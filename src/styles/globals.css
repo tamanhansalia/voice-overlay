@@ -1,0 +1,16 @@
+:root {
+  --bg-glass: rgba(20, 20, 28, 0.72);
+  --bg-elev-1: rgba(255, 255, 255, 0.04);
+  --bg-elev-2: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --text-primary: #f4f4f7;
+  --text-muted: #9b9ba8;
+  --accent: #7c5cff;
+  --accent-glow: rgba(124, 92, 255, 0.55);
+  --danger: #ff5d6a;
+  --success: #4ade80;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; height: 100%; overflow: hidden; background: transparent; color: var(--text-primary); font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+button { font-family: inherit; }
