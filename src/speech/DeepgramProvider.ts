@@ -42,7 +42,13 @@ export class DeepgramProvider implements ISpeechProvider {
     this.ws = new WebSocket(url, ['token', this.apiKey]);
 
     this.ws.onopen = () => this.startAudioPipe();
-    this.ws.onerror = () => cb.onError?.(new Error('Deepgram WebSocket error'));
+    this.ws.onerror = () => {
+      cb.onError?.(new Error('Deepgram WebSocket error'));
+      this.stop();
+    };
+    this.ws.onclose = () => {
+      this.stop();
+    };
     this.ws.onmessage = (ev) => {
       try {
         const msg = JSON.parse(ev.data);
@@ -79,16 +85,23 @@ export class DeepgramProvider implements ISpeechProvider {
   }
 
   async stop(): Promise<void> {
-    try { this.processor?.disconnect(); } catch { /* ignore */ }
-    try { await this.audioCtx?.close(); } catch { /* ignore */ }
-    this.stream?.getTracks().forEach((t) => t.stop());
-    if (this.ws?.readyState === WebSocket.OPEN) {
-      this.ws.send(JSON.stringify({ type: 'CloseStream' }));
-      this.ws.close();
-    }
-    this.processor = null;
-    this.audioCtx = null;
-    this.stream = null;
+    const ws = this.ws;
+    const audioCtx = this.audioCtx;
+    const processor = this.processor;
+    const stream = this.stream;
+
     this.ws = null;
+    this.audioCtx = null;
+    this.processor = null;
+    this.stream = null;
+
+    try { processor?.disconnect(); } catch { /* ignore */ }
+    try { await audioCtx?.close(); } catch { /* ignore */ }
+    stream?.getTracks().forEach((t) => t.stop());
+
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      try { ws.send(JSON.stringify({ type: 'CloseStream' })); } catch { /* ignore */ }
+      try { ws.close(); } catch { /* ignore */ }
+    }
   }
 }

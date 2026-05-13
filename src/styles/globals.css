@@ -1,4 +1,7 @@
 :root {
+  --bg-mica: rgba(20, 20, 28, 0.7);
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-mica: rgba(255, 255, 255, 0.08);
   --bg-glass: rgba(20, 20, 28, 0.72);
   --bg-elev-1: rgba(255, 255, 255, 0.04);
   --bg-elev-2: rgba(255, 255, 255, 0.08);
@@ -12,5 +15,5 @@
 }
 
 * { box-sizing: border-box; }
-html, body, #root { margin: 0; padding: 0; height: 100%; overflow: hidden; background: transparent; color: var(--text-primary); font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+html, body, #root { margin: 0; padding: 0; height: 100%; overflow: overlay; background: transparent; color: var(--text-primary); font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
 button { font-family: inherit; }

@@ -3,7 +3,7 @@
 
 export type RecorderState = 'idle' | 'listening' | 'processing' | 'error';
 
-export type ProviderName = 'webspeech' | 'deepgram' | 'whisper-openai';
+export type ProviderName = 'whisper-local' | 'webspeech' | 'deepgram' | 'whisper-openai';
 
 export type InjectionMode = 'type' | 'paste' | 'copy-only';
 
@@ -31,7 +31,7 @@ export interface AppSettings {
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
-  provider: 'webspeech',
+  provider: 'whisper-local',
   hotkey: 'Alt+Space',
   pushToTalk: false,
   injectionMode: 'paste',

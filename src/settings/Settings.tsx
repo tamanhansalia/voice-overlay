@@ -3,7 +3,8 @@ import type { AppSettings, ProviderName, InjectionMode } from '../shared/types';
 import './Settings.css';
 
 const PROVIDERS: { value: ProviderName; label: string; hint: string }[] = [
-  { value: 'webspeech', label: 'Web Speech (default)', hint: 'Built-in, zero config. May require internet.' },
+  { value: 'whisper-local', label: 'Whisper Local (recommended)', hint: 'Offline, no API key. ~40 MB model downloads once and is cached.' },
+  { value: 'webspeech', label: 'Web Speech', hint: 'Uses Google\'s service — requires a special Chromium build. Falls back to Whisper Local automatically.' },
   { value: 'deepgram', label: 'Deepgram (streaming)', hint: 'Fastest. Needs a Deepgram API key.' },
   { value: 'whisper-openai', label: 'Whisper (OpenAI API)', hint: 'High accuracy. Needs an OpenAI API key.' }
 ];

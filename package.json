@@ -1,6 +1,6 @@
 {
   "name": "voice-overlay",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Lightweight global voice-to-text overlay assistant for Windows",
   "main": "out/main/index.js",
   "author": "you",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@nut-tree-fork/nut-js": "^4.2.2",
+    "@xenova/transformers": "^2.17.2",
     "auto-launch": "^5.0.6",
     "electron-store": "^8.2.0",
     "react": "^18.3.1",
@@ -48,12 +49,19 @@
       {
         "from": "resources",
         "to": ".",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "icon": "resources/icon.ico"
     },

@@ -1,17 +1,18 @@
 import type { ISpeechProvider, SpeechCallbacks } from './ISpeechProvider';
+import { WhisperLocalProvider } from './WhisperLocalProvider';
 
 /**
  * Uses Chromium's built-in webkitSpeechRecognition (Web Speech API).
- *
- * Pros: zero config, streaming, automatic punctuation in many languages.
- * Cons: in stock Electron the underlying Google service requires an API key
- *       baked into Chromium and may fail offline. For production, prefer
- *       Deepgram or local Whisper. Kept here as the default for first-run.
+ * Stock Electron builds lack Google's API key, so on a "network" or
+ * "service-not-allowed" error the provider automatically falls back to
+ * the bundled offline WhisperLocalProvider — no user action required.
  */
 export class WebSpeechProvider implements ISpeechProvider {
   readonly name = 'Web Speech (browser)';
   private recog: any = null;
   private stopped = false;
+  private fallback: WhisperLocalProvider | null = null;
+  private needsFallback = false;
 
   constructor(private lang: string) {}
 
@@ -19,9 +20,11 @@ export class WebSpeechProvider implements ISpeechProvider {
     const Recog =
       (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!Recog) {
-      cb.onError?.(new Error('Web Speech API not available in this environment'));
-      return;
+      // No Web Speech API at all — go straight to offline Whisper.
+      this.fallback = new WhisperLocalProvider();
+      return this.fallback.start(cb);
     }
+
     const r = new Recog();
     r.lang = this.lang;
     r.continuous = true;
@@ -42,14 +45,24 @@ export class WebSpeechProvider implements ISpeechProvider {
     };
 
     r.onerror = (e: any) => {
-      // "no-speech" is fine — just means silence.
       if (e.error === 'no-speech' || e.error === 'aborted') return;
+      this.stopped = true;
+      if (e.error === 'network' || e.error === 'service-not-allowed' || e.error === 'not-allowed') {
+        // Google service unavailable in this Electron build — fall back to offline Whisper.
+        this.needsFallback = true;
+        return;
+      }
       cb.onError?.(new Error(e.error || 'speech recognition error'));
     };
 
-    r.onend = () => {
-      // continuous mode tends to stop after long silences — auto-restart
-      // while the user still wants to record.
+    r.onend = async () => {
+      if (this.needsFallback) {
+        this.needsFallback = false;
+        cb.onPartial?.('Switching to offline Whisper…');
+        this.fallback = new WhisperLocalProvider();
+        await this.fallback.start(cb);
+        return;
+      }
       if (!this.stopped) {
         try { r.start(); } catch { /* ignore */ }
       } else {
@@ -64,6 +77,11 @@ export class WebSpeechProvider implements ISpeechProvider {
 
   async stop(): Promise<void> {
     this.stopped = true;
+    if (this.fallback) {
+      await this.fallback.stop();
+      this.fallback = null;
+      return;
+    }
     try { this.recog?.stop(); } catch { /* ignore */ }
     this.recog = null;
   }

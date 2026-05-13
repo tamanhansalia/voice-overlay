@@ -58,7 +58,7 @@ export class TextInjector {
         await nut.keyboard.releaseKey(nut.Key.LeftControl, nut.Key.V);
       } finally {
         // Give the target app a beat to read the clipboard before we restore.
-        setTimeout(() => clipboard.writeText(previous), 200);
+        setTimeout(() => clipboard.writeText(previous), 500);
       }
       return;
     }

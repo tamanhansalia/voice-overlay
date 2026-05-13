@@ -3,6 +3,7 @@ import type { ISpeechProvider } from './ISpeechProvider';
 import { WebSpeechProvider } from './WebSpeechProvider';
 import { DeepgramProvider } from './DeepgramProvider';
 import { WhisperOpenAIProvider } from './WhisperOpenAIProvider';
+import { WhisperLocalProvider } from './WhisperLocalProvider';
 
 export function makeProvider(s: AppSettings): ISpeechProvider {
   switch (s.provider) {
@@ -11,7 +12,9 @@ export function makeProvider(s: AppSettings): ISpeechProvider {
     case 'whisper-openai':
       return new WhisperOpenAIProvider(s.openAiApiKey, s.language);
     case 'webspeech':
-    default:
       return new WebSpeechProvider(s.language);
+    case 'whisper-local':
+    default:
+      return new WhisperLocalProvider();
   }
 }

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, screen, clipboard } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, clipboard, session } from 'electron';
 import path from 'node:path';
 import { IPC, AppSettings } from '../src/shared/types';
 import { settingsStore } from './settings';
@@ -87,8 +87,11 @@ function createSettingsWindow() {
     width: 560,
     height: 720,
     title: 'Voice Overlay — Settings',
-    backgroundColor: '#0f0f12',
     autoHideMenuBar: true,
+    transparent: true,
+    frame: true,
+    vibrancy: 'under-window',
+    backgroundMaterial: 'mica',
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       contextIsolation: true,
@@ -146,6 +149,17 @@ function registerIpc() {
 }
 
 app.whenReady().then(async () => {
+  // Enable SharedArrayBuffer so @xenova/transformers can use multi-threaded WASM workers.
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Cross-Origin-Opener-Policy': ['same-origin'],
+        'Cross-Origin-Embedder-Policy': ['credentialless'],
+      },
+    });
+  });
+
   registerIpc();
   overlayWin = createOverlay();
 

@@ -13,6 +13,7 @@ export class WhisperOpenAIProvider implements ISpeechProvider {
   private mediaRecorder: MediaRecorder | null = null;
   private stream: MediaStream | null = null;
   private cb: SpeechCallbacks | null = null;
+  private timeoutId: any = null;
   private stopped = false;
 
   constructor(private apiKey: string, private lang: string) {}
@@ -42,7 +43,7 @@ export class WhisperOpenAIProvider implements ISpeechProvider {
       rec.start();
       this.mediaRecorder = rec;
       // 3-second sliding window — tune for latency vs. accuracy.
-      setTimeout(() => {
+      this.timeoutId = setTimeout(() => {
         try { rec.state !== 'inactive' && rec.stop(); } catch { /* ignore */ }
       }, 3000);
     };
@@ -64,6 +65,7 @@ export class WhisperOpenAIProvider implements ISpeechProvider {
       });
       if (!res.ok) {
         this.cb?.onError?.(new Error('Whisper API ' + res.status));
+        this.stop();
         return;
       }
       const data = await res.json();
@@ -71,12 +73,21 @@ export class WhisperOpenAIProvider implements ISpeechProvider {
       if (text) this.cb?.onFinal(text);
     } catch (e: any) {
       this.cb?.onError?.(new Error(e?.message ?? 'Whisper request failed'));
+      this.stop();
     }
   }
 
   async stop(): Promise<void> {
     this.stopped = true;
-    try { this.mediaRecorder?.state !== 'inactive' && this.mediaRecorder?.stop(); } catch { /* ignore */ }
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+    try {
+      if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+        this.mediaRecorder.stop();
+      }
+    } catch { /* ignore */ }
     this.stream?.getTracks().forEach((t) => t.stop());
     this.mediaRecorder = null;
     this.stream = null;

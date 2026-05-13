@@ -4,7 +4,7 @@ import { useRecorder } from './useRecorder';
 import './Overlay.css';
 
 /**
- * The floating overlay. A 64x64 circular button inside a 96x96 transparent
+ * The floating overlay. A 56x56 circular button inside a 160x160 transparent
  * window — the extra padding gives room for the glow effect during listening
  * without clipping.
  */
