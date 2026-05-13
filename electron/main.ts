@@ -29,7 +29,7 @@ app.on('second-instance', () => {
 function createOverlay(): BrowserWindow {
   const settings = settingsStore.getAll();
   const display = screen.getPrimaryDisplay();
-  const size = 96; // overlay window size (icon + glow padding)
+  const size = 160; // overlay window size (icon + glow padding)
   const pos = settings.overlayPosition ?? {
     x: display.workArea.x + display.workArea.width - size - 24,
     y: display.workArea.y + display.workArea.height - size - 80

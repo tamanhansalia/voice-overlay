@@ -86,9 +86,9 @@
 /* Live transcript ticker shown under the orb during listening */
 .ticker {
   position: absolute;
-  bottom: -6px;
+  bottom: 12px;
   left: 50%;
-  transform: translate(-50%, 100%);
+  transform: translateX(-50%);
   background: rgba(20,20,28,0.92);
   border: 1px solid rgba(255,255,255,0.08);
   color: #f4f4f7;
