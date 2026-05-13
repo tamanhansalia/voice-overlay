@@ -1,4 +1,4 @@
-import type { AppSettings } from './shared/types';
+import type { AppSettings, LogEntry } from './shared/types';
 
 declare global {
   interface Window {
@@ -12,6 +12,12 @@ declare global {
       openSettings(): Promise<void>;
       quitApp(): Promise<void>;
       reportOverlayMoved(pos: { x: number; y: number }): void;
+      startDrag(): void;
+      stopDrag(): void;
+      transcribeAudio(audio: Float32Array, lang?: string): Promise<string>;
+      getLogs(): Promise<LogEntry[]>;
+      clearLogs(): Promise<void>;
+      onLog(cb: (entry: LogEntry) => void): () => void;
     };
   }
 }

@@ -1,6 +1,56 @@
 # Project Conversation History
 
-**Last updated**: 2026-05-13T07:50:48.357Z
+**Last updated**: 2026-05-13T08:53:23.866Z
+
+## Session — 2026-05-13T08:53:23.865Z
+
+**User:** --- C:\Users\taman\Downloads\voice-overlay\voice-overlay\src\overlay.tsx ---
+
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Overlay } from './overlay/Overlay';
+import './styles/globals.css';
+
+const root = createRoot(document.getElementById('root')!);
+root.render(<React.StrictMode><Overlay /></React.StrictMode>);
+
+
+--- C:\Users\taman\Downloads\voice-overlay\voice-overlay\src\overlay\Overlay.tsx ---
+
+import { useEffect, useRef, useState } from 'react';
+import t
+
+**User:** --- C:\Users\taman\Downloads\voice-overlay\voice-overlay\electron\autoLaunch.ts ---
+
+import AutoLaunch from 'auto-launch';
+import { app } from 'electron';
+
+const launcher = new AutoLaunch({
+  name: 'Voice Overlay',
+  path: app.getPath('exe'),
+  isHidden: true
+});
+
+export async function setAutoLaunch(enabled: boolean): Promise<void> {
+  try {
+    const current = await launcher.isEnabled();
+    if (enabled && !current) await launcher.enable();
+    if (!enabled && current) await launcher.disable();
+
+**Assistant:** Now I have a complete picture of the project. Let me analyze it for potential bugs and issues.
+
+---
+
+## 🔍 Project Analysis: Potential Bugs
+
+### **1. DeepgramProvider - Audio Sample Rate Mismatch** (High)
+**File:** `src/speech/DeepgramProvider.ts`
+**Issue:** The AudioContext is created with `sampleRate: 16000`, but the microphone stream from `getUserMedia` may have a different sample rate (typically 44.1kHz or 48kHz). The code doesn't resample the audio before sending to Deepgram.
+
+```typescript
+
+
+---
 
 ## Session — 2026-05-13T07:50:48.300Z
 
@@ -31,6 +81,8 @@ To test the app properly, I need to run `npm run dev` in the background. Would y
 
 **User:** list the bugs
 
+
+---
 
 ---
 

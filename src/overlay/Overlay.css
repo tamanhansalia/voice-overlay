@@ -11,39 +11,43 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background:
-    radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,0.18), rgba(255,255,255,0) 60%),
-    linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(40, 40, 60, 0.6));
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
   color: #fff;
   display: grid;
   place-items: center;
   cursor: pointer;
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   box-shadow:
     0 8px 24px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+    inset 0 1px 0 rgba(255,255,255,0.05);
   transition: transform 120ms ease, box-shadow 240ms ease, background 240ms ease;
   -webkit-app-region: no-drag;
 }
 .orb:hover { transform: translateY(-1px) scale(1.03); }
 .orb:active { transform: scale(0.97); }
 
-/* The whole window edge is the drag handle so the user can move the overlay
-   anywhere, while clicks on the orb itself are passed to onClick. */
+/* Drag ring around the orb. Uses IPC-based dragging because focusable:false
+   windows don't support -webkit-app-region:drag. The near-zero background
+   makes the ring non-transparent so Electron delivers pointer events here. */
 .drag-handle {
   position: absolute;
   inset: -20px;
   border-radius: 50%;
-  -webkit-app-region: drag;
+  background: rgba(0, 0, 0, 0.01);
+  cursor: grab;
+  -webkit-app-region: no-drag;
+}
+.drag-handle:active {
+  cursor: grabbing;
 }
 
 .mic { z-index: 2; }
 
 .pulse {
   position: absolute;
-  inset: -6px;
+  inset: -2px;
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
@@ -52,32 +56,33 @@
 
 /* States */
 .overlay-root[data-state="listening"] .orb {
-  background:
-    radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,0.22), rgba(255,255,255,0) 60%),
-    linear-gradient(135deg, rgba(124, 92, 255, 0.7), rgba(60, 30, 120, 0.85));
+  background: var(--bg-card);
+  border-color: var(--accent);
   box-shadow:
-    0 0 0 4px rgba(124, 92, 255, 0.25),
-    0 8px 32px rgba(124, 92, 255, 0.55);
+    0 0 20px var(--accent-glow),
+    inset 0 0 12px var(--accent-glow);
 }
 .overlay-root[data-state="listening"] .pulse {
   opacity: 1;
-  border: 2px solid rgba(124, 92, 255, 0.45);
-  animation: ring 1.4s ease-out infinite;
+  border: 2px solid var(--accent);
+  animation: breathe 2s ease-in-out infinite;
 }
 .overlay-root[data-state="processing"] .orb {
-  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(60,60,80,0.6));
+  background: var(--bg-card);
 }
 .overlay-root[data-state="processing"] .mic {
-  animation: spin 1s linear infinite;
+  animation: spin 2s linear infinite;
+  opacity: 0.7;
 }
 .overlay-root[data-state="error"] .orb {
-  background: linear-gradient(135deg, rgba(255,93,106,0.5), rgba(80,20,30,0.8));
-  box-shadow: 0 0 0 3px rgba(255,93,106,0.25), 0 6px 20px rgba(255,93,106,0.5);
+  background: rgba(255, 93, 106, 0.1);
+  border-color: var(--danger);
+  box-shadow: 0 0 15px rgba(255, 93, 106, 0.3);
 }
 
-@keyframes ring {
-  0%   { transform: scale(1);   opacity: 0.65; }
-  100% { transform: scale(1.6); opacity: 0;    }
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.15); opacity: 0.6; }
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
@@ -86,19 +91,34 @@
 /* Live transcript ticker shown under the orb during listening */
 .ticker {
   position: absolute;
-  bottom: 12px;
+  bottom: 24px;
   left: 50%;
-  transform: translateX(-50%);
-  background: rgba(20,20,28,0.92);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: #f4f4f7;
+  transform: translate(-50%, 0);
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-soft);
+  color: var(--text-primary);
   font-size: 11px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  max-width: 320px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  max-width: 144px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.ticker .err { color: var(--danger, #ff5d6a); }
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 10px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+.ticker .err { color: var(--danger); }
+

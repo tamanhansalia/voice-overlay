@@ -15,6 +15,6 @@ export function makeProvider(s: AppSettings): ISpeechProvider {
       return new WebSpeechProvider(s.language);
     case 'whisper-local':
     default:
-      return new WhisperLocalProvider();
+      return new WhisperLocalProvider(s.language);
   }
 }

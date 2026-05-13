@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { IPC, AppSettings } from '../src/shared/types';
+import { IPC, AppSettings, LogEntry } from '../src/shared/types';
 
 /**
  * The preload script is the only place the renderer touches Node.js / Electron.
@@ -35,7 +35,24 @@ const api = {
 
   // Position tracking
   reportOverlayMoved: (pos: { x: number; y: number }) =>
-    ipcRenderer.send(IPC.overlayMoved, pos)
+    ipcRenderer.send(IPC.overlayMoved, pos),
+
+  // Window dragging (required for focusable:false windows where CSS drag doesn't work)
+  startDrag: () => ipcRenderer.send(IPC.dragStart),
+  stopDrag: () => ipcRenderer.send(IPC.dragStop),
+
+  // Whisper transcription (runs in main process — avoids WASM/ONNX issues in renderer)
+  transcribeAudio: (audio: Float32Array, lang?: string): Promise<string> =>
+    ipcRenderer.invoke(IPC.transcribeAudio, audio, lang),
+
+  // Logs
+  getLogs: (): Promise<LogEntry[]> => ipcRenderer.invoke(IPC.getLogs),
+  clearLogs: (): Promise<void> => ipcRenderer.invoke(IPC.clearLogs),
+  onLog: (cb: (entry: LogEntry) => void) => {
+    const handler = (_e: Electron.IpcRendererEvent, entry: LogEntry) => cb(entry);
+    ipcRenderer.on(IPC.logEvent, handler);
+    return () => ipcRenderer.removeListener(IPC.logEvent, handler);
+  }
 };
 
 contextBridge.exposeInMainWorld('api', api);

@@ -43,6 +43,14 @@ export const DEFAULT_SETTINGS: AppSettings = {
   overlayPosition: null
 };
 
+export type LogLevel = 'info' | 'warn' | 'error';
+
+export interface LogEntry {
+  timestamp: string;
+  level: LogLevel;
+  message: string;
+}
+
 // IPC channel names — centralised so main + renderer can't drift.
 export const IPC = {
   // Renderer -> main
@@ -54,8 +62,14 @@ export const IPC = {
   quitApp: 'quit-app',
   overlayMoved: 'overlay-moved',
   setRecorderState: 'set-recorder-state',
+  getLogs: 'get-logs',
+  clearLogs: 'clear-logs',
+  dragStart: 'drag-start',
+  dragStop: 'drag-stop',
+  transcribeAudio: 'speech:transcribe',
   // Main -> renderer (overlay)
   hotkeyPressed: 'hotkey-pressed',
   hotkeyReleased: 'hotkey-released',
-  settingsChanged: 'settings-changed'
+  settingsChanged: 'settings-changed',
+  logEvent: 'log-event'
 } as const;

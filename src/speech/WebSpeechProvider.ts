@@ -21,7 +21,7 @@ export class WebSpeechProvider implements ISpeechProvider {
       (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!Recog) {
       // No Web Speech API at all — go straight to offline Whisper.
-      this.fallback = new WhisperLocalProvider();
+      this.fallback = new WhisperLocalProvider(this.lang);
       return this.fallback.start(cb);
     }
 
@@ -59,7 +59,7 @@ export class WebSpeechProvider implements ISpeechProvider {
       if (this.needsFallback) {
         this.needsFallback = false;
         cb.onPartial?.('Switching to offline Whisper…');
-        this.fallback = new WhisperLocalProvider();
+        this.fallback = new WhisperLocalProvider(this.lang);
         await this.fallback.start(cb);
         return;
       }

@@ -2,16 +2,19 @@ import { app, BrowserWindow, ipcMain, screen, clipboard, session } from 'electro
 import path from 'node:path';
 import { IPC, AppSettings } from '../src/shared/types';
 import { settingsStore } from './settings';
+import { logger } from './logger';
 import { textInjector } from './textInjector';
 import { HotkeyManager } from './hotkeys';
 import { createTray } from './tray';
 import { setAutoLaunch } from './autoLaunch';
+import { transcribeAudio } from './whisperEngine';
 
 const ICON_PATH = path.join(__dirname, '../../resources/icon.png');
 
 let overlayWin: BrowserWindow | null = null;
 let settingsWin: BrowserWindow | null = null;
 let hotkeys: HotkeyManager | null = null;
+let dragInterval: ReturnType<typeof setInterval> | null = null;
 
 // Single-instance guard so a second launch focuses the existing app.
 const gotLock = app.requestSingleInstanceLock();
@@ -143,8 +146,48 @@ function registerIpc() {
   ipcMain.handle(IPC.openSettings, () => createSettingsWindow());
   ipcMain.handle(IPC.quitApp, () => app.quit());
 
+  ipcMain.handle(IPC.getLogs, () => logger.getHistory());
+  ipcMain.handle(IPC.clearLogs, () => logger.clear());
+
   ipcMain.on(IPC.overlayMoved, (_e, pos: { x: number; y: number }) => {
     settingsStore.update({ overlayPosition: pos });
+  });
+
+  // Custom drag for focusable:false windows (CSS -webkit-app-region:drag is blocked by the OS
+  // when the window has no focus capability). We poll cursor position at ~120 fps and shift
+  // the window by the delta so the overlay follows the cursor naturally.
+  ipcMain.on(IPC.dragStart, () => {
+    if (!overlayWin || dragInterval) return;
+    let last = screen.getCursorScreenPoint();
+    dragInterval = setInterval(() => {
+      if (!overlayWin) return;
+      const curr = screen.getCursorScreenPoint();
+      if (curr.x !== last.x || curr.y !== last.y) {
+        const [wx, wy] = overlayWin.getPosition();
+        overlayWin.setPosition(wx + curr.x - last.x, wy + curr.y - last.y);
+        last = curr;
+      }
+    }, 8);
+  });
+
+  ipcMain.on(IPC.dragStop, () => {
+    if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
+    if (overlayWin) {
+      const [x, y] = overlayWin.getPosition();
+      settingsStore.update({ overlayPosition: { x, y } });
+    }
+  });
+
+  ipcMain.handle(IPC.transcribeAudio, async (_e, rawData: unknown, lang?: string) => {
+    let float32: Float32Array;
+    if (rawData instanceof Float32Array) {
+      float32 = rawData;
+    } else if (Buffer.isBuffer(rawData)) {
+      float32 = new Float32Array(rawData.buffer, rawData.byteOffset, rawData.byteLength / 4);
+    } else {
+      float32 = new Float32Array(rawData as ArrayLike<number>);
+    }
+    return transcribeAudio(float32, lang ?? 'en-US');
   });
 }
 

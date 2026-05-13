@@ -22,9 +22,6 @@ export default defineConfig({
   renderer: {
     root: resolve(__dirname, 'src'),
     plugins: [react()],
-    optimizeDeps: {
-      exclude: ['@xenova/transformers'],
-    },
     build: {
       rollupOptions: {
         input: {

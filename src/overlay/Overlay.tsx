@@ -4,9 +4,10 @@ import { useRecorder } from './useRecorder';
 import './Overlay.css';
 
 /**
- * The floating overlay. A 56x56 circular button inside a 160x160 transparent
- * window — the extra padding gives room for the glow effect during listening
- * without clipping.
+ * The floating overlay component.
+ * Displays a 56x56 circular "orb" within a 160x160 transparent window.
+ * The window size provides padding for visual effects like glows and animations
+ * without clipping the content.
  */
 export function Overlay() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
@@ -43,7 +44,17 @@ export function Overlay() {
           window.api.openSettings();
         }}
       >
-        <span className="drag-handle" aria-hidden />
+        <span
+          className="drag-handle"
+          aria-hidden
+          onPointerDown={(e) => {
+            e.preventDefault();
+            e.currentTarget.setPointerCapture(e.pointerId);
+            window.api.startDrag();
+          }}
+          onPointerUp={() => window.api.stopDrag()}
+          onPointerCancel={() => window.api.stopDrag()}
+        />
         <svg className="mic" viewBox="0 0 24 24" width="22" height="22" aria-hidden>
           <path
             fill="currentColor"
@@ -53,7 +64,7 @@ export function Overlay() {
         <span className="pulse" aria-hidden />
       </button>
 
-      {(state === 'listening' && partial) || error ? (
+      {(partial || error) ? (
         <div className="ticker" ref={tickerRef}>
           {error ? <span className="err">{error}</span> : partial}
         </div>
