@@ -47,7 +47,7 @@ function createOverlay(): BrowserWindow {
     alwaysOnTop: true,
     skipTaskbar: true,
     hasShadow: false,
-    focusable: true,
+    focusable: false,
     show: false,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
@@ -166,6 +166,5 @@ app.on('will-quit', () => {
 });
 
 // Do not quit when all windows are closed — this is a tray app.
-app.on('window-all-closed', (e: Electron.Event) => {
-  e.preventDefault();
+app.on('window-all-closed', () => {
 });
