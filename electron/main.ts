@@ -39,15 +39,16 @@ app.on('second-instance', () => {
 function createOverlay(): BrowserWindow {
   const settings = settingsStore.getAll();
   const display = screen.getPrimaryDisplay();
-  const size = 160; // overlay window size (icon + glow padding)
+  const width = 160;
+  const height = 220; // Increased from 160 to prevent ticker clipping
   const pos = settings.overlayPosition ?? {
-    x: display.workArea.x + display.workArea.width - size - 24,
-    y: display.workArea.y + display.workArea.height - size - 80
+    x: display.workArea.x + display.workArea.width - width - 24,
+    y: display.workArea.y + display.workArea.height - height - 80
   };
 
   const win = new BrowserWindow({
-    width: size,
-    height: size,
+    width,
+    height,
     x: pos.x,
     y: pos.y,
     frame: false,
@@ -80,10 +81,23 @@ function createOverlay(): BrowserWindow {
 
   win.once('ready-to-show', () => win.show());
 
-  // Persist position whenever the user drags the overlay.
+  win.on('closed', () => {
+    if (dragInterval) {
+      clearInterval(dragInterval);
+      dragInterval = null;
+    }
+    overlayWin = null;
+  });
+
+  // Persist position after drag ends — debounced to avoid a disk write on every pixel moved.
+  let moveDebounce: ReturnType<typeof setTimeout> | null = null;
   win.on('moved', () => {
-    const [x, y] = win.getPosition();
-    settingsStore.update({ overlayPosition: { x, y } });
+    if (moveDebounce) clearTimeout(moveDebounce);
+    moveDebounce = setTimeout(() => {
+      const [x, y] = win.getPosition();
+      settingsStore.update({ overlayPosition: { x, y } });
+      moveDebounce = null;
+    }, 300);
   });
 
   return win;

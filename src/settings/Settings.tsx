@@ -21,19 +21,33 @@ export function Settings() {
   const [activeSection, setActiveSection] = useState('provider');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const sectionsRef = useRef<{ [key: string]: HTMLElement | null }>({});
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     window.api.getSettings().then(setS);
   }, []);
 
+  useEffect(() => () => { if (debounceRef.current) clearTimeout(debounceRef.current); }, []);
+
+  // Immediate save — for toggles and radio buttons.
   const update = useCallback(async (patch: Partial<AppSettings>) => {
-    if (!s) return;
-    const nextS = { ...s, ...patch };
-    setS(nextS);
+    setS(prev => prev ? { ...prev, ...patch } : null);
     await window.api.setSettings(patch);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
-  }, [s]);
+  }, []);
+
+  // Debounced save — for text inputs so we don't hit IPC + disk on every keystroke.
+  const debouncedUpdate = useCallback((patch: Partial<AppSettings>) => {
+    setS(prev => prev ? { ...prev, ...patch } : null);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(async () => {
+      await window.api.setSettings(patch);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+      debounceRef.current = null;
+    }, 500);
+  }, []);
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
@@ -74,12 +88,12 @@ export function Settings() {
             </div>
             {s.provider === 'deepgram' && (
               <Field label="Deepgram API Key">
-                <input type="password" value={s.deepgramApiKey} onChange={(e) => update({ deepgramApiKey: e.target.value })} placeholder="dg_..." />
+                <input type="password" value={s.deepgramApiKey} onChange={(e) => debouncedUpdate({ deepgramApiKey: e.target.value })} placeholder="dg_..." />
               </Field>
             )}
             {s.provider === 'whisper-openai' && (
               <Field label="OpenAI API Key">
-                <input type="password" value={s.openAiApiKey} onChange={(e) => update({ openAiApiKey: e.target.value })} placeholder="sk-..." />
+                <input type="password" value={s.openAiApiKey} onChange={(e) => debouncedUpdate({ openAiApiKey: e.target.value })} placeholder="sk-..." />
               </Field>
             )}
           </div>
@@ -89,7 +103,7 @@ export function Settings() {
           <h2><ShortcutIcon /> Global Shortcut</h2>
           <div className="card">
             <Field label="Trigger Hotkey">
-              <input type="text" value={s.hotkey} onChange={(e) => update({ hotkey: e.target.value })} placeholder="Alt+Space" />
+              <input type="text" value={s.hotkey} onChange={(e) => debouncedUpdate({ hotkey: e.target.value })} placeholder="Alt+Space" />
             </Field>
             <Toggle label="Push-to-talk (Hold to record)" checked={s.pushToTalk} onChange={(v: boolean) => update({ pushToTalk: v })} />
           </div>
@@ -111,7 +125,7 @@ export function Settings() {
             </div>
             <Toggle label="Auto-punctuation" checked={s.autoPunctuation} onChange={(v: boolean) => update({ autoPunctuation: v })} />
             <Field label="Language Code (BCP-47)">
-              <input type="text" value={s.language} onChange={(e) => update({ language: e.target.value })} placeholder="en-US" />
+              <input type="text" value={s.language} onChange={(e) => debouncedUpdate({ language: e.target.value })} placeholder="en-US" />
             </Field>
           </div>
         </section>
