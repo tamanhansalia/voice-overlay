@@ -5,6 +5,7 @@ const CHUNK_MS = 5000;
 export class WhisperLocalProvider implements ISpeechProvider {
   readonly name = 'Whisper (local, offline)';
   private rec: MediaRecorder | null = null;
+  private stream: MediaStream | null = null;
   private stopped = false;
 
   constructor(private lang: string) {}
@@ -19,10 +20,9 @@ export class WhisperLocalProvider implements ISpeechProvider {
       cb.onError?.(new Error('Mic access denied: ' + e.message));
       return;
     }
+    this.stream = stream;
 
-    cb.onPartial?.('');
-
-    const loop = () => {
+    const startChunk = () => {
       if (this.stopped) {
         stream.getTracks().forEach((t) => t.stop());
         cb.onEnd?.();
@@ -36,13 +36,13 @@ export class WhisperLocalProvider implements ISpeechProvider {
       recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
 
       recorder.onstop = async () => {
-        if (this.stopped) {
-          stream.getTracks().forEach((t) => t.stop());
-          cb.onEnd?.();
-          return;
-        }
+        // Start next chunk immediately — no gap while transcribing.
+        startChunk();
+
+        if (this.stopped) return;
+
+        // Transcribe previous chunk in parallel with new recording.
         try {
-          cb.onPartial?.('▸ recognizing…');
           const blob = new Blob(chunks, { type: recorder.mimeType });
           const arrayBuf = await blob.arrayBuffer();
           const audioCtx = new AudioContext({ sampleRate: 16000 });
@@ -54,12 +54,9 @@ export class WhisperLocalProvider implements ISpeechProvider {
           } finally {
             audioCtx.close();
           }
-          cb.onPartial?.('');
         } catch (e) {
           console.error('[WhisperLocal] chunk error:', e);
-          cb.onPartial?.('');
         }
-        loop();
       };
 
       recorder.start();
@@ -68,12 +65,14 @@ export class WhisperLocalProvider implements ISpeechProvider {
       }, CHUNK_MS);
     };
 
-    loop();
+    startChunk();
   }
 
   async stop(): Promise<void> {
     this.stopped = true;
     if (this.rec?.state === 'recording') this.rec.stop();
     this.rec = null;
+    this.stream?.getTracks().forEach((t) => t.stop());
+    this.stream = null;
   }
 }
