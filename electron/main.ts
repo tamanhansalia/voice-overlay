@@ -9,7 +9,14 @@ import { createTray } from './tray';
 import { setAutoLaunch } from './autoLaunch';
 import { transcribeAudio } from './whisperEngine';
 
-const ICON_PATH = path.join(__dirname, '../../resources/icon.png');
+const isDev = !app.isPackaged;
+const RESOURCES_PATH = isDev
+  ? path.join(__dirname, '../../resources')
+  : process.resourcesPath;
+
+const ICON_PATH = path.join(RESOURCES_PATH, 'icon.png');
+const ICON_ICO = path.join(RESOURCES_PATH, 'icon.ico');
+const APP_ICON = process.platform === 'win32' ? ICON_ICO : ICON_PATH;
 
 let overlayWin: BrowserWindow | null = null;
 let settingsWin: BrowserWindow | null = null;
@@ -52,6 +59,7 @@ function createOverlay(): BrowserWindow {
     hasShadow: false,
     focusable: false,
     show: false,
+    icon: APP_ICON,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       contextIsolation: true,
@@ -97,6 +105,7 @@ function createSettingsWindow() {
     frame: true,
     vibrancy: 'under-window',
     backgroundMaterial: 'mica',
+    icon: APP_ICON,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       contextIsolation: true,
@@ -214,7 +223,7 @@ app.whenReady().then(async () => {
   createTray({
     overlay: overlayWin,
     openSettings: () => createSettingsWindow(),
-    iconPath: ICON_PATH
+    iconPath: APP_ICON
   });
 
   await setAutoLaunch(settingsStore.getAll().autoLaunch);

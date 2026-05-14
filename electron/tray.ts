@@ -9,9 +9,12 @@ export function createTray(opts: {
   openSettings: () => void;
   iconPath: string;
 }): Tray {
-  const icon = nativeImage
-    .createFromPath(opts.iconPath)
-    .resize({ width: 16, height: 16 });
+  const icon = nativeImage.createFromPath(opts.iconPath);
+
+  if (icon.isEmpty()) {
+    console.error(`[Tray] Failed to load icon from: ${opts.iconPath}`);
+  }
+
   const tray = new Tray(icon);
   tray.setToolTip('Voice Overlay');
 

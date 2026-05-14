@@ -1,7 +1,0 @@
-README.md
-release\0.1.0\win-unpacked\LICENSE.electron.txt
-release\0.1.0\win-unpacked\LICENSES.chromium.html
-src\overlay.html
-src\settings.html
-release\0.1.0\win-unpacked\resources\icon.png
-resources\icon.png

@@ -4,42 +4,42 @@
   "graph": {
     "hyperedges": [
       {
-        "id": "speech_backends",
-        "label": "Speech Backend Providers",
-        "nodes": [
-          "web_speech_provider",
-          "deepgram_provider",
-          "whisper_openai_provider"
-        ],
-        "relation": "participate_in",
-        "confidence": "EXTRACTED",
-        "confidence_score": 0.95,
-        "source_file": "README.md"
-      },
-      {
-        "id": "text_injection_strategies",
-        "label": "Text Injection Modes",
-        "nodes": [
-          "paste_mode",
-          "type_mode",
-          "copy_mode"
-        ],
-        "relation": "participate_in",
-        "confidence": "EXTRACTED",
-        "confidence_score": 0.95,
-        "source_file": "README.md"
-      },
-      {
-        "id": "app_tech_stack",
+        "id": "tech_stack",
         "label": "Application Technology Stack",
         "nodes": [
-          "electron_framework",
-          "react_framework",
-          "typescript_language"
+          "readme_electron",
+          "readme_react",
+          "readme_typescript"
         ],
-        "relation": "form",
+        "relation": "participate_in",
         "confidence": "EXTRACTED",
         "confidence_score": 1.0,
+        "source_file": "README.md"
+      },
+      {
+        "id": "speech_providers",
+        "label": "Speech Backend Providers",
+        "nodes": [
+          "readme_web_speech",
+          "readme_deepgram",
+          "readme_whisper_openai"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.95,
+        "source_file": "README.md"
+      },
+      {
+        "id": "text_injection_modes",
+        "label": "Text Injection Modes",
+        "nodes": [
+          "readme_paste_mode",
+          "readme_type_mode",
+          "readme_copy_only"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.95,
         "source_file": "README.md"
       }
     ]
@@ -51,17 +51,8 @@
       "source_file": "electron.vite.config.ts",
       "source_location": "L1",
       "id": "electron_vite_config_ts",
-      "community": 14,
+      "community": 19,
       "norm_label": "electron.vite.config.ts"
-    },
-    {
-      "label": "extract_ast.py",
-      "file_type": "code",
-      "source_file": "extract_ast.py",
-      "source_location": "L1",
-      "id": "extract_ast_py",
-      "community": 15,
-      "norm_label": "extract_ast.py"
     },
     {
       "label": "autoLaunch.ts",
@@ -69,7 +60,7 @@
       "source_file": "electron\\autoLaunch.ts",
       "source_location": "L1",
       "id": "electron_autolaunch_ts",
-      "community": 8,
+      "community": 13,
       "norm_label": "autolaunch.ts"
     },
     {
@@ -78,7 +69,7 @@
       "source_file": "electron\\autoLaunch.ts",
       "source_location": "L10",
       "id": "autolaunch_setautolaunch",
-      "community": 8,
+      "community": 13,
       "norm_label": "setautolaunch()"
     },
     {
@@ -136,39 +127,102 @@
       "norm_label": ".unregisterall()"
     },
     {
+      "label": "logger.ts",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L1",
+      "id": "electron_logger_ts",
+      "community": 1,
+      "norm_label": "logger.ts"
+    },
+    {
+      "label": "Logger",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L12",
+      "id": "logger_logger",
+      "community": 1,
+      "norm_label": "logger"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L16",
+      "id": "logger_logger_constructor",
+      "community": 1,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".hookConsole()",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L20",
+      "id": "logger_logger_hookconsole",
+      "community": 1,
+      "norm_label": ".hookconsole()"
+    },
+    {
+      "label": ".addEntry()",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L41",
+      "id": "logger_logger_addentry",
+      "community": 1,
+      "norm_label": ".addentry()"
+    },
+    {
+      "label": ".getHistory()",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L61",
+      "id": "logger_logger_gethistory",
+      "community": 1,
+      "norm_label": ".gethistory()"
+    },
+    {
+      "label": ".clear()",
+      "file_type": "code",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L65",
+      "id": "logger_logger_clear",
+      "community": 1,
+      "norm_label": ".clear()"
+    },
+    {
       "label": "main.ts",
       "file_type": "code",
       "source_file": "electron\\main.ts",
       "source_location": "L1",
       "id": "electron_main_ts",
-      "community": 1,
+      "community": 0,
       "norm_label": "main.ts"
     },
     {
       "label": "createOverlay()",
       "file_type": "code",
       "source_file": "electron\\main.ts",
-      "source_location": "L29",
+      "source_location": "L32",
       "id": "main_createoverlay",
-      "community": 1,
+      "community": 0,
       "norm_label": "createoverlay()"
     },
     {
       "label": "createSettingsWindow()",
       "file_type": "code",
       "source_file": "electron\\main.ts",
-      "source_location": "L81",
+      "source_location": "L84",
       "id": "main_createsettingswindow",
-      "community": 1,
+      "community": 0,
       "norm_label": "createsettingswindow()"
     },
     {
       "label": "registerIpc()",
       "file_type": "code",
       "source_file": "electron\\main.ts",
-      "source_location": "L111",
+      "source_location": "L119",
       "id": "main_registeripc",
-      "community": 1,
+      "community": 0,
       "norm_label": "registeripc()"
     },
     {
@@ -177,7 +231,7 @@
       "source_file": "electron\\preload.ts",
       "source_location": "L1",
       "id": "electron_preload_ts",
-      "community": 16,
+      "community": 20,
       "norm_label": "preload.ts"
     },
     {
@@ -186,7 +240,7 @@
       "source_file": "electron\\settings.ts",
       "source_location": "L1",
       "id": "electron_settings_ts",
-      "community": 1,
+      "community": 0,
       "norm_label": "settings.ts"
     },
     {
@@ -195,7 +249,7 @@
       "source_file": "electron\\settings.ts",
       "source_location": "L8",
       "id": "settings_settingsstore",
-      "community": 1,
+      "community": 0,
       "norm_label": "settingsstore"
     },
     {
@@ -204,7 +258,7 @@
       "source_file": "electron\\settings.ts",
       "source_location": "L11",
       "id": "settings_settingsstore_constructor",
-      "community": 1,
+      "community": 0,
       "norm_label": ".constructor()"
     },
     {
@@ -213,7 +267,7 @@
       "source_file": "electron\\settings.ts",
       "source_location": "L18",
       "id": "settings_settingsstore_getall",
-      "community": 1,
+      "community": 0,
       "norm_label": ".getall()"
     },
     {
@@ -222,7 +276,7 @@
       "source_file": "electron\\settings.ts",
       "source_location": "L23",
       "id": "settings_settingsstore_update",
-      "community": 1,
+      "community": 0,
       "norm_label": ".update()"
     },
     {
@@ -231,7 +285,7 @@
       "source_file": "electron\\textInjector.ts",
       "source_location": "L1",
       "id": "electron_textinjector_ts",
-      "community": 6,
+      "community": 5,
       "norm_label": "textinjector.ts"
     },
     {
@@ -240,26 +294,35 @@
       "source_file": "electron\\textInjector.ts",
       "source_location": "L17",
       "id": "textinjector_textinjector",
-      "community": 6,
+      "community": 5,
       "norm_label": "textinjector"
     },
     {
       "label": ".loadNut()",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
-      "source_location": "L20",
+      "source_location": "L21",
       "id": "textinjector_textinjector_loadnut",
-      "community": 6,
+      "community": 5,
       "norm_label": ".loadnut()"
     },
     {
       "label": ".inject()",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
-      "source_location": "L36",
+      "source_location": "L37",
       "id": "textinjector_textinjector_inject",
-      "community": 6,
+      "community": 5,
       "norm_label": ".inject()"
+    },
+    {
+      "label": "._doInject()",
+      "file_type": "code",
+      "source_file": "electron\\textInjector.ts",
+      "source_location": "L52",
+      "id": "textinjector_textinjector_doinject",
+      "community": 5,
+      "norm_label": "._doinject()"
     },
     {
       "label": "tray.ts",
@@ -267,7 +330,7 @@
       "source_file": "electron\\tray.ts",
       "source_location": "L1",
       "id": "electron_tray_ts",
-      "community": 9,
+      "community": 14,
       "norm_label": "tray.ts"
     },
     {
@@ -276,8 +339,44 @@
       "source_file": "electron\\tray.ts",
       "source_location": "L7",
       "id": "tray_createtray",
-      "community": 9,
+      "community": 14,
       "norm_label": "createtray()"
+    },
+    {
+      "label": "whisperEngine.ts",
+      "file_type": "code",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L1",
+      "id": "electron_whisperengine_ts",
+      "community": 9,
+      "norm_label": "whisperengine.ts"
+    },
+    {
+      "label": "modelId()",
+      "file_type": "code",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L9",
+      "id": "whisperengine_modelid",
+      "community": 9,
+      "norm_label": "modelid()"
+    },
+    {
+      "label": "getPipe()",
+      "file_type": "code",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L13",
+      "id": "whisperengine_getpipe",
+      "community": 9,
+      "norm_label": "getpipe()"
+    },
+    {
+      "label": "transcribeAudio()",
+      "file_type": "code",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L31",
+      "id": "whisperengine_transcribeaudio",
+      "community": 9,
+      "norm_label": "transcribeaudio()"
     },
     {
       "label": "global.d.ts",
@@ -285,7 +384,7 @@
       "source_file": "src\\global.d.ts",
       "source_location": "L1",
       "id": "src_global_d_ts",
-      "community": 17,
+      "community": 21,
       "norm_label": "global.d.ts"
     },
     {
@@ -294,7 +393,7 @@
       "source_file": "src\\overlay.tsx",
       "source_location": "L1",
       "id": "src_overlay_tsx",
-      "community": 18,
+      "community": 22,
       "norm_label": "overlay.tsx"
     },
     {
@@ -303,7 +402,7 @@
       "source_file": "src\\settings.tsx",
       "source_location": "L1",
       "id": "src_settings_tsx",
-      "community": 19,
+      "community": 23,
       "norm_label": "settings.tsx"
     },
     {
@@ -312,16 +411,16 @@
       "source_file": "src\\overlay\\Overlay.tsx",
       "source_location": "L1",
       "id": "src_overlay_overlay_tsx",
-      "community": 7,
+      "community": 10,
       "norm_label": "overlay.tsx"
     },
     {
       "label": "Overlay()",
       "file_type": "code",
       "source_file": "src\\overlay\\Overlay.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "id": "overlay_overlay",
-      "community": 7,
+      "community": 10,
       "norm_label": "overlay()"
     },
     {
@@ -330,7 +429,7 @@
       "source_file": "src\\overlay\\useRecorder.ts",
       "source_location": "L1",
       "id": "src_overlay_userecorder_ts",
-      "community": 7,
+      "community": 10,
       "norm_label": "userecorder.ts"
     },
     {
@@ -339,7 +438,7 @@
       "source_file": "src\\overlay\\useRecorder.ts",
       "source_location": "L11",
       "id": "userecorder_userecorder",
-      "community": 7,
+      "community": 10,
       "norm_label": "userecorder()"
     },
     {
@@ -348,17 +447,17 @@
       "source_file": "src\\settings\\Settings.tsx",
       "source_location": "L1",
       "id": "src_settings_settings_tsx",
-      "community": 10,
+      "community": 15,
       "norm_label": "settings.tsx"
     },
     {
-      "label": "update()",
+      "label": "scrollToSection()",
       "file_type": "code",
       "source_file": "src\\settings\\Settings.tsx",
-      "source_location": "L23",
-      "id": "settings_update",
-      "community": 10,
-      "norm_label": "update()"
+      "source_location": "L38",
+      "id": "settings_scrolltosection",
+      "community": 15,
+      "norm_label": "scrolltosection()"
     },
     {
       "label": "types.ts",
@@ -366,7 +465,7 @@
       "source_file": "src\\shared\\types.ts",
       "source_location": "L1",
       "id": "src_shared_types_ts",
-      "community": 20,
+      "community": 24,
       "norm_label": "types.ts"
     },
     {
@@ -409,7 +508,7 @@
       "label": ".startAudioPipe()",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
-      "source_location": "L60",
+      "source_location": "L66",
       "id": "deepgramprovider_deepgramprovider_startaudiopipe",
       "community": 3,
       "norm_label": ".startaudiopipe()"
@@ -418,7 +517,7 @@
       "label": ".stop()",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
-      "source_location": "L81",
+      "source_location": "L87",
       "id": "deepgramprovider_deepgramprovider_stop",
       "community": 3,
       "norm_label": ".stop()"
@@ -429,16 +528,16 @@
       "source_file": "src\\speech\\index.ts",
       "source_location": "L1",
       "id": "src_speech_index_ts",
-      "community": 11,
+      "community": 16,
       "norm_label": "index.ts"
     },
     {
       "label": "makeProvider()",
       "file_type": "code",
       "source_file": "src\\speech\\index.ts",
-      "source_location": "L7",
+      "source_location": "L8",
       "id": "index_makeprovider",
-      "community": 11,
+      "community": 16,
       "norm_label": "makeprovider()"
     },
     {
@@ -447,7 +546,7 @@
       "source_file": "src\\speech\\ISpeechProvider.ts",
       "source_location": "L1",
       "id": "src_speech_ispeechprovider_ts",
-      "community": 21,
+      "community": 25,
       "norm_label": "ispeechprovider.ts"
     },
     {
@@ -456,43 +555,88 @@
       "source_file": "src\\speech\\WebSpeechProvider.ts",
       "source_location": "L1",
       "id": "src_speech_webspeechprovider_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "webspeechprovider.ts"
     },
     {
       "label": "WebSpeechProvider",
       "file_type": "code",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L11",
+      "source_location": "L10",
       "id": "webspeechprovider_webspeechprovider",
-      "community": 5,
+      "community": 6,
       "norm_label": "webspeechprovider"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "id": "webspeechprovider_webspeechprovider_constructor",
-      "community": 5,
+      "community": 6,
       "norm_label": ".constructor()"
     },
     {
       "label": ".start()",
       "file_type": "code",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "webspeechprovider_webspeechprovider_start",
-      "community": 5,
+      "community": 6,
       "norm_label": ".start()"
     },
     {
       "label": ".stop()",
       "file_type": "code",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L65",
+      "source_location": "L78",
       "id": "webspeechprovider_webspeechprovider_stop",
-      "community": 5,
+      "community": 6,
+      "norm_label": ".stop()"
+    },
+    {
+      "label": "WhisperLocalProvider.ts",
+      "file_type": "code",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L1",
+      "id": "src_speech_whisperlocalprovider_ts",
+      "community": 7,
+      "norm_label": "whisperlocalprovider.ts"
+    },
+    {
+      "label": "WhisperLocalProvider",
+      "file_type": "code",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L5",
+      "id": "whisperlocalprovider_whisperlocalprovider",
+      "community": 7,
+      "norm_label": "whisperlocalprovider"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L10",
+      "id": "whisperlocalprovider_whisperlocalprovider_constructor",
+      "community": 7,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".start()",
+      "file_type": "code",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L12",
+      "id": "whisperlocalprovider_whisperlocalprovider_start",
+      "community": 7,
+      "norm_label": ".start()"
+    },
+    {
+      "label": ".stop()",
+      "file_type": "code",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L74",
+      "id": "whisperlocalprovider_whisperlocalprovider_stop",
+      "community": 7,
       "norm_label": ".stop()"
     },
     {
@@ -517,7 +661,7 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "whisperopenaiprovider_whisperopenaiprovider_constructor",
       "community": 4,
       "norm_label": ".constructor()"
@@ -526,7 +670,7 @@
       "label": ".start()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L20",
+      "source_location": "L21",
       "id": "whisperopenaiprovider_whisperopenaiprovider_start",
       "community": 4,
       "norm_label": ".start()"
@@ -535,7 +679,7 @@
       "label": ".transcribe()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L53",
+      "source_location": "L54",
       "id": "whisperopenaiprovider_whisperopenaiprovider_transcribe",
       "community": 4,
       "norm_label": ".transcribe()"
@@ -544,7 +688,7 @@
       "label": ".stop()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L77",
+      "source_location": "L80",
       "id": "whisperopenaiprovider_whisperopenaiprovider_stop",
       "community": 4,
       "norm_label": ".stop()"
@@ -553,167 +697,224 @@
       "label": "Voice Overlay",
       "file_type": "document",
       "source_file": "README.md",
-      "id": "voice_overlay_project",
-      "community": 0,
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_voice_overlay",
+      "community": 8,
       "norm_label": "voice overlay"
     },
     {
-      "label": "README.md",
+      "label": "Electron",
       "file_type": "document",
       "source_file": "README.md",
-      "id": "readme_md",
-      "community": 0,
-      "norm_label": "readme.md"
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_electron",
+      "community": 8,
+      "norm_label": "electron"
+    },
+    {
+      "label": "React",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_react",
+      "community": 8,
+      "norm_label": "react"
+    },
+    {
+      "label": "TypeScript",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_typescript",
+      "community": 8,
+      "norm_label": "typescript"
+    },
+    {
+      "label": "Web Speech Provider",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_web_speech",
+      "community": 12,
+      "norm_label": "web speech provider"
+    },
+    {
+      "label": "Deepgram Provider",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_deepgram",
+      "community": 12,
+      "norm_label": "deepgram provider"
+    },
+    {
+      "label": "Whisper OpenAI Provider",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_whisper_openai",
+      "community": 12,
+      "norm_label": "whisper openai provider"
+    },
+    {
+      "label": "@nut-tree-fork/nut-js",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_nut_js",
+      "community": 11,
+      "norm_label": "@nut-tree-fork/nut-js"
+    },
+    {
+      "label": "Paste Mode",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_paste_mode",
+      "community": 11,
+      "norm_label": "paste mode"
+    },
+    {
+      "label": "Type Keystrokes Mode",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_type_mode",
+      "community": 11,
+      "norm_label": "type keystrokes mode"
+    },
+    {
+      "label": "Copy Only Mode",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_copy_only",
+      "community": 11,
+      "norm_label": "copy only mode"
+    },
+    {
+      "label": "uiohook-napi",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Alternative library to support true push-to-talk (hold to record) via key-down/key-up hooks, bypassing Electron's globalShortcut limitations.",
+      "id": "readme_uiohook_napi",
+      "community": 8,
+      "norm_label": "uiohook-napi"
     },
     {
       "label": "overlay.html",
       "file_type": "code",
       "source_file": "src/overlay.html",
-      "id": "overlay_html",
-      "community": 12,
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "html_overlay",
+      "community": 17,
       "norm_label": "overlay.html"
+    },
+    {
+      "label": "overlay.tsx",
+      "file_type": "code",
+      "source_file": "src/overlay.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "html_overlay_tsx",
+      "community": 17,
+      "norm_label": "overlay.tsx"
     },
     {
       "label": "settings.html",
       "file_type": "code",
       "source_file": "src/settings.html",
-      "id": "settings_html",
-      "community": 13,
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "html_settings",
+      "community": 18,
       "norm_label": "settings.html"
-    },
-    {
-      "label": "Electron",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "electron_framework",
-      "community": 0,
-      "norm_label": "electron"
-    },
-    {
-      "label": "React",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "react_framework",
-      "community": 0,
-      "norm_label": "react"
-    },
-    {
-      "label": "TypeScript",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "typescript_language",
-      "community": 0,
-      "norm_label": "typescript"
-    },
-    {
-      "label": "Windows 10/11",
-      "file_type": "document",
-      "source_file": "README.md",
-      "id": "windows_os",
-      "community": 0,
-      "norm_label": "windows 10/11"
-    },
-    {
-      "label": "Web Speech Provider",
-      "file_type": "code",
-      "source_file": "README.md",
-      "rationale": "Default provider; works in Electron but depends on Chromium's built-in Google service and may fail offline.",
-      "id": "web_speech_provider",
-      "community": 0,
-      "norm_label": "web speech provider"
-    },
-    {
-      "label": "Deepgram Provider",
-      "file_type": "code",
-      "source_file": "README.md",
-      "rationale": "Lowest latency option among pluggable backends.",
-      "id": "deepgram_provider",
-      "community": 0,
-      "norm_label": "deepgram provider"
-    },
-    {
-      "label": "Whisper OpenAI Provider",
-      "file_type": "code",
-      "source_file": "README.md",
-      "rationale": "Medium latency option using OpenAI API.",
-      "id": "whisper_openai_provider",
-      "community": 0,
-      "norm_label": "whisper openai provider"
-    },
-    {
-      "label": "@nut-tree-fork/nut-js",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "nut_js",
-      "community": 0,
-      "norm_label": "@nut-tree-fork/nut-js"
-    },
-    {
-      "label": "electron-store",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "electron_store",
-      "community": 1,
-      "norm_label": "electron-store"
-    },
-    {
-      "label": "Global Hotkey (Alt+Space)",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "global_hotkey",
-      "community": 0,
-      "norm_label": "global hotkey (alt+space)"
-    },
-    {
-      "label": "Paste Mode",
-      "file_type": "code",
-      "source_file": "README.md",
-      "rationale": "Fast and unicode-safe. Default mode compatible with most terminals, browsers, and IDEs.",
-      "id": "paste_mode",
-      "community": 0,
-      "norm_label": "paste mode"
-    },
-    {
-      "label": "Type Keystrokes Mode",
-      "file_type": "code",
-      "source_file": "README.md",
-      "rationale": "Per-character emulation for apps that block clipboard paste (e.g., password fields).",
-      "id": "type_mode",
-      "community": 0,
-      "norm_label": "type keystrokes mode"
-    },
-    {
-      "label": "Copy Only Mode",
-      "file_type": "code",
-      "source_file": "README.md",
-      "id": "copy_mode",
-      "community": 0,
-      "norm_label": "copy only mode"
-    },
-    {
-      "label": "Renderer-only Audio",
-      "file_type": "code",
-      "source_file": "README.md",
-      "rationale": "Mic opened from renderer to keep main process lean and avoid IPC overhead for high-rate PCM frames.",
-      "id": "renderer_audio_processing",
-      "community": 0,
-      "norm_label": "renderer-only audio"
-    },
-    {
-      "label": "overlay.tsx",
-      "file_type": "code",
-      "source_file": "src/overlay.tsx",
-      "id": "overlay_tsx",
-      "community": 12,
-      "norm_label": "overlay.tsx"
     },
     {
       "label": "settings.tsx",
       "file_type": "code",
-      "source_file": "src/settings.tsx",
-      "id": "settings_tsx",
-      "community": 13,
+      "source_file": "src/settings.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "html_settings_tsx",
+      "community": 18,
       "norm_label": "settings.tsx"
+    },
+    {
+      "label": "App Icon",
+      "file_type": "image",
+      "source_file": "resources/icon.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Circular purple background with a white centered microphone. Clean, simple design for system tray and installer icon.",
+      "id": "icon_png",
+      "community": 26,
+      "norm_label": "app icon"
     }
   ],
   "links": [
@@ -804,8 +1005,92 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "electron_logger_ts",
+      "_tgt": "logger_logger",
+      "source": "electron_logger_ts",
+      "target": "logger_logger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "logger_logger",
+      "_tgt": "logger_logger_constructor",
+      "source": "logger_logger",
+      "target": "logger_logger_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_src": "logger_logger",
+      "_tgt": "logger_logger_hookconsole",
+      "source": "logger_logger",
+      "target": "logger_logger_hookconsole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_src": "logger_logger",
+      "_tgt": "logger_logger_addentry",
+      "source": "logger_logger",
+      "target": "logger_logger_addentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "logger_logger",
+      "_tgt": "logger_logger_gethistory",
+      "source": "logger_logger",
+      "target": "logger_logger_gethistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "logger_logger",
+      "_tgt": "logger_logger_clear",
+      "source": "logger_logger",
+      "target": "logger_logger_clear",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\logger.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "logger_logger_constructor",
+      "_tgt": "logger_logger_hookconsole",
+      "source": "logger_logger_constructor",
+      "target": "logger_logger_hookconsole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "electron\\main.ts",
-      "source_location": "L29",
+      "source_location": "L32",
       "weight": 1.0,
       "_src": "electron_main_ts",
       "_tgt": "main_createoverlay",
@@ -817,7 +1102,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "electron\\main.ts",
-      "source_location": "L81",
+      "source_location": "L84",
       "weight": 1.0,
       "_src": "electron_main_ts",
       "_tgt": "main_createsettingswindow",
@@ -829,7 +1114,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "electron\\main.ts",
-      "source_location": "L111",
+      "source_location": "L119",
       "weight": 1.0,
       "_src": "electron_main_ts",
       "_tgt": "main_registeripc",
@@ -842,24 +1127,12 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "electron\\main.ts",
-      "source_location": "L30",
+      "source_location": "L33",
       "weight": 1.0,
       "_src": "main_createoverlay",
       "_tgt": "settings_settingsstore_getall",
       "source": "main_createoverlay",
       "target": "settings_settingsstore_getall"
-    },
-    {
-      "relation": "imports_from",
-      "confidence": "EXTRACTED",
-      "source_file": "electron\\settings.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_src": "electron_settings_ts",
-      "_tgt": "electron_store",
-      "source": "electron_settings_ts",
-      "target": "electron_store",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -937,7 +1210,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "electron\\textInjector.ts",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "_src": "textinjector_textinjector",
       "_tgt": "textinjector_textinjector_loadnut",
@@ -949,7 +1222,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "electron\\textInjector.ts",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0,
       "_src": "textinjector_textinjector",
       "_tgt": "textinjector_textinjector_inject",
@@ -958,15 +1231,27 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\textInjector.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_src": "textinjector_textinjector",
+      "_tgt": "textinjector_textinjector_doinject",
+      "source": "textinjector_textinjector",
+      "target": "textinjector_textinjector_doinject",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "electron\\textInjector.ts",
-      "source_location": "L49",
+      "source_location": "L62",
       "weight": 1.0,
-      "_src": "textinjector_textinjector_inject",
+      "_src": "textinjector_textinjector_doinject",
       "_tgt": "textinjector_textinjector_loadnut",
       "source": "textinjector_textinjector_loadnut",
-      "target": "textinjector_textinjector_inject",
+      "target": "textinjector_textinjector_doinject",
       "confidence_score": 1.0
     },
     {
@@ -984,8 +1269,68 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_src": "electron_whisperengine_ts",
+      "_tgt": "whisperengine_modelid",
+      "source": "electron_whisperengine_ts",
+      "target": "whisperengine_modelid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_src": "electron_whisperengine_ts",
+      "_tgt": "whisperengine_getpipe",
+      "source": "electron_whisperengine_ts",
+      "target": "whisperengine_getpipe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_src": "electron_whisperengine_ts",
+      "_tgt": "whisperengine_transcribeaudio",
+      "source": "electron_whisperengine_ts",
+      "target": "whisperengine_transcribeaudio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "whisperengine_getpipe",
+      "_tgt": "whisperengine_modelid",
+      "source": "whisperengine_modelid",
+      "target": "whisperengine_getpipe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "electron\\whisperEngine.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_src": "whisperengine_transcribeaudio",
+      "_tgt": "whisperengine_getpipe",
+      "source": "whisperengine_getpipe",
+      "target": "whisperengine_transcribeaudio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\Overlay.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_src": "src_overlay_overlay_tsx",
       "_tgt": "overlay_overlay",
@@ -998,7 +1343,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src\\overlay\\Overlay.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "overlay_overlay",
       "_tgt": "userecorder_userecorder",
@@ -1021,12 +1366,12 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\settings\\Settings.tsx",
-      "source_location": "L23",
+      "source_location": "L38",
       "weight": 1.0,
       "_src": "src_settings_settings_tsx",
-      "_tgt": "settings_update",
+      "_tgt": "settings_scrolltosection",
       "source": "src_settings_settings_tsx",
-      "target": "settings_update",
+      "target": "settings_scrolltosection",
       "confidence_score": 1.0
     },
     {
@@ -1069,7 +1414,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\DeepgramProvider.ts",
-      "source_location": "L60",
+      "source_location": "L66",
       "weight": 1.0,
       "_src": "deepgramprovider_deepgramprovider",
       "_tgt": "deepgramprovider_deepgramprovider_startaudiopipe",
@@ -1081,7 +1426,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\DeepgramProvider.ts",
-      "source_location": "L81",
+      "source_location": "L87",
       "weight": 1.0,
       "_src": "deepgramprovider_deepgramprovider",
       "_tgt": "deepgramprovider_deepgramprovider_stop",
@@ -1093,7 +1438,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\index.ts",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_src": "src_speech_index_ts",
       "_tgt": "index_makeprovider",
@@ -1105,7 +1450,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L11",
+      "source_location": "L10",
       "weight": 1.0,
       "_src": "src_speech_webspeechprovider_ts",
       "_tgt": "webspeechprovider_webspeechprovider",
@@ -1117,7 +1462,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_src": "webspeechprovider_webspeechprovider",
       "_tgt": "webspeechprovider_webspeechprovider_constructor",
@@ -1129,7 +1474,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_src": "webspeechprovider_webspeechprovider",
       "_tgt": "webspeechprovider_webspeechprovider_start",
@@ -1141,12 +1486,60 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WebSpeechProvider.ts",
-      "source_location": "L65",
+      "source_location": "L78",
       "weight": 1.0,
       "_src": "webspeechprovider_webspeechprovider",
       "_tgt": "webspeechprovider_webspeechprovider_stop",
       "source": "webspeechprovider_webspeechprovider",
       "target": "webspeechprovider_webspeechprovider_stop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_src": "src_speech_whisperlocalprovider_ts",
+      "_tgt": "whisperlocalprovider_whisperlocalprovider",
+      "source": "src_speech_whisperlocalprovider_ts",
+      "target": "whisperlocalprovider_whisperlocalprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_src": "whisperlocalprovider_whisperlocalprovider",
+      "_tgt": "whisperlocalprovider_whisperlocalprovider_constructor",
+      "source": "whisperlocalprovider_whisperlocalprovider",
+      "target": "whisperlocalprovider_whisperlocalprovider_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "whisperlocalprovider_whisperlocalprovider",
+      "_tgt": "whisperlocalprovider_whisperlocalprovider_start",
+      "source": "whisperlocalprovider_whisperlocalprovider",
+      "target": "whisperlocalprovider_whisperlocalprovider_start",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\speech\\WhisperLocalProvider.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_src": "whisperlocalprovider_whisperlocalprovider",
+      "_tgt": "whisperlocalprovider_whisperlocalprovider_stop",
+      "source": "whisperlocalprovider_whisperlocalprovider",
+      "target": "whisperlocalprovider_whisperlocalprovider_stop",
       "confidence_score": 1.0
     },
     {
@@ -1165,7 +1558,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_src": "whisperopenaiprovider_whisperopenaiprovider",
       "_tgt": "whisperopenaiprovider_whisperopenaiprovider_constructor",
@@ -1177,7 +1570,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "_src": "whisperopenaiprovider_whisperopenaiprovider",
       "_tgt": "whisperopenaiprovider_whisperopenaiprovider_start",
@@ -1189,7 +1582,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L53",
+      "source_location": "L54",
       "weight": 1.0,
       "_src": "whisperopenaiprovider_whisperopenaiprovider",
       "_tgt": "whisperopenaiprovider_whisperopenaiprovider_transcribe",
@@ -1201,7 +1594,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
-      "source_location": "L77",
+      "source_location": "L80",
       "weight": 1.0,
       "_src": "whisperopenaiprovider_whisperopenaiprovider",
       "_tgt": "whisperopenaiprovider_whisperopenaiprovider_stop",
@@ -1210,234 +1603,200 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "references",
+      "relation": "calls",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "_src": "readme_md",
-      "_tgt": "voice_overlay_project",
-      "source": "voice_overlay_project",
-      "target": "readme_md"
+      "source_file": "src\\speech\\WhisperOpenAIProvider.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_src": "whisperopenaiprovider_whisperopenaiprovider_transcribe",
+      "_tgt": "whisperopenaiprovider_whisperopenaiprovider_stop",
+      "source": "whisperopenaiprovider_whisperopenaiprovider_transcribe",
+      "target": "whisperopenaiprovider_whisperopenaiprovider_stop",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "electron_framework",
-      "source": "voice_overlay_project",
-      "target": "electron_framework"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_voice_overlay",
+      "_tgt": "readme_electron",
+      "source": "readme_voice_overlay",
+      "target": "readme_electron"
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "react_framework",
-      "source": "voice_overlay_project",
-      "target": "react_framework"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_voice_overlay",
+      "_tgt": "readme_react",
+      "source": "readme_voice_overlay",
+      "target": "readme_react"
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "typescript_language",
-      "source": "voice_overlay_project",
-      "target": "typescript_language"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_voice_overlay",
+      "_tgt": "readme_typescript",
+      "source": "readme_voice_overlay",
+      "target": "readme_typescript"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "windows_os",
-      "source": "voice_overlay_project",
-      "target": "windows_os"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_uiohook_napi",
+      "_tgt": "readme_electron",
+      "source": "readme_electron",
+      "target": "readme_uiohook_napi"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "web_speech_provider",
-      "source": "voice_overlay_project",
-      "target": "web_speech_provider"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_web_speech",
+      "_tgt": "readme_deepgram",
+      "source": "readme_web_speech",
+      "target": "readme_deepgram"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "deepgram_provider",
-      "source": "voice_overlay_project",
-      "target": "deepgram_provider"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_deepgram",
+      "_tgt": "readme_whisper_openai",
+      "source": "readme_deepgram",
+      "target": "readme_whisper_openai"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "whisper_openai_provider",
-      "source": "voice_overlay_project",
-      "target": "whisper_openai_provider"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_nut_js",
+      "_tgt": "readme_paste_mode",
+      "source": "readme_nut_js",
+      "target": "readme_paste_mode"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "nut_js",
-      "source": "voice_overlay_project",
-      "target": "nut_js"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_nut_js",
+      "_tgt": "readme_type_mode",
+      "source": "readme_nut_js",
+      "target": "readme_type_mode"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "electron_store",
-      "source": "voice_overlay_project",
-      "target": "electron_store"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_paste_mode",
+      "_tgt": "readme_copy_only",
+      "source": "readme_paste_mode",
+      "target": "readme_copy_only"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "global_hotkey",
-      "source": "voice_overlay_project",
-      "target": "global_hotkey"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_type_mode",
+      "_tgt": "readme_paste_mode",
+      "source": "readme_paste_mode",
+      "target": "readme_type_mode"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "paste_mode",
-      "source": "voice_overlay_project",
-      "target": "paste_mode"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "type_mode",
-      "source": "voice_overlay_project",
-      "target": "type_mode"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "copy_mode",
-      "source": "voice_overlay_project",
-      "target": "copy_mode"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "_src": "voice_overlay_project",
-      "_tgt": "renderer_audio_processing",
-      "source": "voice_overlay_project",
-      "target": "renderer_audio_processing"
-    },
-    {
-      "relation": "references",
+      "relation": "calls",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/overlay.html",
-      "_src": "overlay_html",
-      "_tgt": "overlay_tsx",
-      "source": "overlay_html",
-      "target": "overlay_tsx"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "html_overlay",
+      "_tgt": "html_overlay_tsx",
+      "source": "html_overlay",
+      "target": "html_overlay_tsx"
     },
     {
-      "relation": "references",
+      "relation": "calls",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/settings.html",
-      "_src": "settings_html",
-      "_tgt": "settings_tsx",
-      "source": "settings_html",
-      "target": "settings_tsx"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "_src": "web_speech_provider",
-      "_tgt": "deepgram_provider",
-      "source": "web_speech_provider",
-      "target": "deepgram_provider"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "_src": "deepgram_provider",
-      "_tgt": "whisper_openai_provider",
-      "source": "deepgram_provider",
-      "target": "whisper_openai_provider"
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "html_settings",
+      "_tgt": "html_settings_tsx",
+      "source": "html_settings",
+      "target": "html_settings_tsx"
     }
   ],
   "hyperedges": [
     {
-      "id": "speech_backends",
-      "label": "Speech Backend Providers",
-      "nodes": [
-        "web_speech_provider",
-        "deepgram_provider",
-        "whisper_openai_provider"
-      ],
-      "relation": "participate_in",
-      "confidence": "EXTRACTED",
-      "confidence_score": 0.95,
-      "source_file": "README.md"
-    },
-    {
-      "id": "text_injection_strategies",
-      "label": "Text Injection Modes",
-      "nodes": [
-        "paste_mode",
-        "type_mode",
-        "copy_mode"
-      ],
-      "relation": "participate_in",
-      "confidence": "EXTRACTED",
-      "confidence_score": 0.95,
-      "source_file": "README.md"
-    },
-    {
-      "id": "app_tech_stack",
+      "id": "tech_stack",
       "label": "Application Technology Stack",
       "nodes": [
-        "electron_framework",
-        "react_framework",
-        "typescript_language"
+        "readme_electron",
+        "readme_react",
+        "readme_typescript"
       ],
-      "relation": "form",
+      "relation": "participate_in",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "README.md"
+    },
+    {
+      "id": "speech_providers",
+      "label": "Speech Backend Providers",
+      "nodes": [
+        "readme_web_speech",
+        "readme_deepgram",
+        "readme_whisper_openai"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "README.md"
+    },
+    {
+      "id": "text_injection_modes",
+      "label": "Text Injection Modes",
+      "nodes": [
+        "readme_paste_mode",
+        "readme_type_mode",
+        "readme_copy_only"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
       "source_file": "README.md"
     }
   ]
