@@ -7,7 +7,9 @@
   --bg-input: rgba(0, 0, 0, 0.2);
   
   --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-soft: rgba(255, 255, 255, 0.08);
   --border-active: rgba(255, 255, 255, 0.12);
+  --bg-glass: rgba(20, 20, 28, 0.72);
   
   --accent: #7c5cff;
   --accent-soft: rgba(124, 92, 255, 0.15);
