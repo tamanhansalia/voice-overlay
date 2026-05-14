@@ -68,12 +68,12 @@ export class TextInjector {
       try {
         await nut.keyboard.pressKey(nut.Key.LeftControl, nut.Key.V);
         await nut.keyboard.releaseKey(nut.Key.LeftControl, nut.Key.V);
-        // Wait for OS to process the paste before we even think about the next step
-        await new Promise((resolve) => setTimeout(resolve, 150));
+        // Wait for OS to process the paste. 250ms is safer for slow apps/machines.
+        await new Promise((resolve) => setTimeout(resolve, 250));
       } finally {
-        // Restore previous clipboard and wait a bit more
+        // Restore previous clipboard and wait a bit more to ensure next injection doesn't collide
         clipboard.writeText(previous);
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 150));
       }
       return;
     }
@@ -87,6 +87,29 @@ export class TextInjector {
     await nut.keyboard.type(text);
     // Give a small breath after typing
     await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+
+  async runCommand(commandType: string): Promise<void> {
+    const nut = await this.loadNut();
+    if (!nut) return;
+
+    switch (commandType) {
+      case 'delete-last-word':
+        // Ctrl+Backspace deletes the previous word in most Windows apps
+        await nut.keyboard.pressKey(nut.Key.LeftControl, nut.Key.Backspace);
+        await nut.keyboard.releaseKey(nut.Key.LeftControl, nut.Key.Backspace);
+        break;
+      case 'delete-last-sentence':
+        await nut.keyboard.pressKey(nut.Key.LeftShift, nut.Key.Home);
+        await nut.keyboard.releaseKey(nut.Key.LeftShift, nut.Key.Home);
+        await nut.keyboard.pressKey(nut.Key.Backspace);
+        await nut.keyboard.releaseKey(nut.Key.Backspace);
+        break;
+      case 'send':
+        await nut.keyboard.pressKey(nut.Key.Return);
+        await nut.keyboard.releaseKey(nut.Key.Return);
+        break;
+    }
   }
 }
 

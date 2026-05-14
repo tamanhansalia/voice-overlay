@@ -62,6 +62,7 @@ export function Settings() {
         <SidebarItem id="provider" label="Provider" active={activeSection === 'provider'} onClick={scrollToSection} icon={<ProviderIcon />} />
         <SidebarItem id="shortcut" label="Shortcut" active={activeSection === 'shortcut'} onClick={scrollToSection} icon={<ShortcutIcon />} />
         <SidebarItem id="output" label="Output" active={activeSection === 'output'} onClick={scrollToSection} icon={<OutputIcon />} />
+        <SidebarItem id="history" label="History" active={activeSection === 'history'} onClick={scrollToSection} icon={<HistoryIcon />} />
         <SidebarItem id="system" label="System" active={activeSection === 'system'} onClick={scrollToSection} icon={<SystemIcon />} />
         <SidebarItem id="logs" label="Logs" active={activeSection === 'logs'} onClick={scrollToSection} icon={<LogsIcon />} />
       </aside>
@@ -128,6 +129,11 @@ export function Settings() {
               <input type="text" value={s.language} onChange={(e) => debouncedUpdate({ language: e.target.value })} placeholder="en-US" />
             </Field>
           </div>
+        </section>
+
+        <section id="history" ref={el => sectionsRef.current['history'] = el}>
+          <h2><HistoryIcon /> Transcription History</h2>
+          <TranscriptionHistory />
         </section>
 
         <section id="system" ref={el => sectionsRef.current['system'] = el}>
@@ -266,6 +272,43 @@ function LogViewer() {
   );
 }
 
+function TranscriptionHistory() {
+  const [history, setHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetch = () => window.api.getTranscriptionHistory().then(setHistory);
+    fetch();
+    const id = setInterval(fetch, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (history.length === 0) {
+    return (
+      <div className="card" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '12px' }}>
+        No recent transcriptions found.
+      </div>
+    );
+  }
+
+  return (
+    <div className="card" style={{ padding: '8px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '8px' }}>
+        {history.map((t, i) => (
+          <div key={i} className="history-item" style={{ padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', fontSize: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '12px' }}>{t}</span>
+            <button 
+              onClick={() => window.api.copyToClipboard(t)}
+              style={{ padding: '4px 8px', fontSize: '10px', borderRadius: '4px', background: 'var(--bg-card)', border: '1px solid var(--border-soft)', color: '#fff', cursor: 'pointer' }}
+            >
+              Copy
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* Icons (Minimal SVGs) */
 
 const ProviderIcon = () => (
@@ -276,6 +319,9 @@ const ShortcutIcon = () => (
 );
 const OutputIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+);
+const HistoryIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
 );
 const SystemIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
