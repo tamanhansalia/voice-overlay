@@ -87,8 +87,10 @@ function createSettingsWindow() {
     return;
   }
   settingsWin = new BrowserWindow({
-    width: 560,
-    height: 720,
+    width: 850,
+    height: 650,
+    minWidth: 600,
+    minHeight: 500,
     title: 'Voice Overlay — Settings',
     autoHideMenuBar: true,
     transparent: true,

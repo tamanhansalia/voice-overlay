@@ -1,20 +1,90 @@
 :root {
-  --bg-mica: rgba(20, 20, 28, 0.7);
-  --bg-card: rgba(255, 255, 255, 0.05);
-  --border-mica: rgba(255, 255, 255, 0.08);
-  --bg-glass: rgba(20, 20, 28, 0.72);
-  --bg-elev-1: rgba(255, 255, 255, 0.04);
-  --bg-elev-2: rgba(255, 255, 255, 0.08);
-  --border-soft: rgba(255, 255, 255, 0.08);
-  --bg-hover: rgba(255, 255, 255, 0.08);
-  --text-primary: #f4f4f7;
-  --text-muted: #9b9ba8;
+  /* Design Tokens - Modern Minimal Palette */
+  --bg-app: rgba(10, 10, 14, 0.65);
+  --bg-sidebar: rgba(255, 255, 255, 0.03);
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --bg-input: rgba(0, 0, 0, 0.2);
+  
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-active: rgba(255, 255, 255, 0.12);
+  
   --accent: #7c5cff;
-  --accent-glow: rgba(124, 92, 255, 0.55);
-  --danger: #ff5d6a;
+  --accent-soft: rgba(124, 92, 255, 0.15);
+  --accent-glow: rgba(124, 92, 255, 0.4);
+  
+  --text-primary: #f4f4f7;
+  --text-secondary: #9b9ba8;
+  --text-muted: #62626e;
+  
   --success: #4ade80;
+  --danger: #ff5d6a;
+  
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+  
+  --font-main: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 240ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* { box-sizing: border-box; }
-html, body, #root { margin: 0; padding: 0; height: 100%; overflow-y: auto; scrollbar-gutter: stable; background: transparent; color: var(--text-primary); font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-button { font-family: inherit; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden; /* We manage scrolling inside components */
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+}
+
+/* Premium Custom Scrollbar - Ultra Thin & Hidden until hover */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Base utility for Glassmorphism */
+.glass {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--border-subtle);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  color: inherit;
+}
+
+input {
+  font-family: inherit;
+}
