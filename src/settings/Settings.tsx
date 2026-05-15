@@ -139,8 +139,18 @@ export function Settings() {
             <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '20px' }}>
               <Toggle label="AI Features (LLM)" checked={s.aiEnabled} onChange={(v: boolean) => update({ aiEnabled: v })} />
               <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                Requires OpenAI API Key. Enables smart intent detection and free-form AI questions.
+                Enables "fix grammar" and "describe screen" voice commands via GPT-4o.
               </p>
+              {s.aiEnabled && (
+                <Field label="OpenAI API Key">
+                  <input
+                    type="password"
+                    value={s.openAiApiKey}
+                    onChange={(e) => debouncedUpdate({ openAiApiKey: e.target.value })}
+                    placeholder="sk-..."
+                  />
+                </Field>
+              )}
             </div>
           </div>
         </section>
