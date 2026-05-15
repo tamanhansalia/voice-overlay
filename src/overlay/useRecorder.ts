@@ -17,17 +17,12 @@ export function useRecorder(initialSettings: AppSettings | null) {
   const [volume, setVolume] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const providerRef = useRef<ISpeechProvider | null>(null);
+  const sessionRef = useRef(0);
 
   // Sync settings if they change from the outside (e.g. Settings window)
   useEffect(() => {
     setSettings(initialSettings);
   }, [initialSettings]);
-
-  useEffect(() => {
-    return window.api.onSettingsChanged((s) => {
-      setSettings(s);
-    });
-  }, []);
 
   const stop = useCallback(async () => {
     const p = providerRef.current;
@@ -46,7 +41,10 @@ export function useRecorder(initialSettings: AppSettings | null) {
 
   const start = useCallback(async () => {
     if (!settings) return;
+    if (state === 'processing' || state === 'listening') return;
     if (providerRef.current) return; // already running
+
+    const currentSession = ++sessionRef.current;
     setError(null);
     setPartial('');
     setState('listening');
@@ -73,34 +71,42 @@ export function useRecorder(initialSettings: AppSettings | null) {
               console.log('[useRecorder] Executing voice command:', command.type);
               
               if (command.type === 'fix-grammar') {
+                await stop();
                 if (!settings.aiEnabled) {
                   setError('AI features are disabled');
                   setState('error');
-                  setTimeout(() => setState('idle'), 1500);
+                  setTimeout(() => {
+                    if (sessionRef.current === currentSession) setState('idle');
+                  }, 3000);
                   return;
                 }
                 setState('processing');
                 try {
-                  const original = await navigator.clipboard.readText();
+                  const original = await window.api.readClipboard();
                   const fixed = await window.api.askAI(original, 'Fix grammar, spelling, and clarity. Maintain tone. Return ONLY the fixed text.');
                   await window.api.injectText(fixed);
                   if (settings.soundEffectsEnabled) {
                     playCommandSound(settings.soundEffectsVolume);
                   }
+                  if (sessionRef.current === currentSession) setState('idle');
                 } catch (e: any) {
                   setError(e.message || 'AI Fix failed');
                   setState('error');
-                  setTimeout(() => setState('idle'), 1500);
+                  setTimeout(() => {
+                    if (sessionRef.current === currentSession) setState('idle');
+                  }, 3000);
                 }
-                setState('idle');
                 return;
               }
 
               if (command.type === 'describe-screen') {
+                await stop();
                 if (!settings.aiEnabled) {
                   setError('AI features are disabled');
                   setState('error');
-                  setTimeout(() => setState('idle'), 1500);
+                  setTimeout(() => {
+                    if (sessionRef.current === currentSession) setState('idle');
+                  }, 3000);
                   return;
                 }
                 setState('processing');
@@ -111,12 +117,14 @@ export function useRecorder(initialSettings: AppSettings | null) {
                   if (settings.soundEffectsEnabled) {
                     playCommandSound(settings.soundEffectsVolume);
                   }
+                  if (sessionRef.current === currentSession) setState('idle');
                 } catch (e: any) {
                   setError(e.message || 'Screen analysis failed');
                   setState('error');
-                  setTimeout(() => setState('idle'), 1500);
+                  setTimeout(() => {
+                    if (sessionRef.current === currentSession) setState('idle');
+                  }, 3000);
                 }
-                setState('idle');
                 return;
               }
 
@@ -129,6 +137,8 @@ export function useRecorder(initialSettings: AppSettings | null) {
           }
 
           try {
+            await window.api.recordTranscription(t);
+
             if (settings.injectionMode === 'copy-only') {
               await window.api.copyToClipboard(t + ' ');
             } else {
@@ -143,12 +153,14 @@ export function useRecorder(initialSettings: AppSettings | null) {
           setState('error');
           providerRef.current = null;
           // auto-recover after a moment
-          setTimeout(() => setState('idle'), 1500);
+          setTimeout(() => {
+            if (sessionRef.current === currentSession) setState('idle');
+          }, 3000);
         },
         onEnd: () => {
           if (providerRef.current === provider) {
             providerRef.current = null;
-            setState('idle');
+            if (sessionRef.current === currentSession) setState('idle');
           }
         }
       });
@@ -156,9 +168,11 @@ export function useRecorder(initialSettings: AppSettings | null) {
       setError(e?.message ?? 'failed to start');
       setState('error');
       providerRef.current = null;
-      setTimeout(() => setState('idle'), 1500);
+      setTimeout(() => {
+        if (sessionRef.current === currentSession) setState('idle');
+      }, 3000);
     }
-  }, [settings]);
+  }, [settings, state, stop]);
 
   const toggle = useCallback(() => {
     if (providerRef.current) stop();
