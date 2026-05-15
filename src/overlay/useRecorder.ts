@@ -2,28 +2,47 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { AppSettings, RecorderState } from '../shared/types';
 import { makeProvider } from '../speech';
 import type { ISpeechProvider } from '../speech/ISpeechProvider';
+import { processCommand } from '../shared/commandProcessor';
+import { playStartSound, playStopSound } from './sounds';
 
 /**
  * Owns the speech provider lifecycle and exposes a tiny state machine to
  * the UI. Final transcripts are routed to the main process for injection;
  * partial transcripts are surfaced via `partial` for the live ticker.
  */
-export function useRecorder(settings: AppSettings | null) {
+export function useRecorder(initialSettings: AppSettings | null) {
+  const [settings, setSettings] = useState<AppSettings | null>(initialSettings);
   const [state, setState] = useState<RecorderState>('idle');
   const [partial, setPartial] = useState<string>('');
+  const [volume, setVolume] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const providerRef = useRef<ISpeechProvider | null>(null);
+
+  // Sync settings if they change from the outside (e.g. Settings window)
+  useEffect(() => {
+    setSettings(initialSettings);
+  }, [initialSettings]);
+
+  useEffect(() => {
+    return window.api.onSettingsChanged((s) => {
+      setSettings(s);
+    });
+  }, []);
 
   const stop = useCallback(async () => {
     const p = providerRef.current;
     providerRef.current = null;
     if (p) {
       setState('processing');
+      if (settings?.soundEffectsEnabled) {
+        playStopSound(settings.soundEffectsVolume);
+      }
       try { await p.stop(); } catch { /* ignore */ }
     }
     setPartial('');
+    setVolume(0);
     setState('idle');
-  }, []);
+  }, [settings]);
 
   const start = useCallback(async () => {
     if (!settings) return;
@@ -35,12 +54,80 @@ export function useRecorder(settings: AppSettings | null) {
     const provider = makeProvider(settings);
     providerRef.current = provider;
 
+    if (settings.soundEffectsEnabled) {
+      playStartSound(settings.soundEffectsVolume);
+    }
+
     try {
       await provider.start({
+        onVolume: (v) => setVolume(v),
         onPartial: (t) => setPartial(t),
         onFinal: async (t) => {
           if (!t) return;
           setPartial('');
+
+          // Voice Command detection
+          if (settings.voiceCommandsEnabled) {
+            const command = processCommand(t, settings.voiceCommandMode);
+            if (command.type !== 'none') {
+              console.log('[useRecorder] Executing voice command:', command.type);
+              
+              if (command.type === 'fix-grammar') {
+                if (!settings.aiEnabled) {
+                  setError('AI features are disabled');
+                  setState('error');
+                  setTimeout(() => setState('idle'), 1500);
+                  return;
+                }
+                setState('processing');
+                try {
+                  const original = await navigator.clipboard.readText();
+                  const fixed = await window.api.askAI(original, 'Fix grammar, spelling, and clarity. Maintain tone. Return ONLY the fixed text.');
+                  await window.api.injectText(fixed);
+                  if (settings.soundEffectsEnabled) {
+                    playCommandSound(settings.soundEffectsVolume);
+                  }
+                } catch (e: any) {
+                  setError(e.message || 'AI Fix failed');
+                  setState('error');
+                  setTimeout(() => setState('idle'), 1500);
+                }
+                setState('idle');
+                return;
+              }
+
+              if (command.type === 'describe-screen') {
+                if (!settings.aiEnabled) {
+                  setError('AI features are disabled');
+                  setState('error');
+                  setTimeout(() => setState('idle'), 1500);
+                  return;
+                }
+                setState('processing');
+                try {
+                  const screenshot = await window.api.captureScreen();
+                  const description = await window.api.askAI(screenshot, 'Describe this screenshot briefly and accurately.');
+                  await window.api.injectText(description);
+                  if (settings.soundEffectsEnabled) {
+                    playCommandSound(settings.soundEffectsVolume);
+                  }
+                } catch (e: any) {
+                  setError(e.message || 'Screen analysis failed');
+                  setState('error');
+                  setTimeout(() => setState('idle'), 1500);
+                }
+                setState('idle');
+                return;
+              }
+
+              await window.api.executeCommand(command.type);
+              if (settings.soundEffectsEnabled) {
+                playCommandSound(settings.soundEffectsVolume);
+              }
+              return;
+            }
+          }
+
           try {
             if (settings.injectionMode === 'copy-only') {
               await window.api.copyToClipboard(t + ' ');
@@ -78,8 +165,33 @@ export function useRecorder(settings: AppSettings | null) {
     else start();
   }, [start, stop]);
 
+  // Bind global hotkey signals from main process
+  useEffect(() => {
+    const offPress = window.api.onHotkey(() => {
+      if (settings?.pushToTalk) {
+        // In PTT mode, press ALWAYS starts if not already listening
+        if (providerRef.current === null) start();
+      } else {
+        // In Toggle mode, press flips the state
+        toggle();
+      }
+    });
+
+    const offRelease = window.api.onHotkeyReleased?.(() => {
+      if (settings?.pushToTalk) {
+        // In PTT mode, release ALWAYS stops
+        stop();
+      }
+    });
+
+    return () => {
+      offPress();
+      offRelease?.();
+    };
+  }, [settings, start, stop, toggle]);
+
   // Cleanup on unmount.
   useEffect(() => () => { providerRef.current?.stop().catch(() => {}); }, []);
 
-  return { state, partial, error, start, stop, toggle };
+  return { state, partial, volume, error, start, stop, toggle };
 }

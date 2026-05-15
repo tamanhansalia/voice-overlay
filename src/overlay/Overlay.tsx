@@ -55,7 +55,7 @@ export function Overlay() {
           onPointerCancel={() => window.api.stopDrag()}
         />
         <div className="icon-wrap">
-          {state === 'listening' ? (
+          {state === 'listening' && settings.waveformEnabled ? (
             <Waveform volume={volume} active={state === 'listening'} />
           ) : (
             <svg className="mic" viewBox="0 0 24 24" width="22" height="22" aria-hidden>
