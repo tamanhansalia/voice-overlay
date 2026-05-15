@@ -74,6 +74,7 @@ export const IPC = {
   // Renderer -> main
   injectText: 'inject-text',
   copyToClipboard: 'copy-to-clipboard',
+  recordTranscription: 'record-transcription',
   getSettings: 'get-settings',
   setSettings: 'set-settings',
   openSettings: 'open-settings',
@@ -82,6 +83,8 @@ export const IPC = {
   setRecorderState: 'set-recorder-state',
   getLogs: 'get-logs',
   clearLogs: 'clear-logs',
+  getTranscriptionHistory: 'get-transcription-history',
+  clearTranscriptionHistory: 'clear-transcription-history',
   dragStart: 'drag-start',
   dragStop: 'drag-stop',
   transcribeAudio: 'speech:transcribe',
