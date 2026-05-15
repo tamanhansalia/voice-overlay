@@ -28,6 +28,18 @@ export interface AppSettings {
   openAiApiKey: string;
   /** Position (persisted) of the floating overlay. */
   overlayPosition: { x: number; y: number } | null;
+  /** Whether to play sound effects. */
+  soundEffectsEnabled: boolean;
+  /** Volume of sound effects (0.0 to 1.0). */
+  soundEffectsVolume: number;
+  /** Whether to listen for voice commands. */
+  voiceCommandsEnabled: boolean;
+  /** 'prefix' means command follows a trigger word, 'always' means any match triggers. */
+  voiceCommandMode: 'prefix' | 'always';
+  /** Whether AI features are enabled. */
+  aiEnabled: boolean;
+  /** Whether to show the audio waveform. */
+  waveformEnabled: boolean;
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -40,7 +52,13 @@ export const DEFAULT_SETTINGS: AppSettings = {
   autoLaunch: false,
   deepgramApiKey: '',
   openAiApiKey: '',
-  overlayPosition: null
+  overlayPosition: null,
+  soundEffectsEnabled: true,
+  soundEffectsVolume: 0.5,
+  voiceCommandsEnabled: true,
+  voiceCommandMode: 'prefix',
+  aiEnabled: true,
+  waveformEnabled: true
 };
 
 export type LogLevel = 'info' | 'warn' | 'error';
@@ -67,6 +85,8 @@ export const IPC = {
   dragStart: 'drag-start',
   dragStop: 'drag-stop',
   transcribeAudio: 'speech:transcribe',
+  executeCommand: 'execute-command',
+  askAI: 'ask-ai',
   // Main -> renderer (overlay)
   hotkeyPressed: 'hotkey-pressed',
   hotkeyReleased: 'hotkey-released',
