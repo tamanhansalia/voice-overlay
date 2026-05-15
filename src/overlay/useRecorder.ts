@@ -3,7 +3,7 @@ import type { AppSettings, RecorderState } from '../shared/types';
 import { makeProvider } from '../speech';
 import type { ISpeechProvider } from '../speech/ISpeechProvider';
 import { processCommand } from '../shared/commandProcessor';
-import { playStartSound, playStopSound } from './sounds';
+import { playStartSound, playStopSound, playCommandSound } from './sounds';
 
 /**
  * Owns the speech provider lifecycle and exposes a tiny state machine to
