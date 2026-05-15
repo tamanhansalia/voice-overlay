@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain, screen, clipboard, session } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, clipboard, session, desktopCapturer } from 'electron';
 import path from 'node:path';
+import os from 'node:os';
 import { IPC, AppSettings } from '../src/shared/types';
 import { settingsStore } from './settings';
 import { logger } from './logger';
@@ -9,6 +10,10 @@ import { createTray } from './tray';
 import { setAutoLaunch } from './autoLaunch';
 import { transcribeAudio } from './whisperEngine';
 
+// Mica material requires Windows 11 (build 22000+). Guard so Win10 doesn't freeze.
+const isWin11 = process.platform === 'win32' &&
+  parseInt((os.release().split('.')[2] ?? '0'), 10) >= 22000;
+
 const isDev = !app.isPackaged;
 const RESOURCES_PATH = isDev
   ? path.join(__dirname, '../../resources')
@@ -17,6 +22,8 @@ const RESOURCES_PATH = isDev
 const ICON_PATH = path.join(RESOURCES_PATH, 'icon.png');
 const ICON_ICO = path.join(RESOURCES_PATH, 'icon.ico');
 const APP_ICON = process.platform === 'win32' ? ICON_ICO : ICON_PATH;
+
+const transcriptionHistory: string[] = [];
 
 let overlayWin: BrowserWindow | null = null;
 let settingsWin: BrowserWindow | null = null;
@@ -73,6 +80,10 @@ function createOverlay(): BrowserWindow {
   win.setAlwaysOnTop(true, 'screen-saver');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
+  // Pass mouse events through the transparent regions by default.
+  // The renderer toggles this off when the cursor is over the orb/drag-handle.
+  win.setIgnoreMouseEvents(true, { forward: true });
+
   if (process.env['ELECTRON_RENDERER_URL']) {
     win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/overlay.html`);
   } else {
@@ -115,10 +126,8 @@ function createSettingsWindow() {
     minHeight: 500,
     title: 'Voice Overlay — Settings',
     autoHideMenuBar: true,
-    transparent: true,
     frame: true,
-    vibrancy: 'under-window',
-    backgroundMaterial: 'mica',
+    ...(isWin11 && { backgroundMaterial: 'mica' as const }),
     icon: APP_ICON,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
@@ -149,6 +158,19 @@ function registerIpc() {
     clipboard.writeText(text);
   });
 
+  ipcMain.handle(IPC.recordTranscription, (_e, text: string) => {
+    transcriptionHistory.push(text.trim());
+    if (transcriptionHistory.length > 50) transcriptionHistory.shift();
+  });
+
+  ipcMain.handle('read-clipboard', () => clipboard.readText());
+
+  ipcMain.handle(IPC.getTranscriptionHistory, () => transcriptionHistory);
+
+  ipcMain.handle(IPC.clearTranscriptionHistory, () => {
+    transcriptionHistory.length = 0;
+  });
+
   ipcMain.handle(IPC.getSettings, () => settingsStore.getAll());
 
   ipcMain.handle(IPC.setSettings, async (_e, patch: Partial<AppSettings>) => {
@@ -171,6 +193,52 @@ function registerIpc() {
   ipcMain.handle(IPC.openSettings, () => createSettingsWindow());
   ipcMain.handle(IPC.quitApp, () => app.quit());
 
+  ipcMain.handle(IPC.executeCommand, async (_e, commandType: string) => {
+    await textInjector.runCommand(commandType);
+  });
+
+  ipcMain.handle('capture-screen', async () => {
+    const primaryDisplay = screen.getPrimaryDisplay();
+    const sources = await desktopCapturer.getSources({ 
+      types: ['screen'], 
+      thumbnailSize: { width: primaryDisplay.size.width, height: primaryDisplay.size.height } 
+    });
+    return sources[0]?.thumbnail.toDataURL();
+  });
+
+  ipcMain.handle(IPC.askAI, async (_e, prompt: string, system: string) => {
+    const { openAiApiKey } = settingsStore.getAll();
+    if (!openAiApiKey) throw new Error('OpenAI API key missing');
+
+    const isImage = prompt.startsWith('data:image');
+    const userContent = isImage 
+      ? [
+          { type: 'text', text: 'Describe what you see in this screenshot briefly and accurately.' },
+          { type: 'image_url', image_url: { url: prompt } }
+        ]
+      : prompt;
+
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${openAiApiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: userContent }
+        ],
+        temperature: 0.3
+      })
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    return data.choices[0].message.content.trim();
+  });
+
   ipcMain.handle(IPC.getLogs, () => logger.getHistory());
   ipcMain.handle(IPC.clearLogs, () => logger.clear());
 
@@ -181,8 +249,16 @@ function registerIpc() {
   // Custom drag for focusable:false windows (CSS -webkit-app-region:drag is blocked by the OS
   // when the window has no focus capability). We poll cursor position at ~120 fps and shift
   // the window by the delta so the overlay follows the cursor naturally.
+  ipcMain.on('set-ignore-mouse-events', (_e, ignore: boolean) => {
+    if (overlayWin && !overlayWin.isDestroyed()) {
+      overlayWin.setIgnoreMouseEvents(ignore, { forward: true });
+    }
+  });
+
   ipcMain.on(IPC.dragStart, () => {
     if (!overlayWin || dragInterval) return;
+    // Disable pass-through while dragging so pointer events stay with the overlay.
+    overlayWin.setIgnoreMouseEvents(false);
     let last = screen.getCursorScreenPoint();
     dragInterval = setInterval(() => {
       if (!overlayWin) return;
@@ -198,6 +274,7 @@ function registerIpc() {
   ipcMain.on(IPC.dragStop, () => {
     if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
     if (overlayWin) {
+      overlayWin.setIgnoreMouseEvents(true, { forward: true });
       const [x, y] = overlayWin.getPosition();
       settingsStore.update({ overlayPosition: { x, y } });
     }
