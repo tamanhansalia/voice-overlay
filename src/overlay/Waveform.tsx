@@ -10,12 +10,23 @@ export const Waveform: React.FC<WaveformProps> = ({ volume, active }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number>();
   const timeRef = useRef(0);
+  const volumeRef = useRef(volume);
+  const activeRef = useRef(active);
+
+  // Update refs when props change
+  useEffect(() => {
+    volumeRef.current = volume;
+  }, [volume]);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     // Handle high DPI displays
@@ -42,9 +53,11 @@ export const Waveform: React.FC<WaveformProps> = ({ volume, active }) => {
       // Animation parameters
       timeRef.current += 0.05;
       const t = timeRef.current;
+      const currentVolume = volumeRef.current;
+      const isActive = activeRef.current;
       
       // Amplitude driven by volume, with a minimum subtle movement if active
-      const baseAmplitude = active ? 2 + volume * (height * 0.4) : 0;
+      const baseAmplitude = isActive ? 2 + currentVolume * (height * 0.4) : 0;
       
       // Draw 3 overlapping sine waves
       const waves = [
@@ -57,7 +70,7 @@ export const Waveform: React.FC<WaveformProps> = ({ volume, active }) => {
         ctx.beginPath();
         ctx.strokeStyle = '#7c5cff';
         ctx.lineWidth = 2;
-        ctx.globalAlpha = active ? wave.opacity : wave.opacity * 0.2;
+        ctx.globalAlpha = isActive ? wave.opacity : wave.opacity * 0.2;
         
         for (let x = 0; x < width; x += 1) {
           const y = centerY + Math.sin(x * wave.freq + wave.phase) * baseAmplitude * wave.amp;
@@ -75,7 +88,7 @@ export const Waveform: React.FC<WaveformProps> = ({ volume, active }) => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       window.removeEventListener('resize', updateSize);
     };
-  }, [volume, active]);
+  }, []); // Run once on mount
 
   return <canvas ref={canvasRef} className="waveform-canvas" />;
 };
