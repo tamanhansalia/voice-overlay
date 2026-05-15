@@ -163,7 +163,7 @@ function registerIpc() {
     if (transcriptionHistory.length > 50) transcriptionHistory.shift();
   });
 
-  ipcMain.handle('read-clipboard', () => clipboard.readText());
+  ipcMain.handle(IPC.readClipboard, () => clipboard.readText());
 
   ipcMain.handle(IPC.getTranscriptionHistory, () => transcriptionHistory);
 
@@ -197,7 +197,7 @@ function registerIpc() {
     await textInjector.runCommand(commandType);
   });
 
-  ipcMain.handle('capture-screen', async () => {
+  ipcMain.handle(IPC.captureScreen, async () => {
     const primaryDisplay = screen.getPrimaryDisplay();
     const sources = await desktopCapturer.getSources({ 
       types: ['screen'], 
@@ -249,7 +249,7 @@ function registerIpc() {
   // Custom drag for focusable:false windows (CSS -webkit-app-region:drag is blocked by the OS
   // when the window has no focus capability). We poll cursor position at ~120 fps and shift
   // the window by the delta so the overlay follows the cursor naturally.
-  ipcMain.on('set-ignore-mouse-events', (_e, ignore: boolean) => {
+  ipcMain.on(IPC.setIgnoreMouseEvents, (_e, ignore: boolean) => {
     if (overlayWin && !overlayWin.isDestroyed()) {
       overlayWin.setIgnoreMouseEvents(ignore, { forward: true });
     }
