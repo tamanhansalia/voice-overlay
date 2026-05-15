@@ -61,7 +61,10 @@ export function Settings() {
       <aside className="sidebar">
         <SidebarItem id="provider" label="Provider" active={activeSection === 'provider'} onClick={scrollToSection} icon={<ProviderIcon />} />
         <SidebarItem id="shortcut" label="Shortcut" active={activeSection === 'shortcut'} onClick={scrollToSection} icon={<ShortcutIcon />} />
+        <SidebarItem id="intelligence" label="Intelligence" active={activeSection === 'intelligence'} onClick={scrollToSection} icon={<BrainIcon />} />
+        <SidebarItem id="audio" label="Audio" active={activeSection === 'audio'} onClick={scrollToSection} icon={<AudioIcon />} />
         <SidebarItem id="output" label="Output" active={activeSection === 'output'} onClick={scrollToSection} icon={<OutputIcon />} />
+        <SidebarItem id="appearance" label="Appearance" active={activeSection === 'appearance'} onClick={scrollToSection} icon={<AppearanceIcon />} />
         <SidebarItem id="history" label="History" active={activeSection === 'history'} onClick={scrollToSection} icon={<HistoryIcon />} />
         <SidebarItem id="system" label="System" active={activeSection === 'system'} onClick={scrollToSection} icon={<SystemIcon />} />
         <SidebarItem id="logs" label="Logs" active={activeSection === 'logs'} onClick={scrollToSection} icon={<LogsIcon />} />
@@ -110,6 +113,53 @@ export function Settings() {
           </div>
         </section>
 
+        <section id="intelligence" ref={el => sectionsRef.current['intelligence'] = el}>
+          <h2><BrainIcon /> System Intelligence</h2>
+          <div className="card">
+            <Toggle label="Voice Commands" checked={s.voiceCommandsEnabled} onChange={(v: boolean) => update({ voiceCommandsEnabled: v })} />
+            {s.voiceCommandsEnabled && (
+              <div className="field">
+                <label>Command Mode</label>
+                <div className="radio-group">
+                  <RadioItem 
+                    title="Prefix Mode" 
+                    hint="Orb listens for 'Hey Orb' before processing commands." 
+                    active={s.voiceCommandMode === 'prefix'} 
+                    onClick={() => update({ voiceCommandMode: 'prefix' })} 
+                  />
+                  <RadioItem 
+                    title="Always Listening" 
+                    hint="Orb processes any voice command immediately." 
+                    active={s.voiceCommandMode === 'always'} 
+                    onClick={() => update({ voiceCommandMode: 'always' })} 
+                  />
+                </div>
+              </div>
+            )}
+            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '20px' }}>
+              <Toggle label="AI Features (LLM)" checked={s.aiEnabled} onChange={(v: boolean) => update({ aiEnabled: v })} />
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                Requires OpenAI API Key. Enables smart intent detection and free-form AI questions.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="audio" ref={el => sectionsRef.current['audio'] = el}>
+          <h2><AudioIcon /> Audio & Cues</h2>
+          <div className="card">
+            <Toggle label="Play Sound Effects" checked={s.soundEffectsEnabled} onChange={(v: boolean) => update({ soundEffectsEnabled: v })} />
+            <Slider 
+              label="Sound Volume" 
+              value={s.soundEffectsVolume} 
+              min={0} 
+              max={1} 
+              step={0.05} 
+              onChange={(v) => update({ soundEffectsVolume: v })} 
+            />
+          </div>
+        </section>
+
         <section id="output" ref={el => sectionsRef.current['output'] = el}>
           <h2><OutputIcon /> Output & Delivery</h2>
           <div className="card">
@@ -125,9 +175,35 @@ export function Settings() {
               ))}
             </div>
             <Toggle label="Auto-punctuation" checked={s.autoPunctuation} onChange={(v: boolean) => update({ autoPunctuation: v })} />
+            <div className="field">
+              <Toggle 
+                label="Auto-detect language" 
+                checked={s.language === 'auto'} 
+                onChange={(v: boolean) => update({ language: v ? 'auto' : 'en-US' })} 
+              />
+            </div>
             <Field label="Language Code (BCP-47)">
-              <input type="text" value={s.language} onChange={(e) => debouncedUpdate({ language: e.target.value })} placeholder="en-US" />
+              <input 
+                type="text" 
+                value={s.language} 
+                onChange={(e) => debouncedUpdate({ language: e.target.value })} 
+                placeholder="en-US" 
+                disabled={s.language === 'auto'}
+              />
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                Use "auto" for automatic language detection (Provider dependent).
+              </p>
             </Field>
+          </div>
+        </section>
+
+        <section id="appearance" ref={el => sectionsRef.current['appearance'] = el}>
+          <h2><AppearanceIcon /> Appearance</h2>
+          <div className="card">
+            <Toggle label="Show Visual Waveform" checked={s.waveformEnabled} onChange={(v: boolean) => update({ waveformEnabled: v })} />
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+              Displays a real-time audio visualization in the overlay while recording.
+            </p>
           </div>
         </section>
 
@@ -145,7 +221,7 @@ export function Settings() {
         </section>
 
         <section id="logs" ref={el => sectionsRef.current['logs'] = el}>
-          <h2><LogsIcon /> System Intelligence</h2>
+          <h2><LogsIcon /> System Logs</h2>
           <LogViewer />
         </section>
 
@@ -224,6 +300,35 @@ function Toggle({ label, checked, onChange }: ToggleProps) {
   );
 }
 
+interface SliderProps {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (v: number) => void;
+}
+
+function Slider({ label, value, min, max, step, onChange }: SliderProps) {
+  return (
+    <div className="field">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <label>{label}</label>
+        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--accent)' }}>{Math.round(value * 100)}%</span>
+      </div>
+      <input 
+        type="range" 
+        className="custom-slider"
+        min={min} 
+        max={max} 
+        step={step} 
+        value={value} 
+        onChange={(e) => onChange(parseFloat(e.target.value))} 
+      />
+    </div>
+  );
+}
+
 function LogViewer() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -275,12 +380,20 @@ function LogViewer() {
 function TranscriptionHistory() {
   const [history, setHistory] = useState<string[]>([]);
 
+  const fetch = useCallback(() => window.api.getTranscriptionHistory().then(setHistory), []);
+
   useEffect(() => {
-    const fetch = () => window.api.getTranscriptionHistory().then(setHistory);
     fetch();
     const id = setInterval(fetch, 3000);
     return () => clearInterval(id);
-  }, []);
+  }, [fetch]);
+
+  const clearAll = async () => {
+    if (confirm('Clear all transcription history? This cannot be undone.')) {
+      await window.api.clearTranscriptionHistory();
+      setHistory([]);
+    }
+  };
 
   if (history.length === 0) {
     return (
@@ -292,6 +405,14 @@ function TranscriptionHistory() {
 
   return (
     <div className="card" style={{ padding: '8px' }}>
+      <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+        <button 
+          onClick={clearAll}
+          style={{ fontSize: '11px', color: 'var(--danger)', cursor: 'pointer', background: 'none', border: 'none', fontWeight: 600 }}
+        >
+          CLEAR ALL
+        </button>
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '8px' }}>
         {history.map((t, i) => (
           <div key={i} className="history-item" style={{ padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', fontSize: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -328,6 +449,15 @@ const SystemIcon = () => (
 );
 const LogsIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+);
+const BrainIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04"/></svg>
+);
+const AudioIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+);
+const AppearanceIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.13a2 2 0 0 1 1.3 1.3L15 8.1l4.67 1.3a2 2 0 0 1 1.3 1.3l-1.3 4.67 1.3 4.67a2 2 0 0 1-1.3 1.3L15 20.1l-4.67 1.3a2 2 0 0 1-1.3-1.3l1.3-4.67-1.3-4.67a2 2 0 0 1 1.3-1.3l4.67-1.3L12 2.13z"/></svg>
 );
 const CheckIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
