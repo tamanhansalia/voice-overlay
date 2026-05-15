@@ -21,12 +21,30 @@ const api = {
   injectText: (text: string): Promise<void> => ipcRenderer.invoke(IPC.injectText, text),
   copyToClipboard: (text: string): Promise<void> =>
     ipcRenderer.invoke(IPC.copyToClipboard, text),
+  recordTranscription: (text: string): Promise<void> =>
+    ipcRenderer.invoke(IPC.recordTranscription, text),
+  readClipboard: (): Promise<string> => ipcRenderer.invoke('read-clipboard'),
+
+  executeCommand: (commandType: string): Promise<void> =>
+    ipcRenderer.invoke(IPC.executeCommand, commandType),
+
+  askAI: (prompt: string, system: string): Promise<string> =>
+    ipcRenderer.invoke(IPC.askAI, prompt, system),
+
+  captureScreen: (): Promise<string> =>
+    ipcRenderer.invoke('capture-screen'),
 
   // Hotkey signal coming back from the main process
   onHotkey: (cb: () => void) => {
     const handler = () => cb();
     ipcRenderer.on(IPC.hotkeyPressed, handler);
     return () => ipcRenderer.removeListener(IPC.hotkeyPressed, handler);
+  },
+
+  onHotkeyReleased: (cb: () => void) => {
+    const handler = () => cb();
+    ipcRenderer.on(IPC.hotkeyReleased, handler);
+    return () => ipcRenderer.removeListener(IPC.hotkeyReleased, handler);
   },
 
   // Window controls
@@ -41,6 +59,9 @@ const api = {
   startDrag: () => ipcRenderer.send(IPC.dragStart),
   stopDrag: () => ipcRenderer.send(IPC.dragStop),
 
+  // Lets the overlay renderer toggle mouse pass-through when cursor leaves interactive areas.
+  setIgnoreMouseEvents: (ignore: boolean) => ipcRenderer.send('set-ignore-mouse-events', ignore),
+
   // Whisper transcription (runs in main process — avoids WASM/ONNX issues in renderer)
   transcribeAudio: (audio: Float32Array, lang?: string): Promise<string> =>
     ipcRenderer.invoke(IPC.transcribeAudio, audio, lang),
@@ -48,6 +69,8 @@ const api = {
   // Logs
   getLogs: (): Promise<LogEntry[]> => ipcRenderer.invoke(IPC.getLogs),
   clearLogs: (): Promise<void> => ipcRenderer.invoke(IPC.clearLogs),
+  getTranscriptionHistory: (): Promise<string[]> => ipcRenderer.invoke(IPC.getTranscriptionHistory),
+  clearTranscriptionHistory: (): Promise<void> => ipcRenderer.invoke(IPC.clearTranscriptionHistory),
   onLog: (cb: (entry: LogEntry) => void) => {
     const handler = (_e: Electron.IpcRendererEvent, entry: LogEntry) => cb(entry);
     ipcRenderer.on(IPC.logEvent, handler);
