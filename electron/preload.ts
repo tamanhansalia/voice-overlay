@@ -23,7 +23,7 @@ const api = {
     ipcRenderer.invoke(IPC.copyToClipboard, text),
   recordTranscription: (text: string): Promise<void> =>
     ipcRenderer.invoke(IPC.recordTranscription, text),
-  readClipboard: (): Promise<string> => ipcRenderer.invoke('read-clipboard'),
+  readClipboard: (): Promise<string> => ipcRenderer.invoke(IPC.readClipboard),
 
   executeCommand: (commandType: string): Promise<void> =>
     ipcRenderer.invoke(IPC.executeCommand, commandType),
@@ -32,7 +32,7 @@ const api = {
     ipcRenderer.invoke(IPC.askAI, prompt, system),
 
   captureScreen: (): Promise<string> =>
-    ipcRenderer.invoke('capture-screen'),
+    ipcRenderer.invoke(IPC.captureScreen),
 
   // Hotkey signal coming back from the main process
   onHotkey: (cb: () => void) => {
@@ -60,7 +60,7 @@ const api = {
   stopDrag: () => ipcRenderer.send(IPC.dragStop),
 
   // Lets the overlay renderer toggle mouse pass-through when cursor leaves interactive areas.
-  setIgnoreMouseEvents: (ignore: boolean) => ipcRenderer.send('set-ignore-mouse-events', ignore),
+  setIgnoreMouseEvents: (ignore: boolean) => ipcRenderer.send(IPC.setIgnoreMouseEvents, ignore),
 
   // Whisper transcription (runs in main process — avoids WASM/ONNX issues in renderer)
   transcribeAudio: (audio: Float32Array, lang?: string): Promise<string> =>
