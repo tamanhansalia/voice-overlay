@@ -13,6 +13,8 @@ export function Overlay() {
   const { state, partial, volume, error, toggle } = useRecorder(settings);
   const tickerRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
+  const dragRingRef = useRef<HTMLDivElement>(null);
+  const ignoreStateRef = useRef<boolean | null>(null);
 
   useEffect(() => {
     window.api.getSettings().then(setSettings);
@@ -25,6 +27,28 @@ export function Overlay() {
     const handler = (e: MouseEvent) => e.preventDefault();
     window.addEventListener('contextmenu', handler);
     return () => window.removeEventListener('contextmenu', handler);
+  }, []);
+
+  // Cursor-aware mouse pass-through: mousemove is forwarded even when
+  // setIgnoreMouseEvents(true) is active, so we use it to detect when the
+  // cursor enters/leaves the drag-ring circle and toggle pass-through only
+  // at the boundary. Only sends IPC when state actually changes.
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const ring = dragRingRef.current;
+      if (!ring) return;
+      const rect = ring.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const over = Math.hypot(e.clientX - cx, e.clientY - cy) <= rect.width / 2;
+      const shouldIgnore = !over;
+      if (shouldIgnore !== ignoreStateRef.current) {
+        ignoreStateRef.current = shouldIgnore;
+        window.api.setIgnoreMouseEvents(shouldIgnore);
+      }
+    };
+    document.addEventListener('mousemove', onMove);
+    return () => document.removeEventListener('mousemove', onMove);
   }, []);
 
   const handleDragStart = useCallback((e: React.PointerEvent) => {
@@ -55,6 +79,7 @@ export function Overlay() {
     >
       {/* Invisible drag ring around the orb — wider hit area for easy grabbing */}
       <div
+        ref={dragRingRef}
         className="drag-ring"
         aria-hidden
         onPointerDown={handleDragStart}

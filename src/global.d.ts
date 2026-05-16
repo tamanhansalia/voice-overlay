@@ -20,6 +20,7 @@ declare global {
       reportOverlayMoved(pos: { x: number; y: number }): void;
       startDrag(): void;
       stopDrag(): void;
+      setIgnoreMouseEvents(ignore: boolean): void;
       transcribeAudio(audio: Float32Array, lang?: string): Promise<string>;
       getLogs(): Promise<LogEntry[]>;
       clearLogs(): Promise<void>;

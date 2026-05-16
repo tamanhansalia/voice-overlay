@@ -283,6 +283,13 @@ function registerIpc() {
   // Custom drag for focusable:false windows (CSS -webkit-app-region:drag is blocked by the OS
   // when the window has no focus capability). We poll cursor position at ~120 fps and shift
   // the window by the delta so the overlay follows the cursor naturally.
+  ipcMain.on(IPC.setIgnoreMouseEvents, (_e, ignore: boolean) => {
+    if (overlayWin && !overlayWin.isDestroyed()) {
+      // Always keep forward:true so mousemove keeps flowing to the renderer.
+      overlayWin.setIgnoreMouseEvents(ignore, { forward: true });
+    }
+  });
+
   ipcMain.on(IPC.dragStart, () => {
     if (!overlayWin || dragInterval) return;
     // Disable pass-through while dragging so pointer events stay with the overlay.
