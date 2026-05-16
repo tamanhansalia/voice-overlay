@@ -96,7 +96,6 @@ export const IPC = {
   clearTranscriptionHistory: 'clear-transcription-history',
   dragStart: 'drag-start',
   dragStop: 'drag-stop',
-  setIgnoreMouseEvents: 'set-ignore-mouse-events',
   transcribeAudio: 'speech:transcribe',
   executeCommand: 'execute-command',
   askAI: 'ask-ai',

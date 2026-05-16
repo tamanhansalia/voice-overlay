@@ -1,6 +1,6 @@
 {
   "name": "voice-overlay",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Lightweight global voice-to-text overlay assistant for Windows",
   "main": "out/main/index.js",
   "author": "you",

@@ -68,7 +68,6 @@ const api = {
   // Window dragging (required for focusable:false windows where CSS drag doesn't work)
   startDrag: () => ipcRenderer.send(IPC.dragStart),
   stopDrag: () => ipcRenderer.send(IPC.dragStop),
-  setIgnoreMouseEvents: (ignore: boolean) => ipcRenderer.send(IPC.setIgnoreMouseEvents, ignore),
 
   // Whisper transcription (runs in main process — avoids WASM/ONNX issues in renderer)
   transcribeAudio: (audio: Float32Array, lang?: string): Promise<string> =>

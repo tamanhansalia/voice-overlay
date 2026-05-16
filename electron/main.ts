@@ -29,6 +29,9 @@ let overlayWin: BrowserWindow | null = null;
 let settingsWin: BrowserWindow | null = null;
 let hotkeys: HotkeyManager | null = null;
 let dragInterval: ReturnType<typeof setInterval> | null = null;
+let hitTestInterval: ReturnType<typeof setInterval> | null = null;
+let overlayCapturingMouse = false;
+let overlayDragging = false;
 
 // Single-instance guard so a second launch focuses the existing app.
 const gotLock = app.requestSingleInstanceLock();
@@ -81,9 +84,23 @@ function createOverlay(): BrowserWindow {
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
   // Default: pass mouse events through the transparent dead-zone.
-  // forward:true keeps mousemove flowing to the renderer so the cursor-aware
-  // logic in Overlay.tsx can switch to capture mode when the cursor enters the orb.
   win.setIgnoreMouseEvents(true, { forward: true });
+  overlayCapturingMouse = false;
+
+  hitTestInterval = setInterval(() => {
+    if (win.isDestroyed() || overlayDragging) return;
+
+    const [x, y] = win.getPosition();
+    const cursor = screen.getCursorScreenPoint();
+    const centerX = x + width / 2;
+    const centerY = y + height / 2;
+    const isOverRing = Math.hypot(cursor.x - centerX, cursor.y - centerY) <= 44;
+
+    if (isOverRing !== overlayCapturingMouse) {
+      overlayCapturingMouse = isOverRing;
+      win.setIgnoreMouseEvents(!isOverRing, { forward: true });
+    }
+  }, 16);
 
   if (process.env['ELECTRON_RENDERER_URL']) {
     win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/overlay.html`);
@@ -98,6 +115,12 @@ function createOverlay(): BrowserWindow {
       clearInterval(dragInterval);
       dragInterval = null;
     }
+    if (hitTestInterval) {
+      clearInterval(hitTestInterval);
+      hitTestInterval = null;
+    }
+    overlayDragging = false;
+    overlayCapturingMouse = false;
     overlayWin = null;
   });
 
@@ -302,16 +325,13 @@ function registerIpc() {
     return next;
   });
 
-  ipcMain.on(IPC.setIgnoreMouseEvents, (_e, ignore: boolean) => {
-    if (overlayWin && !overlayWin.isDestroyed()) {
-      overlayWin.setIgnoreMouseEvents(ignore, { forward: true });
-    }
-  });
-
   // Custom drag for focusable:false windows. We poll cursor position at ~120 fps
   // and shift the window by the cursor delta so the overlay follows naturally.
   ipcMain.on(IPC.dragStart, () => {
     if (!overlayWin || overlayWin.isDestroyed() || dragInterval) return;
+    overlayDragging = true;
+    overlayCapturingMouse = true;
+    overlayWin.setIgnoreMouseEvents(false);
     let last = screen.getCursorScreenPoint();
     dragInterval = setInterval(() => {
       if (!overlayWin || overlayWin.isDestroyed()) return;
@@ -326,10 +346,15 @@ function registerIpc() {
 
   ipcMain.on(IPC.dragStop, () => {
     if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
+    overlayDragging = false;
     if (overlayWin && !overlayWin.isDestroyed()) {
-      overlayWin.setIgnoreMouseEvents(true, { forward: true });
       const [x, y] = overlayWin.getPosition();
       settingsStore.update({ overlayPosition: { x, y } });
+
+      const cursor = screen.getCursorScreenPoint();
+      const isOverRing = Math.hypot(cursor.x - (x + 80), cursor.y - (y + 110)) <= 44;
+      overlayCapturingMouse = isOverRing;
+      overlayWin.setIgnoreMouseEvents(!isOverRing, { forward: true });
     }
   });
 

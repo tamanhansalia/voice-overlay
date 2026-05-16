@@ -1,632 +1,775 @@
 {
   "directed": false,
   "multigraph": false,
-  "graph": {},
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "release_0_3_0_distribution",
+        "label": "Release 0.3.0 Distribution Package",
+        "nodes": [
+          "release_0_3_0_electron_license",
+          "release_0_3_0_chromium_licenses",
+          "release_0_3_0_icon"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "release/0.3.0/win-unpacked/"
+      },
+      {
+        "id": "release_0_3_1_distribution",
+        "label": "Release 0.3.1 Distribution Package",
+        "nodes": [
+          "release_0_3_1_electron_license",
+          "release_0_3_1_chromium_licenses",
+          "release_0_3_1_icon"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "release/0.3.1/win-unpacked/"
+      }
+    ]
+  },
   "nodes": [
     {
       "label": "hotkeys.ts",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
       "source_location": "L1",
-      "id": "electron_hotkeys_ts",
       "community": 2,
-      "norm_label": "hotkeys.ts"
+      "norm_label": "hotkeys.ts",
+      "id": "electron_hotkeys_ts"
     },
     {
       "label": "HotkeyManager",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
       "source_location": "L89",
-      "id": "hotkeys_hotkeymanager",
       "community": 2,
-      "norm_label": "hotkeymanager"
+      "norm_label": "hotkeymanager",
+      "id": "hotkeys_hotkeymanager"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
       "source_location": "L95",
-      "id": "hotkeys_hotkeymanager_constructor",
       "community": 2,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "hotkeys_hotkeymanager_constructor"
     },
     {
       "label": ".checkState()",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L109",
-      "id": "hotkeys_hotkeymanager_checkstate",
+      "source_location": "L112",
       "community": 2,
-      "norm_label": ".checkstate()"
+      "norm_label": ".checkstate()",
+      "id": "hotkeys_hotkeymanager_checkstate"
     },
     {
       "label": ".register()",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L128",
-      "id": "hotkeys_hotkeymanager_register",
+      "source_location": "L131",
       "community": 2,
-      "norm_label": ".register()"
+      "norm_label": ".register()",
+      "id": "hotkeys_hotkeymanager_register"
     },
     {
       "label": ".unregister()",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L145",
-      "id": "hotkeys_hotkeymanager_unregister",
+      "source_location": "L148",
       "community": 2,
-      "norm_label": ".unregister()"
+      "norm_label": ".unregister()",
+      "id": "hotkeys_hotkeymanager_unregister"
     },
     {
       "label": ".unregisterAll()",
       "file_type": "code",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L151",
-      "id": "hotkeys_hotkeymanager_unregisterall",
+      "source_location": "L154",
       "community": 2,
-      "norm_label": ".unregisterall()"
+      "norm_label": ".unregisterall()",
+      "id": "hotkeys_hotkeymanager_unregisterall"
     },
     {
       "label": "main.ts",
       "file_type": "code",
       "source_file": "electron\\main.ts",
       "source_location": "L1",
-      "id": "electron_main_ts",
       "community": 5,
-      "norm_label": "main.ts"
+      "norm_label": "main.ts",
+      "id": "electron_main_ts"
     },
     {
       "label": "createOverlay()",
       "file_type": "code",
       "source_file": "electron\\main.ts",
       "source_location": "L46",
-      "id": "main_createoverlay",
       "community": 5,
-      "norm_label": "createoverlay()"
+      "norm_label": "createoverlay()",
+      "id": "main_createoverlay"
     },
     {
       "label": "createSettingsWindow()",
       "file_type": "code",
       "source_file": "electron\\main.ts",
-      "source_location": "L117",
-      "id": "main_createsettingswindow",
+      "source_location": "L118",
       "community": 5,
-      "norm_label": "createsettingswindow()"
+      "norm_label": "createsettingswindow()",
+      "id": "main_createsettingswindow"
     },
     {
       "label": "registerIpc()",
       "file_type": "code",
       "source_file": "electron\\main.ts",
-      "source_location": "L151",
-      "id": "main_registeripc",
+      "source_location": "L152",
       "community": 5,
-      "norm_label": "registeripc()"
+      "norm_label": "registeripc()",
+      "id": "main_registeripc"
     },
     {
       "label": "preload.ts",
       "file_type": "code",
       "source_file": "electron\\preload.ts",
       "source_location": "L1",
-      "id": "electron_preload_ts",
-      "community": 14,
-      "norm_label": "preload.ts"
+      "community": 17,
+      "norm_label": "preload.ts",
+      "id": "electron_preload_ts"
     },
     {
       "label": "textInjector.ts",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
       "source_location": "L1",
-      "id": "electron_textinjector_ts",
       "community": 3,
-      "norm_label": "textinjector.ts"
+      "norm_label": "textinjector.ts",
+      "id": "electron_textinjector_ts"
     },
     {
       "label": "TextInjector",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
       "source_location": "L17",
-      "id": "textinjector_textinjector",
       "community": 3,
-      "norm_label": "textinjector"
+      "norm_label": "textinjector",
+      "id": "textinjector_textinjector"
     },
     {
       "label": ".loadNut()",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
       "source_location": "L21",
-      "id": "textinjector_textinjector_loadnut",
       "community": 3,
-      "norm_label": ".loadnut()"
+      "norm_label": ".loadnut()",
+      "id": "textinjector_textinjector_loadnut"
     },
     {
       "label": ".inject()",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
       "source_location": "L37",
-      "id": "textinjector_textinjector_inject",
       "community": 3,
-      "norm_label": ".inject()"
+      "norm_label": ".inject()",
+      "id": "textinjector_textinjector_inject"
     },
     {
       "label": "._doInject()",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
       "source_location": "L52",
-      "id": "textinjector_textinjector_doinject",
       "community": 3,
-      "norm_label": "._doinject()"
+      "norm_label": "._doinject()",
+      "id": "textinjector_textinjector_doinject"
     },
     {
       "label": ".runCommand()",
       "file_type": "code",
       "source_file": "electron\\textInjector.ts",
       "source_location": "L92",
-      "id": "textinjector_textinjector_runcommand",
       "community": 3,
-      "norm_label": ".runcommand()"
+      "norm_label": ".runcommand()",
+      "id": "textinjector_textinjector_runcommand"
     },
     {
       "label": "tray.ts",
       "file_type": "code",
       "source_file": "electron\\tray.ts",
       "source_location": "L1",
-      "id": "electron_tray_ts",
-      "community": 8,
-      "norm_label": "tray.ts"
+      "community": 9,
+      "norm_label": "tray.ts",
+      "id": "electron_tray_ts"
     },
     {
       "label": "createTray()",
       "file_type": "code",
       "source_file": "electron\\tray.ts",
       "source_location": "L7",
-      "id": "tray_createtray",
-      "community": 8,
-      "norm_label": "createtray()"
+      "community": 9,
+      "norm_label": "createtray()",
+      "id": "tray_createtray"
     },
     {
       "label": "whisperEngine.ts",
       "file_type": "code",
       "source_file": "electron\\whisperEngine.ts",
       "source_location": "L1",
-      "id": "electron_whisperengine_ts",
       "community": 6,
-      "norm_label": "whisperengine.ts"
+      "norm_label": "whisperengine.ts",
+      "id": "electron_whisperengine_ts"
     },
     {
       "label": "modelId()",
       "file_type": "code",
       "source_file": "electron\\whisperEngine.ts",
       "source_location": "L9",
-      "id": "whisperengine_modelid",
       "community": 6,
-      "norm_label": "modelid()"
+      "norm_label": "modelid()",
+      "id": "whisperengine_modelid"
     },
     {
       "label": "getPipe()",
       "file_type": "code",
       "source_file": "electron\\whisperEngine.ts",
       "source_location": "L14",
-      "id": "whisperengine_getpipe",
       "community": 6,
-      "norm_label": "getpipe()"
+      "norm_label": "getpipe()",
+      "id": "whisperengine_getpipe"
     },
     {
       "label": "transcribeAudio()",
       "file_type": "code",
       "source_file": "electron\\whisperEngine.ts",
       "source_location": "L32",
-      "id": "whisperengine_transcribeaudio",
       "community": 6,
-      "norm_label": "transcribeaudio()"
+      "norm_label": "transcribeaudio()",
+      "id": "whisperengine_transcribeaudio"
     },
     {
       "label": "global.d.ts",
       "file_type": "code",
       "source_file": "src\\global.d.ts",
       "source_location": "L1",
-      "id": "src_global_d_ts",
-      "community": 15,
-      "norm_label": "global.d.ts"
+      "community": 18,
+      "norm_label": "global.d.ts",
+      "id": "src_global_d_ts"
     },
     {
       "label": "Overlay.tsx",
       "file_type": "code",
       "source_file": "src\\overlay\\Overlay.tsx",
       "source_location": "L1",
-      "id": "src_overlay_overlay_tsx",
-      "community": 9,
-      "norm_label": "overlay.tsx"
+      "community": 7,
+      "norm_label": "overlay.tsx",
+      "id": "src_overlay_overlay_tsx"
     },
     {
       "label": "onMouseMove()",
       "file_type": "code",
       "source_file": "src\\overlay\\Overlay.tsx",
       "source_location": "L28",
-      "id": "overlay_onmousemove",
-      "community": 9,
-      "norm_label": "onmousemove()"
+      "community": 7,
+      "norm_label": "onmousemove()",
+      "id": "overlay_onmousemove"
     },
     {
       "label": "sounds.ts",
       "file_type": "code",
       "source_file": "src\\overlay\\sounds.ts",
       "source_location": "L1",
-      "id": "src_overlay_sounds_ts",
       "community": 1,
-      "norm_label": "sounds.ts"
+      "norm_label": "sounds.ts",
+      "id": "src_overlay_sounds_ts"
     },
     {
       "label": "getCtx()",
       "file_type": "code",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L3",
-      "id": "sounds_getctx",
+      "source_location": "L7",
       "community": 1,
-      "norm_label": "getctx()"
+      "norm_label": "getctx()",
+      "id": "sounds_getctx"
     },
     {
       "label": "playStartSound()",
       "file_type": "code",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L8",
-      "id": "sounds_playstartsound",
+      "source_location": "L27",
       "community": 1,
-      "norm_label": "playstartsound()"
+      "norm_label": "playstartsound()",
+      "id": "sounds_playstartsound"
     },
     {
       "label": "playStopSound()",
       "file_type": "code",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L28",
-      "id": "sounds_playstopsound",
+      "source_location": "L55",
       "community": 1,
-      "norm_label": "playstopsound()"
+      "norm_label": "playstopsound()",
+      "id": "sounds_playstopsound"
     },
     {
       "label": "playCommandSound()",
       "file_type": "code",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L48",
-      "id": "sounds_playcommandsound",
+      "source_location": "L83",
       "community": 1,
-      "norm_label": "playcommandsound()"
+      "norm_label": "playcommandsound()",
+      "id": "sounds_playcommandsound"
     },
     {
       "label": "useRecorder.ts",
       "file_type": "code",
       "source_file": "src\\overlay\\useRecorder.ts",
       "source_location": "L1",
-      "id": "src_overlay_userecorder_ts",
       "community": 10,
-      "norm_label": "userecorder.ts"
+      "norm_label": "userecorder.ts",
+      "id": "src_overlay_userecorder_ts"
     },
     {
       "label": "useRecorder()",
       "file_type": "code",
       "source_file": "src\\overlay\\useRecorder.ts",
       "source_location": "L13",
-      "id": "userecorder_userecorder",
       "community": 10,
-      "norm_label": "userecorder()"
+      "norm_label": "userecorder()",
+      "id": "userecorder_userecorder"
     },
     {
       "label": "Waveform.tsx",
       "file_type": "code",
       "source_file": "src\\overlay\\Waveform.tsx",
       "source_location": "L1",
-      "id": "src_overlay_waveform_tsx",
       "community": 11,
-      "norm_label": "waveform.tsx"
+      "norm_label": "waveform.tsx",
+      "id": "src_overlay_waveform_tsx"
     },
     {
       "label": "Waveform()",
       "file_type": "code",
       "source_file": "src\\overlay\\Waveform.tsx",
       "source_location": "L9",
-      "id": "waveform_waveform",
       "community": 11,
-      "norm_label": "waveform()"
+      "norm_label": "waveform()",
+      "id": "waveform_waveform"
     },
     {
       "label": "Settings.tsx",
       "file_type": "code",
       "source_file": "src\\settings\\Settings.tsx",
       "source_location": "L1",
-      "id": "src_settings_settings_tsx",
-      "community": 7,
-      "norm_label": "settings.tsx"
+      "community": 8,
+      "norm_label": "settings.tsx",
+      "id": "src_settings_settings_tsx"
     },
     {
       "label": "scrollToSection()",
       "file_type": "code",
       "source_file": "src\\settings\\Settings.tsx",
-      "source_location": "L52",
-      "id": "settings_scrolltosection",
-      "community": 7,
-      "norm_label": "scrolltosection()"
+      "source_location": "L57",
+      "community": 8,
+      "norm_label": "scrolltosection()",
+      "id": "settings_scrolltosection"
     },
     {
       "label": "clearAll()",
       "file_type": "code",
       "source_file": "src\\settings\\Settings.tsx",
-      "source_location": "L401",
-      "id": "settings_clearall",
-      "community": 7,
-      "norm_label": "clearall()"
+      "source_location": "L451",
+      "community": 8,
+      "norm_label": "clearall()",
+      "id": "settings_clearall"
     },
     {
       "label": "commandProcessor.ts",
       "file_type": "code",
       "source_file": "src\\shared\\commandProcessor.ts",
       "source_location": "L1",
-      "id": "src_shared_commandprocessor_ts",
       "community": 12,
-      "norm_label": "commandprocessor.ts"
+      "norm_label": "commandprocessor.ts",
+      "id": "src_shared_commandprocessor_ts"
     },
     {
       "label": "processCommand()",
       "file_type": "code",
       "source_file": "src\\shared\\commandProcessor.ts",
       "source_location": "L9",
-      "id": "commandprocessor_processcommand",
       "community": 12,
-      "norm_label": "processcommand()"
+      "norm_label": "processcommand()",
+      "id": "commandprocessor_processcommand"
     },
     {
       "label": "types.ts",
       "file_type": "code",
       "source_file": "src\\shared\\types.ts",
       "source_location": "L1",
-      "id": "src_shared_types_ts",
-      "community": 16,
-      "norm_label": "types.ts"
+      "community": 19,
+      "norm_label": "types.ts",
+      "id": "src_shared_types_ts"
     },
     {
       "label": "DeepgramProvider.ts",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
       "source_location": "L1",
-      "id": "src_speech_deepgramprovider_ts",
       "community": 4,
-      "norm_label": "deepgramprovider.ts"
+      "norm_label": "deepgramprovider.ts",
+      "id": "src_speech_deepgramprovider_ts"
     },
     {
       "label": "DeepgramProvider",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
       "source_location": "L9",
-      "id": "deepgramprovider_deepgramprovider",
       "community": 4,
-      "norm_label": "deepgramprovider"
+      "norm_label": "deepgramprovider",
+      "id": "deepgramprovider_deepgramprovider"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
       "source_location": "L17",
-      "id": "deepgramprovider_deepgramprovider_constructor",
       "community": 4,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "deepgramprovider_deepgramprovider_constructor"
     },
     {
       "label": ".start()",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
       "source_location": "L23",
-      "id": "deepgramprovider_deepgramprovider_start",
       "community": 4,
-      "norm_label": ".start()"
+      "norm_label": ".start()",
+      "id": "deepgramprovider_deepgramprovider_start"
     },
     {
       "label": ".startAudioPipe()",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
       "source_location": "L66",
-      "id": "deepgramprovider_deepgramprovider_startaudiopipe",
       "community": 4,
-      "norm_label": ".startaudiopipe()"
+      "norm_label": ".startaudiopipe()",
+      "id": "deepgramprovider_deepgramprovider_startaudiopipe"
     },
     {
       "label": ".stop()",
       "file_type": "code",
       "source_file": "src\\speech\\DeepgramProvider.ts",
       "source_location": "L132",
-      "id": "deepgramprovider_deepgramprovider_stop",
       "community": 4,
-      "norm_label": ".stop()"
+      "norm_label": ".stop()",
+      "id": "deepgramprovider_deepgramprovider_stop"
     },
     {
       "label": "ISpeechProvider.ts",
       "file_type": "code",
       "source_file": "src\\speech\\ISpeechProvider.ts",
       "source_location": "L1",
-      "id": "src_speech_ispeechprovider_ts",
-      "community": 17,
-      "norm_label": "ispeechprovider.ts"
+      "community": 20,
+      "norm_label": "ispeechprovider.ts",
+      "id": "src_speech_ispeechprovider_ts"
     },
     {
       "label": "WhisperLocalProvider.ts",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperLocalProvider.ts",
       "source_location": "L1",
-      "id": "src_speech_whisperlocalprovider_ts",
       "community": 1,
-      "norm_label": "whisperlocalprovider.ts"
+      "norm_label": "whisperlocalprovider.ts",
+      "id": "src_speech_whisperlocalprovider_ts"
     },
     {
       "label": "WhisperLocalProvider",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperLocalProvider.ts",
       "source_location": "L5",
-      "id": "whisperlocalprovider_whisperlocalprovider",
       "community": 1,
-      "norm_label": "whisperlocalprovider"
+      "norm_label": "whisperlocalprovider",
+      "id": "whisperlocalprovider_whisperlocalprovider"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperLocalProvider.ts",
       "source_location": "L12",
-      "id": "whisperlocalprovider_whisperlocalprovider_constructor",
       "community": 1,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "whisperlocalprovider_whisperlocalprovider_constructor"
     },
     {
       "label": ".start()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperLocalProvider.ts",
       "source_location": "L14",
-      "id": "whisperlocalprovider_whisperlocalprovider_start",
       "community": 1,
-      "norm_label": ".start()"
+      "norm_label": ".start()",
+      "id": "whisperlocalprovider_whisperlocalprovider_start"
     },
     {
       "label": ".stop()",
       "file_type": "code",
       "source_file": "src\\speech\\WhisperLocalProvider.ts",
       "source_location": "L86",
-      "id": "whisperlocalprovider_whisperlocalprovider_stop",
       "community": 1,
-      "norm_label": ".stop()"
+      "norm_label": ".stop()",
+      "id": "whisperlocalprovider_whisperlocalprovider_stop"
     },
     {
       "label": "Enhance Sound Cues Implementation Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-enhance-sound-cues.md",
       "rationale": "Enhance sound cues by supporting adjustable volume and adding a success chime for voice commands using Web Audio API.",
-      "id": "plan_enhance_sound_cues",
       "community": 0,
-      "norm_label": "enhance sound cues implementation plan"
+      "norm_label": "enhance sound cues implementation plan",
+      "id": "plan_enhance_sound_cues"
     },
     {
       "label": "Enhanced Voice Overlay Features Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-enhanced-features.md",
       "rationale": "Master plan to implement visual waveform, configurable voice commands, AI screen/grammar features, and sound cues.",
-      "id": "plan_enhanced_features",
       "community": 0,
-      "norm_label": "enhanced voice overlay features plan"
+      "norm_label": "enhanced voice overlay features plan",
+      "id": "plan_enhanced_features"
     },
     {
       "label": "Expand Settings Schema Implementation Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-expand-settings-schema.md",
       "rationale": "Expand AppSettings and DEFAULT_SETTINGS to support new feature toggles and volume control.",
-      "id": "plan_expand_settings_schema",
       "community": 0,
-      "norm_label": "expand settings schema implementation plan"
+      "norm_label": "expand settings schema implementation plan",
+      "id": "plan_expand_settings_schema"
     },
     {
       "label": "Fix Clipboard Bridge and State Race Conditions Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-fix-clipboard-and-race-conditions.md",
       "rationale": "Fix restricted navigator.clipboard access via IPC bridge and use session IDs to prevent async state race conditions in useRecorder.",
-      "id": "plan_fix_clipboard_race",
       "community": 13,
-      "norm_label": "fix clipboard bridge and state race conditions plan"
+      "norm_label": "fix clipboard bridge and state race conditions plan",
+      "id": "plan_fix_clipboard_race"
     },
     {
       "label": "Integrate Waveform and Settings into Overlay Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-integrate-waveform-overlay.md",
       "rationale": "Connect new settings and the Waveform component to the actual recording logic in the Overlay UI.",
-      "id": "plan_integrate_waveform",
       "community": 0,
-      "norm_label": "integrate waveform and settings into overlay plan"
+      "norm_label": "integrate waveform and settings into overlay plan",
+      "id": "plan_integrate_waveform"
     },
     {
       "label": "IPC Constants Cleanup Implementation Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-ipc-constants-cleanup.md",
       "rationale": "Centralize hardcoded IPC strings in src/shared/types.ts to ensure type safety and architectural consistency.",
-      "id": "plan_ipc_cleanup",
       "community": 13,
-      "norm_label": "ipc constants cleanup implementation plan"
+      "norm_label": "ipc constants cleanup implementation plan",
+      "id": "plan_ipc_cleanup"
     },
     {
       "label": "Revamp Settings UI Implementation Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-revamp-settings-ui.md",
       "rationale": "Overhaul settings panel with new sections for Intelligence, Audio, and Appearance with consistent styling.",
-      "id": "plan_revamp_settings_ui",
       "community": 0,
-      "norm_label": "revamp settings ui implementation plan"
+      "norm_label": "revamp settings ui implementation plan",
+      "id": "plan_revamp_settings_ui"
     },
     {
       "label": "Settings UI and History Logic Fix Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-settings-ui-and-history-fix.md",
       "rationale": "Centralize history recording into a dedicated IPC call to avoid duplication and improve language selection UI.",
-      "id": "plan_history_fix",
       "community": 0,
-      "norm_label": "settings ui and history logic fix plan"
+      "norm_label": "settings ui and history logic fix plan",
+      "id": "plan_history_fix"
     },
     {
       "label": "Update Voice Command Processor Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-update-voice-command-processor.md",
       "rationale": "Extend processCommand to support prefix (\"Hey Orb\") and always-listening trigger modes.",
-      "id": "plan_update_command_processor",
       "community": 0,
-      "norm_label": "update voice command processor plan"
+      "norm_label": "update voice command processor plan",
+      "id": "plan_update_command_processor"
     },
     {
       "label": "Visual Waveform Component Implementation Plan",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-15-waveform-component.md",
       "rationale": "Create a smooth, liquid-style sine wave visualizer on Canvas to replace bar-based SVG visualizer.",
-      "id": "plan_waveform_component",
       "community": 0,
-      "norm_label": "visual waveform component implementation plan"
+      "norm_label": "visual waveform component implementation plan",
+      "id": "plan_waveform_component"
     },
     {
       "label": "Design Spec: Enhanced Voice Overlay Features",
       "file_type": "document",
       "source_file": "docs/superpowers/specs/2026-05-15-enhanced-features-design.md",
-      "id": "spec_enhanced_features",
       "community": 0,
-      "norm_label": "design spec: enhanced voice overlay features"
+      "norm_label": "design spec: enhanced voice overlay features",
+      "id": "spec_enhanced_features"
     },
     {
       "label": "Design Spec: Smooth Waveform Visualizer",
       "file_type": "document",
       "source_file": "docs/superpowers/specs/2026-05-15-waveform-design.md",
       "rationale": "Provide more fluid and organic feedback to user voice activity using overlapping sine waves.",
-      "id": "spec_waveform_design",
       "community": 0,
-      "norm_label": "design spec: smooth waveform visualizer"
+      "norm_label": "design spec: smooth waveform visualizer",
+      "id": "spec_waveform_design"
     },
     {
       "label": "Sound Cues (Earcons)",
       "file_type": "concept",
       "rationale": "Audio feedback for start, stop, and command execution using Web Audio API oscillators.",
-      "id": "concept_sound_cues",
       "community": 0,
-      "norm_label": "sound cues (earcons)"
+      "norm_label": "sound cues (earcons)",
+      "id": "concept_sound_cues"
     },
     {
       "label": "Visual Waveform",
       "file_type": "concept",
       "rationale": "Animated liquid-style sine wave visualizer indicating voice activity level.",
-      "id": "concept_waveform",
       "community": 0,
-      "norm_label": "visual waveform"
+      "norm_label": "visual waveform",
+      "id": "concept_waveform"
     },
     {
       "label": "Voice Commands",
       "file_type": "concept",
       "rationale": "Keyword-based actions (send, delete, fix grammar) triggered by speech recognition.",
-      "id": "concept_voice_commands",
-      "community": 18,
-      "norm_label": "voice commands"
+      "community": 21,
+      "norm_label": "voice commands",
+      "id": "concept_voice_commands"
     },
     {
       "label": "AI Features",
       "file_type": "concept",
       "rationale": "GPT-4o powered features for grammar correction and screen description.",
-      "id": "concept_ai_features",
       "community": 0,
-      "norm_label": "ai features"
+      "norm_label": "ai features",
+      "id": "concept_ai_features"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "src\\overlay\\Overlay.tsx",
+      "source_location": "L28",
+      "id": "overlay_handler",
+      "community": 7,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "onMove()",
+      "file_type": "code",
+      "source_file": "src\\overlay\\Overlay.tsx",
+      "source_location": "L42",
+      "id": "overlay_onmove",
+      "community": 7,
+      "norm_label": "onmove()"
+    },
+    {
+      "label": "resumeCtx()",
+      "file_type": "code",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L15",
+      "id": "sounds_resumectx",
+      "community": 1,
+      "norm_label": "resumectx()"
+    },
+    {
+      "label": "normalizedVolume()",
+      "file_type": "code",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L23",
+      "id": "sounds_normalizedvolume",
+      "community": 1,
+      "norm_label": "normalizedvolume()"
+    },
+    {
+      "label": "Electron License (v0.3.0)",
+      "file_type": "document",
+      "source_file": "release/0.3.0/win-unpacked/LICENSE.electron.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2024-03-27T00:00:00Z",
+      "author": "GitHub Inc.",
+      "contributor": "Electron contributors",
+      "id": "release_0_3_0_electron_license",
+      "community": 14,
+      "norm_label": "electron license (v0.3.0)"
+    },
+    {
+      "label": "Chromium Credits & Licenses (v0.3.0)",
+      "file_type": "document",
+      "source_file": "release/0.3.0/win-unpacked/LICENSES.chromium.html",
+      "source_location": null,
+      "source_url": "https://source.chromium.org/chromium",
+      "captured_at": "2024-03-27T00:00:00Z",
+      "author": "Chromium Authors",
+      "contributor": "Chromium contributors",
+      "id": "release_0_3_0_chromium_licenses",
+      "community": 15,
+      "norm_label": "chromium credits & licenses (v0.3.0)"
+    },
+    {
+      "label": "Application Icon (v0.3.0)",
+      "file_type": "image",
+      "source_file": "release/0.3.0/win-unpacked/resources/icon.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2024-03-27T00:00:00Z",
+      "author": null,
+      "contributor": null,
+      "id": "release_0_3_0_icon",
+      "community": 16,
+      "norm_label": "application icon (v0.3.0)"
+    },
+    {
+      "label": "Electron License (v0.3.1)",
+      "file_type": "document",
+      "source_file": "release/0.3.1/win-unpacked/LICENSE.electron.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2024-03-27T00:00:00Z",
+      "author": "GitHub Inc.",
+      "contributor": "Electron contributors",
+      "id": "release_0_3_1_electron_license",
+      "community": 14,
+      "norm_label": "electron license (v0.3.1)"
+    },
+    {
+      "label": "Chromium Credits & Licenses (v0.3.1)",
+      "file_type": "document",
+      "source_file": "release/0.3.1/win-unpacked/LICENSES.chromium.html",
+      "source_location": null,
+      "source_url": "https://source.chromium.org/chromium",
+      "captured_at": "2024-03-27T00:00:00Z",
+      "author": "Chromium Authors",
+      "contributor": "Chromium contributors",
+      "id": "release_0_3_1_chromium_licenses",
+      "community": 15,
+      "norm_label": "chromium credits & licenses (v0.3.1)"
+    },
+    {
+      "label": "Application Icon (v0.3.1)",
+      "file_type": "image",
+      "source_file": "release/0.3.1/win-unpacked/resources/icon.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2024-03-27T00:00:00Z",
+      "author": null,
+      "contributor": null,
+      "id": "release_0_3_1_icon",
+      "community": 16,
+      "norm_label": "application icon (v0.3.1)"
     }
   ],
   "links": [
@@ -638,9 +781,9 @@
       "weight": 1.0,
       "_src": "electron_hotkeys_ts",
       "_tgt": "hotkeys_hotkeymanager",
+      "confidence_score": 1.0,
       "source": "electron_hotkeys_ts",
-      "target": "hotkeys_hotkeymanager",
-      "confidence_score": 1.0
+      "target": "hotkeys_hotkeymanager"
     },
     {
       "relation": "method",
@@ -650,57 +793,57 @@
       "weight": 1.0,
       "_src": "hotkeys_hotkeymanager",
       "_tgt": "hotkeys_hotkeymanager_constructor",
+      "confidence_score": 1.0,
       "source": "hotkeys_hotkeymanager",
-      "target": "hotkeys_hotkeymanager_constructor",
-      "confidence_score": 1.0
+      "target": "hotkeys_hotkeymanager_constructor"
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L109",
+      "source_location": "L112",
       "weight": 1.0,
       "_src": "hotkeys_hotkeymanager",
       "_tgt": "hotkeys_hotkeymanager_checkstate",
+      "confidence_score": 1.0,
       "source": "hotkeys_hotkeymanager",
-      "target": "hotkeys_hotkeymanager_checkstate",
-      "confidence_score": 1.0
+      "target": "hotkeys_hotkeymanager_checkstate"
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L128",
+      "source_location": "L131",
       "weight": 1.0,
       "_src": "hotkeys_hotkeymanager",
       "_tgt": "hotkeys_hotkeymanager_register",
+      "confidence_score": 1.0,
       "source": "hotkeys_hotkeymanager",
-      "target": "hotkeys_hotkeymanager_register",
-      "confidence_score": 1.0
+      "target": "hotkeys_hotkeymanager_register"
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L145",
+      "source_location": "L148",
       "weight": 1.0,
       "_src": "hotkeys_hotkeymanager",
       "_tgt": "hotkeys_hotkeymanager_unregister",
+      "confidence_score": 1.0,
       "source": "hotkeys_hotkeymanager",
-      "target": "hotkeys_hotkeymanager_unregister",
-      "confidence_score": 1.0
+      "target": "hotkeys_hotkeymanager_unregister"
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "electron\\hotkeys.ts",
-      "source_location": "L151",
+      "source_location": "L154",
       "weight": 1.0,
       "_src": "hotkeys_hotkeymanager",
       "_tgt": "hotkeys_hotkeymanager_unregisterall",
+      "confidence_score": 1.0,
       "source": "hotkeys_hotkeymanager",
-      "target": "hotkeys_hotkeymanager_unregisterall",
-      "confidence_score": 1.0
+      "target": "hotkeys_hotkeymanager_unregisterall"
     },
     {
       "relation": "calls",
@@ -734,33 +877,33 @@
       "weight": 1.0,
       "_src": "electron_main_ts",
       "_tgt": "main_createoverlay",
+      "confidence_score": 1.0,
       "source": "electron_main_ts",
-      "target": "main_createoverlay",
-      "confidence_score": 1.0
+      "target": "main_createoverlay"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "electron\\main.ts",
-      "source_location": "L117",
+      "source_location": "L118",
       "weight": 1.0,
       "_src": "electron_main_ts",
       "_tgt": "main_createsettingswindow",
+      "confidence_score": 1.0,
       "source": "electron_main_ts",
-      "target": "main_createsettingswindow",
-      "confidence_score": 1.0
+      "target": "main_createsettingswindow"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "electron\\main.ts",
-      "source_location": "L151",
+      "source_location": "L152",
       "weight": 1.0,
       "_src": "electron_main_ts",
       "_tgt": "main_registeripc",
+      "confidence_score": 1.0,
       "source": "electron_main_ts",
-      "target": "main_registeripc",
-      "confidence_score": 1.0
+      "target": "main_registeripc"
     },
     {
       "relation": "contains",
@@ -770,9 +913,9 @@
       "weight": 1.0,
       "_src": "electron_textinjector_ts",
       "_tgt": "textinjector_textinjector",
+      "confidence_score": 1.0,
       "source": "electron_textinjector_ts",
-      "target": "textinjector_textinjector",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector"
     },
     {
       "relation": "method",
@@ -782,9 +925,9 @@
       "weight": 1.0,
       "_src": "textinjector_textinjector",
       "_tgt": "textinjector_textinjector_loadnut",
+      "confidence_score": 1.0,
       "source": "textinjector_textinjector",
-      "target": "textinjector_textinjector_loadnut",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector_loadnut"
     },
     {
       "relation": "method",
@@ -794,9 +937,9 @@
       "weight": 1.0,
       "_src": "textinjector_textinjector",
       "_tgt": "textinjector_textinjector_inject",
+      "confidence_score": 1.0,
       "source": "textinjector_textinjector",
-      "target": "textinjector_textinjector_inject",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector_inject"
     },
     {
       "relation": "method",
@@ -806,9 +949,9 @@
       "weight": 1.0,
       "_src": "textinjector_textinjector",
       "_tgt": "textinjector_textinjector_doinject",
+      "confidence_score": 1.0,
       "source": "textinjector_textinjector",
-      "target": "textinjector_textinjector_doinject",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector_doinject"
     },
     {
       "relation": "method",
@@ -818,9 +961,9 @@
       "weight": 1.0,
       "_src": "textinjector_textinjector",
       "_tgt": "textinjector_textinjector_runcommand",
+      "confidence_score": 1.0,
       "source": "textinjector_textinjector",
-      "target": "textinjector_textinjector_runcommand",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector_runcommand"
     },
     {
       "relation": "calls",
@@ -830,9 +973,9 @@
       "weight": 1.0,
       "_src": "textinjector_textinjector_doinject",
       "_tgt": "textinjector_textinjector_loadnut",
+      "confidence_score": 1.0,
       "source": "textinjector_textinjector_loadnut",
-      "target": "textinjector_textinjector_doinject",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector_doinject"
     },
     {
       "relation": "calls",
@@ -842,9 +985,9 @@
       "weight": 1.0,
       "_src": "textinjector_textinjector_runcommand",
       "_tgt": "textinjector_textinjector_loadnut",
+      "confidence_score": 1.0,
       "source": "textinjector_textinjector_loadnut",
-      "target": "textinjector_textinjector_runcommand",
-      "confidence_score": 1.0
+      "target": "textinjector_textinjector_runcommand"
     },
     {
       "relation": "contains",
@@ -854,9 +997,9 @@
       "weight": 1.0,
       "_src": "electron_tray_ts",
       "_tgt": "tray_createtray",
+      "confidence_score": 1.0,
       "source": "electron_tray_ts",
-      "target": "tray_createtray",
-      "confidence_score": 1.0
+      "target": "tray_createtray"
     },
     {
       "relation": "contains",
@@ -866,9 +1009,9 @@
       "weight": 1.0,
       "_src": "electron_whisperengine_ts",
       "_tgt": "whisperengine_modelid",
+      "confidence_score": 1.0,
       "source": "electron_whisperengine_ts",
-      "target": "whisperengine_modelid",
-      "confidence_score": 1.0
+      "target": "whisperengine_modelid"
     },
     {
       "relation": "contains",
@@ -878,9 +1021,9 @@
       "weight": 1.0,
       "_src": "electron_whisperengine_ts",
       "_tgt": "whisperengine_getpipe",
+      "confidence_score": 1.0,
       "source": "electron_whisperengine_ts",
-      "target": "whisperengine_getpipe",
-      "confidence_score": 1.0
+      "target": "whisperengine_getpipe"
     },
     {
       "relation": "contains",
@@ -890,9 +1033,9 @@
       "weight": 1.0,
       "_src": "electron_whisperengine_ts",
       "_tgt": "whisperengine_transcribeaudio",
+      "confidence_score": 1.0,
       "source": "electron_whisperengine_ts",
-      "target": "whisperengine_transcribeaudio",
-      "confidence_score": 1.0
+      "target": "whisperengine_transcribeaudio"
     },
     {
       "relation": "calls",
@@ -902,9 +1045,9 @@
       "weight": 1.0,
       "_src": "whisperengine_getpipe",
       "_tgt": "whisperengine_modelid",
+      "confidence_score": 1.0,
       "source": "whisperengine_modelid",
-      "target": "whisperengine_getpipe",
-      "confidence_score": 1.0
+      "target": "whisperengine_getpipe"
     },
     {
       "relation": "calls",
@@ -914,9 +1057,9 @@
       "weight": 1.0,
       "_src": "whisperengine_transcribeaudio",
       "_tgt": "whisperengine_getpipe",
+      "confidence_score": 1.0,
       "source": "whisperengine_getpipe",
-      "target": "whisperengine_transcribeaudio",
-      "confidence_score": 1.0
+      "target": "whisperengine_transcribeaudio"
     },
     {
       "relation": "contains",
@@ -926,93 +1069,141 @@
       "weight": 1.0,
       "_src": "src_overlay_overlay_tsx",
       "_tgt": "overlay_onmousemove",
+      "confidence_score": 1.0,
       "source": "src_overlay_overlay_tsx",
-      "target": "overlay_onmousemove",
+      "target": "overlay_onmousemove"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\Overlay.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_src": "src_overlay_overlay_tsx",
+      "_tgt": "overlay_handler",
+      "source": "src_overlay_overlay_tsx",
+      "target": "overlay_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\Overlay.tsx",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_src": "src_overlay_overlay_tsx",
+      "_tgt": "overlay_onmove",
+      "source": "src_overlay_overlay_tsx",
+      "target": "overlay_onmove",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L3",
+      "source_location": "L7",
       "weight": 1.0,
       "_src": "src_overlay_sounds_ts",
       "_tgt": "sounds_getctx",
+      "confidence_score": 1.0,
       "source": "src_overlay_sounds_ts",
-      "target": "sounds_getctx",
+      "target": "sounds_getctx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "src_overlay_sounds_ts",
+      "_tgt": "sounds_playstartsound",
+      "confidence_score": 1.0,
+      "source": "src_overlay_sounds_ts",
+      "target": "sounds_playstartsound"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "src_overlay_sounds_ts",
+      "_tgt": "sounds_playstopsound",
+      "confidence_score": 1.0,
+      "source": "src_overlay_sounds_ts",
+      "target": "sounds_playstopsound"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_src": "src_overlay_sounds_ts",
+      "_tgt": "sounds_playcommandsound",
+      "confidence_score": 1.0,
+      "source": "src_overlay_sounds_ts",
+      "target": "sounds_playcommandsound"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "src_overlay_sounds_ts",
+      "_tgt": "sounds_resumectx",
+      "source": "src_overlay_sounds_ts",
+      "target": "sounds_resumectx",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L8",
+      "source_location": "L23",
       "weight": 1.0,
       "_src": "src_overlay_sounds_ts",
-      "_tgt": "sounds_playstartsound",
+      "_tgt": "sounds_normalizedvolume",
       "source": "src_overlay_sounds_ts",
-      "target": "sounds_playstartsound",
+      "target": "sounds_normalizedvolume",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\sounds.ts",
       "source_location": "L28",
       "weight": 1.0,
-      "_src": "src_overlay_sounds_ts",
-      "_tgt": "sounds_playstopsound",
-      "source": "src_overlay_sounds_ts",
-      "target": "sounds_playstopsound",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L48",
-      "weight": 1.0,
-      "_src": "src_overlay_sounds_ts",
-      "_tgt": "sounds_playcommandsound",
-      "source": "src_overlay_sounds_ts",
-      "target": "sounds_playcommandsound",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L9",
-      "weight": 1.0,
       "_src": "sounds_playstartsound",
       "_tgt": "sounds_getctx",
+      "confidence_score": 1.0,
       "source": "sounds_getctx",
-      "target": "sounds_playstartsound",
-      "confidence_score": 1.0
+      "target": "sounds_playstartsound"
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L29",
+      "source_location": "L56",
       "weight": 1.0,
       "_src": "sounds_playstopsound",
       "_tgt": "sounds_getctx",
+      "confidence_score": 1.0,
       "source": "sounds_getctx",
-      "target": "sounds_playstopsound",
-      "confidence_score": 1.0
+      "target": "sounds_playstopsound"
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\sounds.ts",
-      "source_location": "L49",
+      "source_location": "L84",
       "weight": 1.0,
       "_src": "sounds_playcommandsound",
       "_tgt": "sounds_getctx",
+      "confidence_score": 1.0,
       "source": "sounds_getctx",
-      "target": "sounds_playcommandsound",
-      "confidence_score": 1.0
+      "target": "sounds_playcommandsound"
     },
     {
       "relation": "calls",
@@ -1040,6 +1231,30 @@
     },
     {
       "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_src": "sounds_playstartsound",
+      "_tgt": "sounds_resumectx",
+      "source": "sounds_playstartsound",
+      "target": "sounds_resumectx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "sounds_playstartsound",
+      "_tgt": "sounds_normalizedvolume",
+      "source": "sounds_playstartsound",
+      "target": "sounds_normalizedvolume",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src\\overlay\\sounds.ts",
@@ -1061,6 +1276,30 @@
       "_tgt": "whisperlocalprovider_whisperlocalprovider_stop",
       "source": "sounds_playstopsound",
       "target": "whisperlocalprovider_whisperlocalprovider_stop"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_src": "sounds_playstopsound",
+      "_tgt": "sounds_resumectx",
+      "source": "sounds_playstopsound",
+      "target": "sounds_resumectx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_src": "sounds_playstopsound",
+      "_tgt": "sounds_normalizedvolume",
+      "source": "sounds_playstopsound",
+      "target": "sounds_normalizedvolume",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -1087,6 +1326,30 @@
       "target": "whisperlocalprovider_whisperlocalprovider_stop"
     },
     {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "_src": "sounds_playcommandsound",
+      "_tgt": "sounds_resumectx",
+      "source": "sounds_playcommandsound",
+      "target": "sounds_resumectx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\overlay\\sounds.ts",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_src": "sounds_playcommandsound",
+      "_tgt": "sounds_normalizedvolume",
+      "source": "sounds_playcommandsound",
+      "target": "sounds_normalizedvolume",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\overlay\\useRecorder.ts",
@@ -1094,9 +1357,9 @@
       "weight": 1.0,
       "_src": "src_overlay_userecorder_ts",
       "_tgt": "userecorder_userecorder",
+      "confidence_score": 1.0,
       "source": "src_overlay_userecorder_ts",
-      "target": "userecorder_userecorder",
-      "confidence_score": 1.0
+      "target": "userecorder_userecorder"
     },
     {
       "relation": "contains",
@@ -1106,33 +1369,33 @@
       "weight": 1.0,
       "_src": "src_overlay_waveform_tsx",
       "_tgt": "waveform_waveform",
+      "confidence_score": 1.0,
       "source": "src_overlay_waveform_tsx",
-      "target": "waveform_waveform",
-      "confidence_score": 1.0
+      "target": "waveform_waveform"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\settings\\Settings.tsx",
-      "source_location": "L52",
+      "source_location": "L57",
       "weight": 1.0,
       "_src": "src_settings_settings_tsx",
       "_tgt": "settings_scrolltosection",
+      "confidence_score": 1.0,
       "source": "src_settings_settings_tsx",
-      "target": "settings_scrolltosection",
-      "confidence_score": 1.0
+      "target": "settings_scrolltosection"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\settings\\Settings.tsx",
-      "source_location": "L401",
+      "source_location": "L451",
       "weight": 1.0,
       "_src": "src_settings_settings_tsx",
       "_tgt": "settings_clearall",
+      "confidence_score": 1.0,
       "source": "src_settings_settings_tsx",
-      "target": "settings_clearall",
-      "confidence_score": 1.0
+      "target": "settings_clearall"
     },
     {
       "relation": "contains",
@@ -1142,9 +1405,9 @@
       "weight": 1.0,
       "_src": "src_shared_commandprocessor_ts",
       "_tgt": "commandprocessor_processcommand",
+      "confidence_score": 1.0,
       "source": "src_shared_commandprocessor_ts",
-      "target": "commandprocessor_processcommand",
-      "confidence_score": 1.0
+      "target": "commandprocessor_processcommand"
     },
     {
       "relation": "contains",
@@ -1154,9 +1417,9 @@
       "weight": 1.0,
       "_src": "src_speech_deepgramprovider_ts",
       "_tgt": "deepgramprovider_deepgramprovider",
+      "confidence_score": 1.0,
       "source": "src_speech_deepgramprovider_ts",
-      "target": "deepgramprovider_deepgramprovider",
-      "confidence_score": 1.0
+      "target": "deepgramprovider_deepgramprovider"
     },
     {
       "relation": "method",
@@ -1166,9 +1429,9 @@
       "weight": 1.0,
       "_src": "deepgramprovider_deepgramprovider",
       "_tgt": "deepgramprovider_deepgramprovider_constructor",
+      "confidence_score": 1.0,
       "source": "deepgramprovider_deepgramprovider",
-      "target": "deepgramprovider_deepgramprovider_constructor",
-      "confidence_score": 1.0
+      "target": "deepgramprovider_deepgramprovider_constructor"
     },
     {
       "relation": "method",
@@ -1178,9 +1441,9 @@
       "weight": 1.0,
       "_src": "deepgramprovider_deepgramprovider",
       "_tgt": "deepgramprovider_deepgramprovider_start",
+      "confidence_score": 1.0,
       "source": "deepgramprovider_deepgramprovider",
-      "target": "deepgramprovider_deepgramprovider_start",
-      "confidence_score": 1.0
+      "target": "deepgramprovider_deepgramprovider_start"
     },
     {
       "relation": "method",
@@ -1190,9 +1453,9 @@
       "weight": 1.0,
       "_src": "deepgramprovider_deepgramprovider",
       "_tgt": "deepgramprovider_deepgramprovider_startaudiopipe",
+      "confidence_score": 1.0,
       "source": "deepgramprovider_deepgramprovider",
-      "target": "deepgramprovider_deepgramprovider_startaudiopipe",
-      "confidence_score": 1.0
+      "target": "deepgramprovider_deepgramprovider_startaudiopipe"
     },
     {
       "relation": "method",
@@ -1202,9 +1465,9 @@
       "weight": 1.0,
       "_src": "deepgramprovider_deepgramprovider",
       "_tgt": "deepgramprovider_deepgramprovider_stop",
+      "confidence_score": 1.0,
       "source": "deepgramprovider_deepgramprovider",
-      "target": "deepgramprovider_deepgramprovider_stop",
-      "confidence_score": 1.0
+      "target": "deepgramprovider_deepgramprovider_stop"
     },
     {
       "relation": "contains",
@@ -1214,9 +1477,9 @@
       "weight": 1.0,
       "_src": "src_speech_whisperlocalprovider_ts",
       "_tgt": "whisperlocalprovider_whisperlocalprovider",
+      "confidence_score": 1.0,
       "source": "src_speech_whisperlocalprovider_ts",
-      "target": "whisperlocalprovider_whisperlocalprovider",
-      "confidence_score": 1.0
+      "target": "whisperlocalprovider_whisperlocalprovider"
     },
     {
       "relation": "method",
@@ -1226,9 +1489,9 @@
       "weight": 1.0,
       "_src": "whisperlocalprovider_whisperlocalprovider",
       "_tgt": "whisperlocalprovider_whisperlocalprovider_constructor",
+      "confidence_score": 1.0,
       "source": "whisperlocalprovider_whisperlocalprovider",
-      "target": "whisperlocalprovider_whisperlocalprovider_constructor",
-      "confidence_score": 1.0
+      "target": "whisperlocalprovider_whisperlocalprovider_constructor"
     },
     {
       "relation": "method",
@@ -1238,9 +1501,9 @@
       "weight": 1.0,
       "_src": "whisperlocalprovider_whisperlocalprovider",
       "_tgt": "whisperlocalprovider_whisperlocalprovider_start",
+      "confidence_score": 1.0,
       "source": "whisperlocalprovider_whisperlocalprovider",
-      "target": "whisperlocalprovider_whisperlocalprovider_start",
-      "confidence_score": 1.0
+      "target": "whisperlocalprovider_whisperlocalprovider_start"
     },
     {
       "relation": "method",
@@ -1250,9 +1513,9 @@
       "weight": 1.0,
       "_src": "whisperlocalprovider_whisperlocalprovider",
       "_tgt": "whisperlocalprovider_whisperlocalprovider_stop",
+      "confidence_score": 1.0,
       "source": "whisperlocalprovider_whisperlocalprovider",
-      "target": "whisperlocalprovider_whisperlocalprovider_stop",
-      "confidence_score": 1.0
+      "target": "whisperlocalprovider_whisperlocalprovider_stop"
     },
     {
       "relation": "references",
@@ -1390,7 +1653,70 @@
       "_tgt": "plan_waveform_component",
       "source": "plan_waveform_component",
       "target": "concept_waveform"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.98,
+      "source_file": "release/0.3.1/win-unpacked/LICENSE.electron.txt",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "release_0_3_0_electron_license",
+      "_tgt": "release_0_3_1_electron_license",
+      "source": "release_0_3_0_electron_license",
+      "target": "release_0_3_1_electron_license"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.98,
+      "source_file": "release/0.3.1/win-unpacked/LICENSES.chromium.html",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "release_0_3_0_chromium_licenses",
+      "_tgt": "release_0_3_1_chromium_licenses",
+      "source": "release_0_3_0_chromium_licenses",
+      "target": "release_0_3_1_chromium_licenses"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "release/0.3.1/win-unpacked/resources/icon.png",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "release_0_3_0_icon",
+      "_tgt": "release_0_3_1_icon",
+      "source": "release_0_3_0_icon",
+      "target": "release_0_3_1_icon"
     }
   ],
-  "hyperedges": []
+  "hyperedges": [
+    {
+      "id": "release_0_3_0_distribution",
+      "label": "Release 0.3.0 Distribution Package",
+      "nodes": [
+        "release_0_3_0_electron_license",
+        "release_0_3_0_chromium_licenses",
+        "release_0_3_0_icon"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "release/0.3.0/win-unpacked/"
+    },
+    {
+      "id": "release_0_3_1_distribution",
+      "label": "Release 0.3.1 Distribution Package",
+      "nodes": [
+        "release_0_3_1_electron_license",
+        "release_0_3_1_chromium_licenses",
+        "release_0_3_1_icon"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "release/0.3.1/win-unpacked/"
+    }
+  ]
 }
