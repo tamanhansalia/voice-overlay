@@ -72,7 +72,7 @@ export function useRecorder(initialSettings: AppSettings | null) {
               
               if (command.type === 'fix-grammar') {
                 await stop();
-                if (!settings.aiEnabled) {
+                if (!settings.aiEnabled && !settings.blackboxEnabled) {
                   setError('AI features are disabled');
                   setState('error');
                   setTimeout(() => {
@@ -83,7 +83,12 @@ export function useRecorder(initialSettings: AppSettings | null) {
                 setState('processing');
                 try {
                   const original = await window.api.readClipboard();
-                  const fixed = await window.api.askAI(original, 'Fix grammar, spelling, and clarity. Maintain tone. Return ONLY the fixed text.');
+                  let fixed: string;
+                  if (settings.blackboxEnabled) {
+                    fixed = await window.api.askBlackbox(original, 'Fix grammar, spelling, and clarity. Maintain tone. Return ONLY the fixed text.');
+                  } else {
+                    fixed = await window.api.askAI(original, 'Fix grammar, spelling, and clarity. Maintain tone. Return ONLY the fixed text.');
+                  }
                   await window.api.injectText(fixed);
                   if (settings.soundEffectsEnabled) {
                     playCommandSound(settings.soundEffectsVolume);
@@ -101,7 +106,7 @@ export function useRecorder(initialSettings: AppSettings | null) {
 
               if (command.type === 'describe-screen') {
                 await stop();
-                if (!settings.aiEnabled) {
+                if (!settings.aiEnabled && !settings.blackboxEnabled) {
                   setError('AI features are disabled');
                   setState('error');
                   setTimeout(() => {
@@ -112,7 +117,12 @@ export function useRecorder(initialSettings: AppSettings | null) {
                 setState('processing');
                 try {
                   const screenshot = await window.api.captureScreen();
-                  const description = await window.api.askAI(screenshot, 'Describe this screenshot briefly and accurately.');
+                  let description: string;
+                  if (settings.blackboxEnabled) {
+                    description = await window.api.askBlackbox(screenshot, 'Describe this screenshot briefly and accurately.');
+                  } else {
+                    description = await window.api.askAI(screenshot, 'Describe this screenshot briefly and accurately.');
+                  }
                   await window.api.injectText(description);
                   if (settings.soundEffectsEnabled) {
                     playCommandSound(settings.soundEffectsVolume);

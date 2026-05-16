@@ -240,6 +240,39 @@ function registerIpc() {
     return data.choices[0].message.content.trim();
   });
 
+  ipcMain.handle(IPC.askBlackbox, async (_e, prompt: string, system: string) => {
+    const { blackboxApiKey, blackboxModel } = settingsStore.getAll();
+    if (!blackboxApiKey) throw new Error('Blackbox API key missing');
+
+    const isImage = prompt.startsWith('data:image');
+    const userContent = isImage 
+      ? [
+          { type: 'text', text: 'Describe what you see in this screenshot briefly and accurately.' },
+          { type: 'image_url', image_url: { url: prompt } }
+        ]
+      : prompt;
+
+    const res = await fetch('https://api.blackbox.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${blackboxApiKey}`
+      },
+      body: JSON.stringify({
+        model: blackboxModel || 'gpt-4o',
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: userContent }
+        ],
+        temperature: 0.3
+      })
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    return data.choices[0].message.content.trim();
+  });
+
   ipcMain.handle(IPC.getLogs, () => logger.getHistory());
   ipcMain.handle(IPC.clearLogs, () => logger.clear());
 

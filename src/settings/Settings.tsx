@@ -152,6 +152,35 @@ export function Settings() {
                 </Field>
               )}
             </div>
+            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '20px', marginTop: '20px' }}>
+              <Toggle label="Blackbox AI Support" checked={s.blackboxEnabled} onChange={(v: boolean) => update({ blackboxEnabled: v })} />
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                Use Blackbox AI (api.blackbox.ai) for voice commands instead of OpenAI.
+              </p>
+              {s.blackboxEnabled && (
+                <>
+                  <Field label="Blackbox API Key">
+                    <input
+                      type="password"
+                      value={s.blackboxApiKey}
+                      onChange={(e) => debouncedUpdate({ blackboxApiKey: e.target.value })}
+                      placeholder="pk-..."
+                    />
+                  </Field>
+                  <Field label="Blackbox Model">
+                    <input
+                      type="text"
+                      value={s.blackboxModel}
+                      onChange={(e) => debouncedUpdate({ blackboxModel: e.target.value })}
+                      placeholder="gpt-4o"
+                    />
+                    <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                      Common models: gpt-4o, blackbox-ai, claude-3-5-sonnet
+                    </p>
+                  </Field>
+                </>
+              )}
+            </div>
           </div>
         </section>
 

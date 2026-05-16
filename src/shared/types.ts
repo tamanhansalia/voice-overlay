@@ -26,6 +26,12 @@ export interface AppSettings {
   deepgramApiKey: string;
   /** API key for OpenAI (if Whisper API used). */
   openAiApiKey: string;
+  /** API key for Blackbox AI. */
+  blackboxApiKey: string;
+  /** Model to use for Blackbox AI. */
+  blackboxModel: string;
+  /** Whether Blackbox AI is enabled for commands. */
+  blackboxEnabled: boolean;
   /** Position (persisted) of the floating overlay. */
   overlayPosition: { x: number; y: number } | null;
   /** Whether to play sound effects. */
@@ -52,6 +58,9 @@ export const DEFAULT_SETTINGS: AppSettings = {
   autoLaunch: false,
   deepgramApiKey: '',
   openAiApiKey: '',
+  blackboxApiKey: '',
+  blackboxModel: 'gpt-4o',
+  blackboxEnabled: false,
   overlayPosition: null,
   soundEffectsEnabled: true,
   soundEffectsVolume: 0.5,
@@ -90,6 +99,7 @@ export const IPC = {
   transcribeAudio: 'speech:transcribe',
   executeCommand: 'execute-command',
   askAI: 'ask-ai',
+  askBlackbox: 'ask-blackbox',
   readClipboard: 'read-clipboard',
   captureScreen: 'capture-screen',
   // Main -> renderer (overlay)

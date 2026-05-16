@@ -11,6 +11,7 @@ declare global {
       readClipboard(): Promise<string>;
       executeCommand(commandType: string): Promise<void>;
       askAI(prompt: string, system: string): Promise<string>;
+      askBlackbox(prompt: string, system: string): Promise<string>;
       captureScreen(): Promise<string>;
       onHotkey(cb: () => void): () => void;
       onHotkeyReleased(cb: () => void): () => void;

@@ -31,6 +31,9 @@ const api = {
   askAI: (prompt: string, system: string): Promise<string> =>
     ipcRenderer.invoke(IPC.askAI, prompt, system),
 
+  askBlackbox: (prompt: string, system: string): Promise<string> =>
+    ipcRenderer.invoke(IPC.askBlackbox, prompt, system),
+
   captureScreen: (): Promise<string> =>
     ipcRenderer.invoke(IPC.captureScreen),
 
