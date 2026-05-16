@@ -351,6 +351,42 @@ button.danger-btn:hover {
   border-color: rgba(255, 107, 107, 0.3);
 }
 
+/* ---- Position Reset ---- */
+.position-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coord-value {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: var(--bg-input);
+  padding: 8px 12px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border-subtle);
+  flex: 1;
+}
+
+button.secondary-btn {
+  padding: 9px 16px;
+  border-radius: var(--radius-s);
+  background: rgba(110, 168, 254, 0.08);
+  border: 1px solid rgba(110, 168, 254, 0.2);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  transition: var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+button.secondary-btn:hover {
+  background: rgba(110, 168, 254, 0.15);
+  border-color: rgba(110, 168, 254, 0.35);
+}
+
 /* ---- History ---- */
 .history-item {
   transition: background 120ms ease;

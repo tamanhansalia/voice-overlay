@@ -27,6 +27,11 @@ export function Settings() {
     window.api.getSettings().then(setS);
   }, []);
 
+  useEffect(() => {
+    const off = window.api.onSettingsChanged((newSettings) => setS(newSettings));
+    return () => off();
+  }, []);
+
   useEffect(() => () => { if (debounceRef.current) clearTimeout(debounceRef.current); }, []);
 
   // Immediate save — for toggles and radio buttons.
@@ -255,6 +260,22 @@ export function Settings() {
           <h2><SystemIcon /> Application</h2>
           <div className="card">
             <Toggle label="Launch on Windows login" checked={s.autoLaunch} onChange={(v: boolean) => update({ autoLaunch: v })} />
+            <div className="field">
+              <label>Overlay Position</label>
+              <div className="position-display">
+                <span className="coord-value">
+                  {s.overlayPosition
+                    ? `X: ${s.overlayPosition.x}, Y: ${s.overlayPosition.y}`
+                    : 'Default position'}
+                </span>
+                <button className="secondary-btn" onClick={() => window.api.resetOverlayPosition()}>
+                  Reset to Default
+                </button>
+              </div>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                Resets the floating overlay to the bottom-right corner of your screen.
+              </p>
+            </div>
             <button className="danger-btn" onClick={() => window.api.quitApp()}>Terminate Application</button>
           </div>
         </section>
