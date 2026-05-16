@@ -36,19 +36,14 @@ export function Overlay() {
 
   const handleDragStop = useCallback(() => {
     window.api.stopDrag();
-    // Reset after a short delay so a simple click doesn't trigger toggle
+    // If pointer never moved, treat as a click on the orb
+    if (!isDraggingRef.current) toggle();
     setTimeout(() => { isDraggingRef.current = false; }, 50);
-  }, []);
+  }, [toggle]);
 
   const handlePointerMove = useCallback(() => {
     isDraggingRef.current = true;
   }, []);
-
-  const handleOrbClick = useCallback(() => {
-    // If we just finished dragging, don't toggle
-    if (isDraggingRef.current) return;
-    toggle();
-  }, [toggle]);
 
   if (!settings) return null;
 
@@ -71,7 +66,6 @@ export function Overlay() {
       <button
         className="orb"
         title={'Voice Overlay (' + settings.hotkey + ')'}
-        onClick={handleOrbClick}
       >
         <div className="icon-wrap">
           {state === 'listening' && settings.waveformEnabled ? (
