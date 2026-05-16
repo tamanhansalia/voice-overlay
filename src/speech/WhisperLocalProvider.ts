@@ -6,12 +6,14 @@ export class WhisperLocalProvider implements ISpeechProvider {
   readonly name = 'Whisper (local, offline)';
   private rec: MediaRecorder | null = null;
   private stream: MediaStream | null = null;
+  private audioCtx: AudioContext | null = null;
   private stopped = false;
 
   constructor(private lang: string) {}
 
   async start(cb: SpeechCallbacks): Promise<void> {
     this.stopped = false;
+    this.audioCtx = new AudioContext({ sampleRate: 16000 });
 
     let stream: MediaStream;
     try {
@@ -22,8 +24,26 @@ export class WhisperLocalProvider implements ISpeechProvider {
     }
     this.stream = stream;
 
+    // Add volume analysis
+    const analyser = this.audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    const source = this.audioCtx.createMediaStreamSource(stream);
+    source.connect(analyser);
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    const checkVolume = () => {
+      if (this.stopped || !this.audioCtx) return;
+      analyser.getByteFrequencyData(dataArray);
+      let sum = 0;
+      for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+      const avg = sum / dataArray.length;
+      cb.onVolume?.(Math.min(1, avg / 128));
+      requestAnimationFrame(checkVolume);
+    };
+    checkVolume();
+
     const startChunk = () => {
-      if (this.stopped) {
+      if (this.stopped || !this.audioCtx) {
         stream.getTracks().forEach((t) => t.stop());
         cb.onEnd?.();
         return;
@@ -39,21 +59,16 @@ export class WhisperLocalProvider implements ISpeechProvider {
         // Start next chunk immediately — no gap while transcribing.
         startChunk();
 
-        if (this.stopped) return;
+        if (this.stopped || !this.audioCtx) return;
 
         // Transcribe previous chunk in parallel with new recording.
         try {
           const blob = new Blob(chunks, { type: recorder.mimeType });
           const arrayBuf = await blob.arrayBuffer();
-          const audioCtx = new AudioContext({ sampleRate: 16000 });
-          try {
-            const decoded = await audioCtx.decodeAudioData(arrayBuf);
-            const float32 = decoded.getChannelData(0);
-            const text = await window.api.transcribeAudio(float32, this.lang);
-            if (text && !this.stopped) cb.onFinal(text);
-          } finally {
-            audioCtx.close();
-          }
+          const decoded = await this.audioCtx.decodeAudioData(arrayBuf);
+          const float32 = decoded.getChannelData(0);
+          const text = await window.api.transcribeAudio(float32, this.lang);
+          if (text && !this.stopped) cb.onFinal(text);
         } catch (e) {
           console.error('[WhisperLocal] chunk error:', e);
         }
@@ -74,5 +89,9 @@ export class WhisperLocalProvider implements ISpeechProvider {
     this.rec = null;
     this.stream?.getTracks().forEach((t) => t.stop());
     this.stream = null;
+    if (this.audioCtx) {
+      await this.audioCtx.close();
+      this.audioCtx = null;
+    }
   }
 }

@@ -41,7 +41,7 @@ export class DeepgramProvider implements ISpeechProvider {
     const url = 'wss://api.deepgram.com/v1/listen?' + params.toString();
     this.ws = new WebSocket(url, ['token', this.apiKey]);
 
-    this.ws.onopen = () => this.startAudioPipe();
+    this.ws.onopen = () => this.startAudioPipe(cb);
     this.ws.onerror = () => {
       cb.onError?.(new Error('Deepgram WebSocket error'));
       this.stop();
@@ -63,23 +63,68 @@ export class DeepgramProvider implements ISpeechProvider {
     };
   }
 
-  private startAudioPipe() {
+  private startAudioPipe(cb: SpeechCallbacks) {
     if (!this.stream || !this.ws) return;
-    this.audioCtx = new AudioContext({ sampleRate: 16000 });
+    
+    // Create at hardware rate to avoid browser resampling bugs, then we'll downsample.
+    this.audioCtx = new AudioContext();
     const source = this.audioCtx.createMediaStreamSource(this.stream);
-    // ScriptProcessor is deprecated but universally supported; for production
-    // swap for an AudioWorkletNode shipped in its own file.
+    const hardwareRate = this.audioCtx.sampleRate;
+    
+    // Add volume analysis
+    const analyser = this.audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    source.connect(analyser);
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    const checkVolume = () => {
+      if (!this.audioCtx || !this.ws) return;
+      analyser.getByteFrequencyData(dataArray);
+      let sum = 0;
+      for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+      const avg = sum / dataArray.length;
+      cb.onVolume?.(Math.min(1, avg / 128));
+      requestAnimationFrame(checkVolume);
+    };
+    checkVolume();
+    
+    // We want 16000Hz for Deepgram.
+    const targetRate = 16000;
+    
     this.processor = this.audioCtx.createScriptProcessor(4096, 1, 1);
     source.connect(this.processor);
     this.processor.connect(this.audioCtx.destination);
+
     this.processor.onaudioprocess = (e) => {
       if (this.ws?.readyState !== WebSocket.OPEN) return;
+      
       const input = e.inputBuffer.getChannelData(0);
-      const pcm = new Int16Array(input.length);
-      for (let i = 0; i < input.length; i++) {
-        const s = Math.max(-1, Math.min(1, input[i]));
-        pcm[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+      
+      // Simple downsampling (picking every Nth sample if hardwareRate is a multiple, 
+      // or linear interpolation for others). Linear interpolation is safer.
+      const ratio = hardwareRate / targetRate;
+      const targetLength = Math.round(input.length / ratio);
+      const pcm = new Int16Array(targetLength);
+      
+      for (let i = 0; i < targetLength; i++) {
+        const index = i * ratio;
+        const low = Math.floor(index);
+        const high = Math.ceil(index);
+        const weight = index - low;
+        
+        // Linear interpolation
+        let s: number;
+        if (high < input.length) {
+          s = input[low] * (1 - weight) + input[high] * weight;
+        } else {
+          s = input[low];
+        }
+        
+        // Clamp and convert to Int16
+        const clamped = Math.max(-1, Math.min(1, s));
+        pcm[i] = clamped < 0 ? clamped * 0x8000 : clamped * 0x7fff;
       }
+      
       this.ws.send(pcm.buffer);
     };
   }

@@ -406,37 +406,37 @@ function TranscriptionHistory() {
   };
 
   if (history.length === 0) {
-    return (
-      <div className="card" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '12px' }}>
+  return (
+      <div className="card" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', fontWeight: 400 }}>
         No recent transcriptions found.
       </div>
     );
   }
 
   return (
-    <div className="card" style={{ padding: '8px' }}>
-      <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
-        <button 
-          onClick={clearAll}
-          style={{ fontSize: '11px', color: 'var(--danger)', cursor: 'pointer', background: 'none', border: 'none', fontWeight: 600 }}
-        >
-          CLEAR ALL
-        </button>
+      <div className="card" style={{ padding: '8px' }}>
+        <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+          <button 
+            onClick={clearAll}
+            style={{ fontSize: '11px', color: 'var(--danger)', cursor: 'pointer', background: 'none', border: 'none', fontWeight: 500 }}
+          >
+            Clear All
+          </button>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '6px' }}>
+          {history.map((t, i) => (
+            <div key={i} className="history-item" style={{ padding: '8px 12px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', fontSize: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'default' }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '12px', color: 'var(--text-secondary)' }}>{t}</span>
+              <button 
+                onClick={() => window.api.copyToClipboard(t)}
+                style={{ padding: '4px 10px', fontSize: '11px', borderRadius: '4px', background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', cursor: 'pointer', fontWeight: 500 }}
+              >
+                Copy
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '8px' }}>
-        {history.map((t, i) => (
-          <div key={i} className="history-item" style={{ padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', fontSize: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '12px' }}>{t}</span>
-            <button 
-              onClick={() => window.api.copyToClipboard(t)}
-              style={{ padding: '4px 8px', fontSize: '10px', borderRadius: '4px', background: 'var(--bg-card)', border: '1px solid var(--border-soft)', color: '#fff', cursor: 'pointer' }}
-            >
-              Copy
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 

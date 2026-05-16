@@ -1,34 +1,43 @@
 :root {
-  /* Design Tokens - Modern Minimal Palette */
-  --bg-app: rgba(10, 10, 14, 0.65);
-  --bg-sidebar: rgba(255, 255, 255, 0.03);
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.07);
-  --bg-input: rgba(0, 0, 0, 0.2);
-  
-  --border-subtle: rgba(255, 255, 255, 0.06);
+  /* Design Tokens - Clean Professional Palette */
+  --bg-app: #1a1a1a;
+  --bg-sidebar: #202020;
+  --bg-card: #252525;
+  --bg-card-hover: #2a2a2a;
+  --bg-input: #1e1e1e;
+
+  --border-subtle: rgba(255, 255, 255, 0.05);
   --border-soft: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(255, 255, 255, 0.12);
-  --bg-glass: rgba(20, 20, 28, 0.72);
-  
-  --accent: #7c5cff;
-  --accent-soft: rgba(124, 92, 255, 0.15);
-  --accent-glow: rgba(124, 92, 255, 0.4);
-  
-  --text-primary: #f4f4f7;
-  --text-secondary: #9b9ba8;
-  --text-muted: #62626e;
-  
-  --success: #4ade80;
-  --danger: #ff5d6a;
-  
+  --border-hover: rgba(255, 255, 255, 0.14);
+  --border-active: rgba(255, 255, 255, 0.18);
+  --bg-glass: rgba(30, 30, 30, 0.85);
+
+  /* Neutral accent — soft blue-gray, not neon */
+  --accent: #6ea8fe;
+  --accent-soft: rgba(110, 168, 254, 0.12);
+  --accent-glow: rgba(110, 168, 254, 0.35);
+  --accent-hover: #8bbaff;
+
+  --text-primary: #ececec;
+  --text-secondary: #a0a0a0;
+  --text-muted: #6e6e6e;
+
+  --success: #3ddc84;
+  --danger: #ff6b6b;
+
+  /* Surface tokens for overlay */
+  --surface-elevated: #242424;
+  --surface-active: #2d2d2d;
+  --surface-danger: rgba(255, 107, 107, 0.08);
+  --surface-tooltip: #2a2a2a;
+
   --radius-s: 6px;
   --radius-m: 10px;
   --radius-l: 14px;
-  
+
   --font-main: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 120ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-smooth: 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {

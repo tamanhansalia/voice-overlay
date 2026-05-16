@@ -59,9 +59,6 @@ const api = {
   startDrag: () => ipcRenderer.send(IPC.dragStart),
   stopDrag: () => ipcRenderer.send(IPC.dragStop),
 
-  // Lets the overlay renderer toggle mouse pass-through when cursor leaves interactive areas.
-  setIgnoreMouseEvents: (ignore: boolean) => ipcRenderer.send(IPC.setIgnoreMouseEvents, ignore),
-
   // Whisper transcription (runs in main process — avoids WASM/ONNX issues in renderer)
   transcribeAudio: (audio: Float32Array, lang?: string): Promise<string> =>
     ipcRenderer.invoke(IPC.transcribeAudio, audio, lang),

@@ -92,7 +92,6 @@ export const IPC = {
   askAI: 'ask-ai',
   readClipboard: 'read-clipboard',
   captureScreen: 'capture-screen',
-  setIgnoreMouseEvents: 'set-ignore-mouse-events',
   // Main -> renderer (overlay)
   hotkeyPressed: 'hotkey-pressed',
   hotkeyReleased: 'hotkey-released',

@@ -6,113 +6,123 @@
   user-select: none;
 }
 
+/* ---- Orb ---- */
 .orb {
   position: relative;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: 1px solid var(--border-soft);
-  background: var(--bg-card);
-  color: #fff;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
   display: grid;
   place-items: center;
   cursor: pointer;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  transition: transform 120ms ease, box-shadow 240ms ease, background 240ms ease;
-  -webkit-app-region: no-drag;
+  transition:
+    transform 120ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms ease,
+    background 240ms ease,
+    border-color 240ms ease;
+  z-index: 2;
 }
-.orb:hover { transform: translateY(-1px) scale(1.03); }
-.orb:active { transform: scale(0.97); }
+.orb:hover {
+  transform: scale(1.06);
+  border-color: var(--border-hover);
+}
+.orb:active {
+  transform: scale(0.96);
+}
 
-/* Drag ring around the orb. Uses IPC-based dragging because focusable:false
-   windows don't support -webkit-app-region:drag. The near-zero background
-   makes the ring non-transparent so Electron delivers pointer events here. */
-.drag-handle {
-  position: absolute;
-  inset: -20px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.01);
-  cursor: grab;
-  -webkit-app-region: no-drag;
+/* ---- Icon ---- */
+.icon-wrap {
+  display: grid;
+  place-items: center;
+  color: inherit;
+  transition: color 200ms ease;
 }
-.drag-handle:active {
+
+/* ---- Drag ring (invisible, wider grab area around the orb) ---- */
+.drag-ring {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  cursor: grab;
+  z-index: 3;
+  background: transparent;
+}
+.drag-ring:active {
   cursor: grabbing;
 }
 
-.mic { z-index: 2; }
-
-.pulse {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 240ms ease;
+/* ---- States ---- */
+.overlay-root[data-state="idle"] .orb {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
-/* States */
 .overlay-root[data-state="listening"] .orb {
-  background: var(--bg-card);
+  background: var(--surface-active);
   border-color: var(--accent);
   box-shadow:
-    0 0 20px var(--accent-glow),
-    inset 0 0 12px var(--accent-glow);
+    0 0 0 1px var(--accent-glow),
+    0 0 28px var(--accent-glow);
+  transform: scale(var(--volume-scale, 1));
 }
-.overlay-root[data-state="listening"] .pulse {
-  opacity: 1;
-  border: 2px solid var(--accent);
-  animation: breathe 2s ease-in-out infinite;
-}
-.overlay-root[data-state="processing"] .orb {
-  background: var(--bg-card);
-}
-.overlay-root[data-state="processing"] .mic {
-  animation: spin 2s linear infinite;
-  opacity: 0.7;
-}
-.overlay-root[data-state="error"] .orb {
-  background: rgba(255, 93, 106, 0.1);
-  border-color: var(--danger);
-  box-shadow: 0 0 15px rgba(255, 93, 106, 0.3);
+.overlay-root[data-state="listening"] .icon-wrap {
+  color: #fff;
 }
 
-@keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.15); opacity: 0.6; }
+.overlay-root[data-state="processing"] .orb {
+  border-color: var(--accent);
+  opacity: 0.85;
 }
+.overlay-root[data-state="processing"] .mic {
+  animation: spin 1.6s linear infinite;
+  opacity: 0.6;
+}
+
+.overlay-root[data-state="error"] .orb {
+  border-color: var(--danger);
+  background: var(--surface-danger);
+}
+.overlay-root[data-state="error"] .icon-wrap {
+  color: var(--danger);
+}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* Live transcript ticker shown under the orb during listening */
+/* ---- Ticker ---- */
 .ticker {
   position: absolute;
-  bottom: 24px;
+  bottom: 8px;
   left: 50%;
-  transform: translate(-50%, 0);
-  background: var(--bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-soft);
+  transform: translateX(-50%);
+  background: var(--surface-tooltip);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   font-size: 11px;
+  font-weight: 450;
+  line-height: 1.4;
   padding: 6px 12px;
-  border-radius: 20px;
-  max-width: 144px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
-  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: 8px;
+  max-width: 148px;
+  width: max-content;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 10;
+  letter-spacing: 0.01em;
 }
 
 @keyframes slideUp {
   from {
-    transform: translate(-50%, 10px);
+    transform: translate(-50%, 8px);
     opacity: 0;
   }
   to {
@@ -120,5 +130,9 @@
     opacity: 1;
   }
 }
-.ticker .err { color: var(--danger); }
+
+.ticker .err {
+  color: var(--danger);
+  font-weight: 500;
+}
 

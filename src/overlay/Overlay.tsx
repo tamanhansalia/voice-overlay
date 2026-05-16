@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import type { AppSettings } from '../shared/types';
 import { useRecorder } from './useRecorder';
 import { Waveform } from './Waveform';
@@ -7,20 +7,48 @@ import './Overlay.css';
 /**
  * The floating overlay component.
  * Displays a 56x56 circular "orb" within a 160x160 transparent window.
- * The window size provides padding for visual effects like glows and animations
- * without clipping the content.
  */
 export function Overlay() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
   const { state, partial, volume, error, toggle } = useRecorder(settings);
   const tickerRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
 
-  // Load settings once and listen for changes.
   useEffect(() => {
     window.api.getSettings().then(setSettings);
     const off = window.api.onSettingsChanged(setSettings);
     return () => off();
   }, []);
+
+  // Disable right-click entirely on the overlay window
+  useEffect(() => {
+    const handler = (e: MouseEvent) => e.preventDefault();
+    window.addEventListener('contextmenu', handler);
+    return () => window.removeEventListener('contextmenu', handler);
+  }, []);
+
+  const handleDragStart = useCallback((e: React.PointerEvent) => {
+    e.preventDefault();
+    isDraggingRef.current = false;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    window.api.startDrag();
+  }, []);
+
+  const handleDragStop = useCallback(() => {
+    window.api.stopDrag();
+    // Reset after a short delay so a simple click doesn't trigger toggle
+    setTimeout(() => { isDraggingRef.current = false; }, 50);
+  }, []);
+
+  const handlePointerMove = useCallback(() => {
+    isDraggingRef.current = true;
+  }, []);
+
+  const handleOrbClick = useCallback(() => {
+    // If we just finished dragging, don't toggle
+    if (isDraggingRef.current) return;
+    toggle();
+  }, [toggle]);
 
   if (!settings) return null;
 
@@ -30,30 +58,21 @@ export function Overlay() {
       data-state={state}
       style={{ '--volume-scale': 1 + volume * 0.5 } as any}
     >
+      {/* Invisible drag ring around the orb — wider hit area for easy grabbing */}
+      <div
+        className="drag-ring"
+        aria-hidden
+        onPointerDown={handleDragStart}
+        onPointerUp={handleDragStop}
+        onPointerMove={handlePointerMove}
+        onPointerCancel={handleDragStop}
+      />
+
       <button
         className="orb"
         title={'Voice Overlay (' + settings.hotkey + ')'}
-        onClick={(e) => {
-          // Single click toggles. Drag is handled by the window region below.
-          if ((e.target as HTMLElement).closest('.drag-handle')) return;
-          toggle();
-        }}
-        onContextMenu={(e) => {
-          e.preventDefault();
-          window.api.openSettings();
-        }}
+        onClick={handleOrbClick}
       >
-        <span
-          className="drag-handle"
-          aria-hidden
-          onPointerDown={(e) => {
-            e.preventDefault();
-            e.currentTarget.setPointerCapture(e.pointerId);
-            window.api.startDrag();
-          }}
-          onPointerUp={() => window.api.stopDrag()}
-          onPointerCancel={() => window.api.stopDrag()}
-        />
         <div className="icon-wrap">
           {state === 'listening' && settings.waveformEnabled ? (
             <Waveform volume={volume} active={state === 'listening'} />
@@ -66,7 +85,6 @@ export function Overlay() {
             </svg>
           )}
         </div>
-        <span className="pulse" aria-hidden />
       </button>
 
       {(partial || error) ? (

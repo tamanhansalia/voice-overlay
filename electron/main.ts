@@ -80,10 +80,6 @@ function createOverlay(): BrowserWindow {
   win.setAlwaysOnTop(true, 'screen-saver');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-  // Pass mouse events through the transparent regions by default.
-  // The renderer toggles this off when the cursor is over the orb/drag-handle.
-  win.setIgnoreMouseEvents(true, { forward: true });
-
   if (process.env['ELECTRON_RENDERER_URL']) {
     win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/overlay.html`);
   } else {
@@ -249,12 +245,6 @@ function registerIpc() {
   // Custom drag for focusable:false windows (CSS -webkit-app-region:drag is blocked by the OS
   // when the window has no focus capability). We poll cursor position at ~120 fps and shift
   // the window by the delta so the overlay follows the cursor naturally.
-  ipcMain.on(IPC.setIgnoreMouseEvents, (_e, ignore: boolean) => {
-    if (overlayWin && !overlayWin.isDestroyed()) {
-      overlayWin.setIgnoreMouseEvents(ignore, { forward: true });
-    }
-  });
-
   ipcMain.on(IPC.dragStart, () => {
     if (!overlayWin || dragInterval) return;
     // Disable pass-through while dragging so pointer events stay with the overlay.
@@ -274,7 +264,6 @@ function registerIpc() {
   ipcMain.on(IPC.dragStop, () => {
     if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
     if (overlayWin) {
-      overlayWin.setIgnoreMouseEvents(true, { forward: true });
       const [x, y] = overlayWin.getPosition();
       settingsStore.update({ overlayPosition: { x, y } });
     }

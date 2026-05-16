@@ -7,6 +7,7 @@ const pipes = new Map<string, Pipe>();
 const pending = new Map<string, Promise<Pipe>>();
 
 function modelId(lang: string): string {
+  if (lang === 'auto') return 'Xenova/whisper-tiny';
   return lang.startsWith('en') ? 'Xenova/whisper-tiny.en' : 'Xenova/whisper-tiny';
 }
 
@@ -30,6 +31,10 @@ async function getPipe(lang: string): Promise<Pipe> {
 
 export async function transcribeAudio(float32: Float32Array, lang = 'en-US'): Promise<string> {
   const pipe = await getPipe(lang);
-  const result = await pipe(float32, { sampling_rate: 16000 });
+  const opts: Record<string, unknown> = { sampling_rate: 16000 };
+  if (lang !== 'auto') {
+    opts.language = lang.split('-')[0];
+  }
+  const result = await pipe(float32, opts);
   return (result?.text ?? '').trim();
 }

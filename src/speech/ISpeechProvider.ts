@@ -15,6 +15,8 @@ export interface SpeechCallbacks {
   onError?: (err: Error) => void;
   /** Provider stopped on its own (e.g. silence timeout). */
   onEnd?: () => void;
+  /** Current microphone volume level (0.0 to 1.0). */
+  onVolume?: (volume: number) => void;
 }
 
 export interface ISpeechProvider {
