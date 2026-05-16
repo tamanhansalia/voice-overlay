@@ -37,7 +37,8 @@ export function Overlay() {
     if (e.button === 0) {
       e.preventDefault();
       e.stopPropagation();
-      start();
+      if (state === 'listening') stop();
+      else start();
       return;
     }
 
@@ -55,7 +56,7 @@ export function Overlay() {
     activePointerIdRef.current = e.pointerId;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     window.api.startDrag();
-  }, [start, stop]);
+  }, [state, start, stop]);
 
   const finishDrag = useCallback((e: React.PointerEvent) => {
     if (!isPointerDownRef.current || activePointerIdRef.current !== e.pointerId) return;
