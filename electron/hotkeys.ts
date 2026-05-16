@@ -95,6 +95,9 @@ export class HotkeyManager {
   constructor(private getOverlay: () => BrowserWindow | null) {
     uIOhook.on('keydown', (e) => {
       this.activeKeys.add(e.keycode);
+      if (e.keycode === UiohookKey.Backspace) {
+        this.getOverlay()?.webContents.send(IPC.stopRecordingRequested);
+      }
       this.checkState();
     });
 

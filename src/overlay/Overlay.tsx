@@ -10,11 +10,10 @@ import './Overlay.css';
  */
 export function Overlay() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
-  const { state, partial, volume, error, toggle } = useRecorder(settings);
+  const { state, partial, volume, error, start, stop } = useRecorder(settings);
   const tickerRef = useRef<HTMLDivElement>(null);
-  const isDraggingRef = useRef(false);
-  const dragRingRef = useRef<HTMLDivElement>(null);
-  const ignoreStateRef = useRef<boolean | null>(null);
+  const isPointerDownRef = useRef(false);
+  const activePointerIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     window.api.getSettings().then(setSettings);
@@ -29,45 +28,54 @@ export function Overlay() {
     return () => window.removeEventListener('contextmenu', handler);
   }, []);
 
-  // Cursor-aware mouse pass-through: mousemove is forwarded even when
-  // setIgnoreMouseEvents(true) is active, so we use it to detect when the
-  // cursor enters/leaves the drag-ring circle and toggle pass-through only
-  // at the boundary. Only sends IPC when state actually changes.
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const ring = dragRingRef.current;
-      if (!ring) return;
-      const rect = ring.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const over = Math.hypot(e.clientX - cx, e.clientY - cy) <= rect.width / 2;
-      const shouldIgnore = !over;
-      if (shouldIgnore !== ignoreStateRef.current) {
-        ignoreStateRef.current = shouldIgnore;
-        window.api.setIgnoreMouseEvents(shouldIgnore);
-      }
-    };
-    document.addEventListener('mousemove', onMove);
-    return () => document.removeEventListener('mousemove', onMove);
-  }, []);
+    const offStop = window.api.onStopRecordingRequested(stop);
+    return () => offStop();
+  }, [stop]);
 
-  const handleDragStart = useCallback((e: React.PointerEvent) => {
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.button === 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      start();
+      return;
+    }
+
+    if (e.button === 3) {
+      e.preventDefault();
+      e.stopPropagation();
+      stop();
+      return;
+    }
+
+    if (e.button !== 2) return;
     e.preventDefault();
-    isDraggingRef.current = false;
+    e.stopPropagation();
+    isPointerDownRef.current = true;
+    activePointerIdRef.current = e.pointerId;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     window.api.startDrag();
-  }, []);
+  }, [start, stop]);
 
-  const handleDragStop = useCallback(() => {
+  const finishDrag = useCallback((e: React.PointerEvent) => {
+    if (!isPointerDownRef.current || activePointerIdRef.current !== e.pointerId) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if ((e.currentTarget as HTMLElement).hasPointerCapture(e.pointerId)) {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    }
+    isPointerDownRef.current = false;
+    activePointerIdRef.current = null;
     window.api.stopDrag();
-    // If pointer never moved, treat as a click on the orb
-    if (!isDraggingRef.current) toggle();
-    setTimeout(() => { isDraggingRef.current = false; }, 50);
-  }, [toggle]);
-
-  const handlePointerMove = useCallback(() => {
-    isDraggingRef.current = true;
   }, []);
+
+  const handleDragStop = useCallback((e: React.PointerEvent) => {
+    finishDrag(e);
+  }, [finishDrag]);
+
+  const handleDragCancel = useCallback((e: React.PointerEvent) => {
+    finishDrag(e);
+  }, [finishDrag]);
 
   if (!settings) return null;
 
@@ -77,15 +85,13 @@ export function Overlay() {
       data-state={state}
       style={{ '--volume-scale': 1 + volume * 0.5 } as any}
     >
-      {/* Invisible drag ring around the orb — wider hit area for easy grabbing */}
+      {/* Invisible drag ring — grab anywhere around the orb to move the overlay */}
       <div
-        ref={dragRingRef}
         className="drag-ring"
         aria-hidden
-        onPointerDown={handleDragStart}
+        onPointerDown={handlePointerDown}
         onPointerUp={handleDragStop}
-        onPointerMove={handlePointerMove}
-        onPointerCancel={handleDragStop}
+        onPointerCancel={handleDragCancel}
       />
 
       <button

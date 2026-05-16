@@ -80,11 +80,6 @@ function createOverlay(): BrowserWindow {
   win.setAlwaysOnTop(true, 'screen-saver');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-  // Pass mouse events through transparent regions by default so the dead-zone
-  // around the orb doesn't block clicks in apps below. forward:true keeps
-  // the renderer receiving events so drag/click still work on the drag-ring.
-  win.setIgnoreMouseEvents(true, { forward: true });
-
   if (process.env['ELECTRON_RENDERER_URL']) {
     win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/overlay.html`);
   } else {
@@ -280,23 +275,35 @@ function registerIpc() {
     settingsStore.update({ overlayPosition: pos });
   });
 
-  // Custom drag for focusable:false windows (CSS -webkit-app-region:drag is blocked by the OS
-  // when the window has no focus capability). We poll cursor position at ~120 fps and shift
-  // the window by the delta so the overlay follows the cursor naturally.
-  ipcMain.on(IPC.setIgnoreMouseEvents, (_e, ignore: boolean) => {
+  ipcMain.handle(IPC.resetOverlayPosition, async () => {
+    const display = screen.getPrimaryDisplay();
+    const width = 160;
+    const height = 220;
+    const defaultPos = {
+      x: display.workArea.x + display.workArea.width - width - 24,
+      y: display.workArea.y + display.workArea.height - height - 80
+    };
+
     if (overlayWin && !overlayWin.isDestroyed()) {
-      // Always keep forward:true so mousemove keeps flowing to the renderer.
-      overlayWin.setIgnoreMouseEvents(ignore, { forward: true });
+      overlayWin.setPosition(defaultPos.x, defaultPos.y);
     }
+
+    const next = settingsStore.update({ overlayPosition: null });
+
+    BrowserWindow.getAllWindows().forEach((w) => {
+      w.webContents.send(IPC.settingsChanged, next);
+    });
+
+    return next;
   });
 
+  // Custom drag for focusable:false windows. We poll cursor position at ~120 fps
+  // and shift the window by the cursor delta so the overlay follows naturally.
   ipcMain.on(IPC.dragStart, () => {
-    if (!overlayWin || dragInterval) return;
-    // Disable pass-through while dragging so pointer events stay with the overlay.
-    overlayWin.setIgnoreMouseEvents(false);
+    if (!overlayWin || overlayWin.isDestroyed() || dragInterval) return;
     let last = screen.getCursorScreenPoint();
     dragInterval = setInterval(() => {
-      if (!overlayWin) return;
+      if (!overlayWin || overlayWin.isDestroyed()) return;
       const curr = screen.getCursorScreenPoint();
       if (curr.x !== last.x || curr.y !== last.y) {
         const [wx, wy] = overlayWin.getPosition();
@@ -308,8 +315,7 @@ function registerIpc() {
 
   ipcMain.on(IPC.dragStop, () => {
     if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
-    if (overlayWin) {
-      overlayWin.setIgnoreMouseEvents(true, { forward: true });
+    if (overlayWin && !overlayWin.isDestroyed()) {
       const [x, y] = overlayWin.getPosition();
       settingsStore.update({ overlayPosition: { x, y } });
     }

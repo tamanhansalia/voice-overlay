@@ -50,8 +50,15 @@ const api = {
     return () => ipcRenderer.removeListener(IPC.hotkeyReleased, handler);
   },
 
+  onStopRecordingRequested: (cb: () => void) => {
+    const handler = () => cb();
+    ipcRenderer.on(IPC.stopRecordingRequested, handler);
+    return () => ipcRenderer.removeListener(IPC.stopRecordingRequested, handler);
+  },
+
   // Window controls
   openSettings: () => ipcRenderer.invoke(IPC.openSettings),
+  resetOverlayPosition: (): Promise<AppSettings> => ipcRenderer.invoke(IPC.resetOverlayPosition),
   quitApp: () => ipcRenderer.invoke(IPC.quitApp),
 
   // Position tracking
@@ -61,7 +68,6 @@ const api = {
   // Window dragging (required for focusable:false windows where CSS drag doesn't work)
   startDrag: () => ipcRenderer.send(IPC.dragStart),
   stopDrag: () => ipcRenderer.send(IPC.dragStop),
-  setIgnoreMouseEvents: (ignore: boolean) => ipcRenderer.send(IPC.setIgnoreMouseEvents, ignore),
 
   // Whisper transcription (runs in main process — avoids WASM/ONNX issues in renderer)
   transcribeAudio: (audio: Float32Array, lang?: string): Promise<string> =>

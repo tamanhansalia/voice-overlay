@@ -96,16 +96,17 @@ export const IPC = {
   clearTranscriptionHistory: 'clear-transcription-history',
   dragStart: 'drag-start',
   dragStop: 'drag-stop',
-  setIgnoreMouseEvents: 'set-ignore-mouse-events',
   transcribeAudio: 'speech:transcribe',
   executeCommand: 'execute-command',
   askAI: 'ask-ai',
   askBlackbox: 'ask-blackbox',
   readClipboard: 'read-clipboard',
   captureScreen: 'capture-screen',
+  resetOverlayPosition: 'reset-overlay-position',
   // Main -> renderer (overlay)
   hotkeyPressed: 'hotkey-pressed',
   hotkeyReleased: 'hotkey-released',
+  stopRecordingRequested: 'stop-recording-requested',
   settingsChanged: 'settings-changed',
   logEvent: 'log-event'
 } as const;

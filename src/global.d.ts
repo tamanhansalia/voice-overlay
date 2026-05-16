@@ -15,12 +15,13 @@ declare global {
       captureScreen(): Promise<string>;
       onHotkey(cb: () => void): () => void;
       onHotkeyReleased(cb: () => void): () => void;
+      onStopRecordingRequested(cb: () => void): () => void;
       openSettings(): Promise<void>;
+      resetOverlayPosition(): Promise<AppSettings>;
       quitApp(): Promise<void>;
       reportOverlayMoved(pos: { x: number; y: number }): void;
       startDrag(): void;
       stopDrag(): void;
-      setIgnoreMouseEvents(ignore: boolean): void;
       transcribeAudio(audio: Float32Array, lang?: string): Promise<string>;
       getLogs(): Promise<LogEntry[]>;
       clearLogs(): Promise<void>;
