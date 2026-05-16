@@ -1,0 +1,1 @@
+{"nodes": [{"id": "src_global_d_ts", "label": "global.d.ts", "file_type": "code", "source_file": "src\\global.d.ts", "source_location": "L1"}], "edges": [{"source": "src_global_d_ts", "target": "src_shared_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\global.d.ts", "source_location": "L1", "weight": 1.0}], "raw_calls": []}

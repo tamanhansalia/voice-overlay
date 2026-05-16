@@ -1,207 +1,164 @@
-# Graph Report - .  (2026-05-14)
+# Graph Report - .  (2026-05-15)
 
 ## Corpus Check
-- Large corpus: 44 files · ~6,694,821 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
+- Large corpus: 78 files · ~14,720,897 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
 
 ## Summary
-- 89 nodes · 70 edges · 27 communities detected
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.81)
+- 70 nodes · 66 edges · 19 communities detected
+- Extraction: 79% EXTRACTED · 21% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Main Process & Settings|Main Process & Settings]]
-- [[_COMMUNITY_Logging System|Logging System]]
-- [[_COMMUNITY_Global Hotkeys|Global Hotkeys]]
-- [[_COMMUNITY_Deepgram Integration|Deepgram Integration]]
-- [[_COMMUNITY_Whisper OpenAI Integration|Whisper OpenAI Integration]]
-- [[_COMMUNITY_Text Injection|Text Injection]]
-- [[_COMMUNITY_Web Speech Integration|Web Speech Integration]]
-- [[_COMMUNITY_Local Whisper Integration|Local Whisper Integration]]
-- [[_COMMUNITY_Project Core (Readme)|Project Core (Readme)]]
-- [[_COMMUNITY_Whisper Engine|Whisper Engine]]
-- [[_COMMUNITY_Overlay UI & Recording|Overlay UI & Recording]]
-- [[_COMMUNITY_Text Injection Modes|Text Injection Modes]]
-- [[_COMMUNITY_Speech Providers|Speech Providers]]
-- [[_COMMUNITY_Auto Launch|Auto Launch]]
-- [[_COMMUNITY_System Tray|System Tray]]
-- [[_COMMUNITY_Settings UI|Settings UI]]
-- [[_COMMUNITY_Speech Provider Factory|Speech Provider Factory]]
-- [[_COMMUNITY_Overlay HTML|Overlay HTML]]
-- [[_COMMUNITY_Settings HTML|Settings HTML]]
-- [[_COMMUNITY_Vite Config|Vite Config]]
-- [[_COMMUNITY_Preload Script|Preload Script]]
-- [[_COMMUNITY_Global Types|Global Types]]
-- [[_COMMUNITY_Overlay Entry|Overlay Entry]]
-- [[_COMMUNITY_Settings Entry|Settings Entry]]
-- [[_COMMUNITY_Shared Types|Shared Types]]
+- [[_COMMUNITY_Feature Plans & Design Specs|Feature Plans & Design Specs]]
+- [[_COMMUNITY_Sound & Speech Provider Logic|Sound & Speech Provider Logic]]
+- [[_COMMUNITY_Global Hotkey Management|Global Hotkey Management]]
+- [[_COMMUNITY_Text Injection Services|Text Injection Services]]
+- [[_COMMUNITY_Deepgram Provider Integration|Deepgram Provider Integration]]
+- [[_COMMUNITY_Main Process & Window Management|Main Process & Window Management]]
+- [[_COMMUNITY_Whisper Engine (LocalCloud)|Whisper Engine (Local/Cloud)]]
+- [[_COMMUNITY_Settings UI Logic|Settings UI Logic]]
+- [[_COMMUNITY_Tray Icon & System Menu|Tray Icon & System Menu]]
+- [[_COMMUNITY_Overlay UI Layout|Overlay UI Layout]]
+- [[_COMMUNITY_Recorder Hook (State Machine)|Recorder Hook (State Machine)]]
+- [[_COMMUNITY_Waveform Visualization|Waveform Visualization]]
+- [[_COMMUNITY_Voice Command Processing|Voice Command Processing]]
+- [[_COMMUNITY_System Robustness (ClipboardIPC)|System Robustness (Clipboard/IPC)]]
+- [[_COMMUNITY_Preload IPC Bridge|Preload IPC Bridge]]
+- [[_COMMUNITY_Global Type Definitions|Global Type Definitions]]
+- [[_COMMUNITY_Shared Types & Constants|Shared Types & Constants]]
 - [[_COMMUNITY_Speech Provider Interface|Speech Provider Interface]]
-- [[_COMMUNITY_App Icon|App Icon]]
+- [[_COMMUNITY_Voice Command Concepts|Voice Command Concepts]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Logger` - 6 edges
-2. `HotkeyManager` - 5 edges
-3. `DeepgramProvider` - 5 edges
-4. `WhisperOpenAIProvider` - 5 edges
-5. `SettingsStore` - 4 edges
-6. `TextInjector` - 4 edges
-7. `WebSpeechProvider` - 4 edges
-8. `WhisperLocalProvider` - 4 edges
-9. `getPipe()` - 3 edges
-10. `Voice Overlay` - 3 edges
+1. `Enhanced Voice Overlay Features Plan` - 8 edges
+2. `HotkeyManager` - 6 edges
+3. `TextInjector` - 5 edges
+4. `DeepgramProvider` - 5 edges
+5. `getCtx()` - 4 edges
+6. `playStartSound()` - 4 edges
+7. `playStopSound()` - 4 edges
+8. `playCommandSound()` - 4 edges
+9. `WhisperLocalProvider` - 4 edges
+10. `Visual Waveform Component Implementation Plan` - 4 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Overlay()` --calls--> `useRecorder()`  [INFERRED]
-  src\overlay\Overlay.tsx → src\overlay\useRecorder.ts
-
-## Hyperedges (group relationships)
-- **Application Technology Stack** — readme_electron, readme_react, readme_typescript [EXTRACTED 1.00]
-- **Speech Backend Providers** — readme_web_speech, readme_deepgram, readme_whisper_openai [EXTRACTED 0.95]
-- **Text Injection Modes** — readme_paste_mode, readme_type_mode, readme_copy_only [EXTRACTED 0.95]
+- `Enhanced Voice Overlay Features Plan` --references--> `Enhance Sound Cues Implementation Plan`  [EXTRACTED]
+  docs/superpowers/plans/2026-05-15-enhanced-features.md → docs/superpowers/plans/2026-05-15-enhance-sound-cues.md
+- `Enhanced Voice Overlay Features Plan` --references--> `Expand Settings Schema Implementation Plan`  [EXTRACTED]
+  docs/superpowers/plans/2026-05-15-enhanced-features.md → docs/superpowers/plans/2026-05-15-expand-settings-schema.md
+- `Enhanced Voice Overlay Features Plan` --references--> `Update Voice Command Processor Plan`  [EXTRACTED]
+  docs/superpowers/plans/2026-05-15-enhanced-features.md → docs/superpowers/plans/2026-05-15-update-voice-command-processor.md
+- `Enhanced Voice Overlay Features Plan` --references--> `Integrate Waveform and Settings into Overlay Plan`  [EXTRACTED]
+  docs/superpowers/plans/2026-05-15-enhanced-features.md → docs/superpowers/plans/2026-05-15-integrate-waveform-overlay.md
+- `Enhanced Voice Overlay Features Plan` --references--> `Revamp Settings UI Implementation Plan`  [EXTRACTED]
+  docs/superpowers/plans/2026-05-15-enhanced-features.md → docs/superpowers/plans/2026-05-15-revamp-settings-ui.md
 
 ## Communities
 
-### Community 0 - "Main Process & Settings"
-Cohesion: 0.25
-Nodes (2): createOverlay(), SettingsStore
+### Community 0 - "Feature Plans & Design Specs"
+Cohesion: 0.17
+Nodes (13): AI Features, Sound Cues (Earcons), Visual Waveform, Enhance Sound Cues Implementation Plan, Enhanced Voice Overlay Features Plan, Expand Settings Schema Implementation Plan, Settings UI and History Logic Fix Plan, Integrate Waveform and Settings into Overlay Plan (+5 more)
 
-### Community 1 - "Logging System"
-Cohesion: 0.33
-Nodes (1): Logger
+### Community 1 - "Sound & Speech Provider Logic"
+Cohesion: 0.38
+Nodes (5): getCtx(), playCommandSound(), playStartSound(), playStopSound(), WhisperLocalProvider
 
-### Community 2 - "Global Hotkeys"
-Cohesion: 0.4
+### Community 2 - "Global Hotkey Management"
+Cohesion: 0.29
 Nodes (1): HotkeyManager
 
-### Community 3 - "Deepgram Integration"
+### Community 3 - "Text Injection Services"
+Cohesion: 0.47
+Nodes (1): TextInjector
+
+### Community 4 - "Deepgram Provider Integration"
 Cohesion: 0.33
 Nodes (1): DeepgramProvider
 
-### Community 4 - "Whisper OpenAI Integration"
-Cohesion: 0.4
-Nodes (1): WhisperOpenAIProvider
-
-### Community 5 - "Text Injection"
+### Community 5 - "Main Process & Window Management"
 Cohesion: 0.5
-Nodes (1): TextInjector
+Nodes (0): 
 
-### Community 6 - "Web Speech Integration"
-Cohesion: 0.4
-Nodes (1): WebSpeechProvider
-
-### Community 7 - "Local Whisper Integration"
-Cohesion: 0.4
-Nodes (1): WhisperLocalProvider
-
-### Community 8 - "Project Core (Readme)"
-Cohesion: 0.4
-Nodes (5): Electron, React, TypeScript, uiohook-napi, Voice Overlay
-
-### Community 9 - "Whisper Engine"
+### Community 6 - "Whisper Engine (Local/Cloud)"
 Cohesion: 0.83
 Nodes (3): getPipe(), modelId(), transcribeAudio()
 
-### Community 10 - "Overlay UI & Recording"
-Cohesion: 0.5
-Nodes (2): Overlay(), useRecorder()
-
-### Community 11 - "Text Injection Modes"
+### Community 7 - "Settings UI Logic"
 Cohesion: 0.67
-Nodes (4): Copy Only Mode, @nut-tree-fork/nut-js, Paste Mode, Type Keystrokes Mode
+Nodes (0): 
 
-### Community 12 - "Speech Providers"
-Cohesion: 0.67
-Nodes (3): Deepgram Provider, Web Speech Provider, Whisper OpenAI Provider
-
-### Community 13 - "Auto Launch"
+### Community 8 - "Tray Icon & System Menu"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 14 - "System Tray"
+### Community 9 - "Overlay UI Layout"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 15 - "Settings UI"
+### Community 10 - "Recorder Hook (State Machine)"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 16 - "Speech Provider Factory"
+### Community 11 - "Waveform Visualization"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 17 - "Overlay HTML"
-Cohesion: 1.0
-Nodes (1): overlay.tsx
-
-### Community 18 - "Settings HTML"
-Cohesion: 1.0
-Nodes (1): settings.tsx
-
-### Community 19 - "Vite Config"
+### Community 12 - "Voice Command Processing"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 20 - "Preload Script"
+### Community 13 - "System Robustness (Clipboard/IPC)"
+Cohesion: 1.0
+Nodes (2): Fix Clipboard Bridge and State Race Conditions Plan, IPC Constants Cleanup Implementation Plan
+
+### Community 14 - "Preload IPC Bridge"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 21 - "Global Types"
+### Community 15 - "Global Type Definitions"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 22 - "Overlay Entry"
+### Community 16 - "Shared Types & Constants"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 23 - "Settings Entry"
+### Community 17 - "Speech Provider Interface"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 24 - "Shared Types"
+### Community 18 - "Voice Command Concepts"
 Cohesion: 1.0
-Nodes (0): 
-
-### Community 25 - "Speech Provider Interface"
-Cohesion: 1.0
-Nodes (0): 
-
-### Community 26 - "App Icon"
-Cohesion: 1.0
-Nodes (1): App Icon
+Nodes (1): Voice Commands
 
 ## Knowledge Gaps
-- **9 isolated node(s):** `React`, `TypeScript`, `Web Speech Provider`, `Whisper OpenAI Provider`, `Copy Only Mode` (+4 more)
+- **7 isolated node(s):** `Expand Settings Schema Implementation Plan`, `Fix Clipboard Bridge and State Race Conditions Plan`, `IPC Constants Cleanup Implementation Plan`, `Settings UI and History Logic Fix Plan`, `Update Voice Command Processor Plan` (+2 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Auto Launch`** (2 nodes): `setAutoLaunch()`, `autoLaunch.ts`
+- **Thin community `Tray Icon & System Menu`** (2 nodes): `tray.ts`, `createTray()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `System Tray`** (2 nodes): `tray.ts`, `createTray()`
+- **Thin community `Overlay UI Layout`** (2 nodes): `onMouseMove()`, `Overlay.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Settings UI`** (2 nodes): `scrollToSection()`, `Settings.tsx`
+- **Thin community `Recorder Hook (State Machine)`** (2 nodes): `useRecorder.ts`, `useRecorder()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Speech Provider Factory`** (2 nodes): `makeProvider()`, `index.ts`
+- **Thin community `Waveform Visualization`** (2 nodes): `Waveform.tsx`, `Waveform()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Overlay HTML`** (2 nodes): `overlay.html`, `overlay.tsx`
+- **Thin community `Voice Command Processing`** (2 nodes): `processCommand()`, `commandProcessor.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Settings HTML`** (2 nodes): `settings.html`, `settings.tsx`
+- **Thin community `System Robustness (Clipboard/IPC)`** (2 nodes): `Fix Clipboard Bridge and State Race Conditions Plan`, `IPC Constants Cleanup Implementation Plan`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Vite Config`** (1 nodes): `electron.vite.config.ts`
+- **Thin community `Preload IPC Bridge`** (1 nodes): `preload.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Preload Script`** (1 nodes): `preload.ts`
+- **Thin community `Global Type Definitions`** (1 nodes): `global.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Global Types`** (1 nodes): `global.d.ts`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Overlay Entry`** (1 nodes): `overlay.tsx`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Settings Entry`** (1 nodes): `settings.tsx`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Shared Types`** (1 nodes): `types.ts`
+- **Thin community `Shared Types & Constants`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Speech Provider Interface`** (1 nodes): `ISpeechProvider.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `App Icon`** (1 nodes): `App Icon`
+- **Thin community `Voice Command Concepts`** (1 nodes): `Voice Commands`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `React`, `TypeScript`, `Web Speech Provider` to the rest of the system?**
-  _9 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `Expand Settings Schema Implementation Plan`, `Fix Clipboard Bridge and State Race Conditions Plan`, `IPC Constants Cleanup Implementation Plan` to the rest of the system?**
+  _7 weakly-connected nodes found - possible documentation gaps or missing edges._
