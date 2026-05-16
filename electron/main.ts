@@ -80,6 +80,11 @@ function createOverlay(): BrowserWindow {
   win.setAlwaysOnTop(true, 'screen-saver');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
+  // Pass mouse events through transparent regions by default so the dead-zone
+  // around the orb doesn't block clicks in apps below. forward:true keeps
+  // the renderer receiving events so drag/click still work on the drag-ring.
+  win.setIgnoreMouseEvents(true, { forward: true });
+
   if (process.env['ELECTRON_RENDERER_URL']) {
     win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/overlay.html`);
   } else {
@@ -264,6 +269,7 @@ function registerIpc() {
   ipcMain.on(IPC.dragStop, () => {
     if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
     if (overlayWin) {
+      overlayWin.setIgnoreMouseEvents(true, { forward: true });
       const [x, y] = overlayWin.getPosition();
       settingsStore.update({ overlayPosition: { x, y } });
     }
